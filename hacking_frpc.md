@@ -20,7 +20,7 @@ Upcoming Fluence hackathons with fRPC bounties:
 
 ## Setting Up
 
-To get going, you need installa nd setup a few dependencies outlined below.
+To get going, you need install and setup a few dependencies outlined below.
 
 ### Off-chain Dependencies
 
@@ -29,16 +29,18 @@ To get going, you need installa nd setup a few dependencies outlined below.
 * [Rust](https://www.rust-lang.org/tools/install) (optional; Fluence CLI will install if not already in your environment)
 * For VSCode, there is a helpful [Aqua language support](https://marketplace.visualstudio.com/items?itemName=FluenceLabs.aqua) package available
 
+Note that Fluence CLI installs missing dependencies as need ("lazy install"). If you want all your dependencies installed at once, use the `fluence dependencies i`.
+
 ### On-chain Dependencies
 
 * Wallectconnect compatible wallet, e.g., MetaMask, setup for and funded with:
-  * [Polygon](https://polygon.technology/) Mumbai testnet: https://chainlist.org/?testnets=true&search=mumbai
-  * MATIC testnet faucet: https://faucet.polygon.technology/ or https://mumbaifaucet.com/
-  * Fluence USDC testnet faucet: https://faucet.fluence.dev/
+  * [Polygon](https://polygon.technology/) [Mumbai testnet](https://chainlist.org/?testnets=true&search=mumbai)
+  * [MATIC testnet faucet](https://faucet.polygon.technology/) [or](https://mumbaifaucet.com/)
+  * [Fluence USDC testnet faucet](https://faucet.fluence.dev/)
 
 ### API Keys
 
-Since fRPC works with existing RPC providers, you want at least three provider urls and API keys to the EVM of your choice. For example for Ethereum's Goerli testnet:
+Since fRPC works with existing RPC providers or even self-hosted nodes, you want at least three provider urls and, if necessary, API keys to *the* chain of your choice. Yes, multi-chain support is currently not supported but for you to implement. For Ethereum's Goerli testnet, for example:
 
 * Infura: https://goerli.infura.io/v3/<your key>
 * Alchemy: https://eth-goerli.g.alchemy.com/v2/<your key>
@@ -46,10 +48,9 @@ Since fRPC works with existing RPC providers, you want at least three provider u
 
 All three of the listed providers have a free account option and support the API key in the url, rather than the header, which is the current gateway implementation choice; a choice you should feel free to override and customize to your needs.
 
-
 ## Tools And Tooling
 
-The most prominent developer tool is [Fluence CLI](https://github.com/fluencelabs/fluence-cli), which allows you to manage the entire lifecycle of a project including Rust and Aqua code as well as Deals. From scaffolding your project, services and modules to deal creation and service deployment, Fluence CLI has you covered. Moreover, Fluence CLI can scaffold JS projects using [js-client[(https://github.com/fluencelabs/js-client) allowing you to create, or integrate, Fluence projects for the browser or node app. See Figure 1 for a quick overview of workflows managed by Fluence CLI and the associated commands. If you have Fluence CLI installed, use `fluence --help` to get a more complete overview of topics and commands.  
+The most prominent developer tool is [Fluence CLI](https://github.com/fluencelabs/fluence-cli), which allows you to manage the entire lifecycle of a project including Rust and Aqua code as well as Deals. From scaffolding your project, services and modules to deal creation and service deployment, Fluence CLI has you covered. Moreover, Fluence CLI can scaffold JS projects using [js-client](https://github.com/fluencelabs/js-client) allowing you to create, or integrate, Fluence projects for the browser or node app. See Figure 1 for a quick overview of workflows managed by Fluence CLI and the associated commands. If you have Fluence CLI installed, use `fluence --help` to get a more complete overview of topics and commands.
 
 Figure 1: Stylized Project Creation And Deployment Workflow With Fluence CLI
 
@@ -108,7 +109,57 @@ soon
 
 #### Distributed RPC API Adapters With Marine
 
-soon
+In the "./wasm-modules/" directory, you find two modules: *curl_adapter* and *eth-rpc*, each comprised of the Rust code and a configuration file called *module.yaml*, which are referenced in the top directory's *service.yaml* file. Now, what are those modules good for?
+
+#### Curl Adapter
+
+Wasm modules are socket-less, single-threaded entities confined to a sandbox keeping the host safe. However, Marine modules come with a configuration file that not only allows a module to "punch through" the sandbox and have access to a host's resources but also for a host to permission such access. No permission from the host, no access. This information if contained in the *module.yaml*:
+
+```yaml
+version: 0
+type: rust
+name: curl_adapter
+mountedBinaries:
+  curl: /usr/bin/curl
+```
+
+Which basically states that the Wasm module named *curl_adapter* wants access to a binary callable with the (host) path `/usr/bin/curl`. Looking at the the *main.rs* file:
+
+```Rust
+use marine_rs_sdk::{marine, MountedBinaryResult};
+
+pub fn main() {}
+
+#[marine]
+pub fn curl_request(cmd: Vec<String>) -> MountedBinaryResult {
+    curl(cmd)
+}
+
+#[marine]
+#[link(wasm_import_module = "host")]
+extern "C" {
+    fn curl(cmd: Vec<String>) -> MountedBinaryResult;
+}
+```
+
+In order to make access to the host's binary happen, we use Rust's FFI interface to link a function names *curl*, taking an array of strings as its argument, and expose it to the module via the `#[marine]` macro. We then wrap the *curl* function with the *curl_request* function for the whole purpose to expose it, via the `#[marine]` macro, as the sole exported function. Why? so any other Wasm module in need of curl access can link to the *curl_adapter* and utilize the *curl_request* function to make *curl* calls including out *eth-rpc* module.
+
+#### ETH RPC Module
+
+The *eth_rpc* module uses [Web3](https://crates.io/crates/web3), a Rust EVM json-rpc client.
+
+```Rust
+
+```
+
+TODO: need to clean up code.
+
+For all things Wasm, see the [Marine book](https://fluence.dev/docs/marine-book/introduction) and the Fluence [developer documentation](TBD). Also note, that unless you need some EVM method not currently made available or customize special RPC provider interaction, you may not have to touch this module and the service.
+
+
+#### Deploying The Service
+
+Even if you don't change the Rust code, you still need to deploy the service to one or more peers to be usable by you dAPP via the gateway. 
 
 #### Distributed Workflow Orchestration With Aqua
 
