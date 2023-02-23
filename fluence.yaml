@@ -9,3 +9,9 @@ aquaInputPath: src/aqua/main.aqua
 dependencies:
   npm:
     "@fluencelabs/aqua-lib": 0.6.0
+  cargo:
+    marine: 0.12.6
+    mrepl: 0.19.1
+services:
+  eth_rpc:
+    get: wasm-modules
