@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=.fluence/schemas/deals.yaml.json
+
+# Defines deal configuration for each worker you wanna deploy
+
+# Documentation: https://github.com/fluencelabs/fluence-cli/tree/main/docs/configs/deals.md
+
+version: 0
+deals:
+  - workerName: defaultWorker

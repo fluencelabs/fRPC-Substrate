@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=.fluence/schemas/workers.yaml.json
+
+# Defines workers and what they consist of. Currently worker includes a set of services that you want to deploy on a particular peer
+
+# Documentation: https://github.com/fluencelabs/fluence-cli/tree/main/docs/configs/workers.md
+
+version: 0
+workers:
+  defaultWorker:
+    services: []
