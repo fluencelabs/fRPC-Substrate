@@ -8,10 +8,25 @@ version: 2
 aquaInputPath: src/aqua/main.aqua
 dependencies:
   npm:
+    "@fluencelabs/aqua": 0.10.1
     "@fluencelabs/aqua-lib": 0.6.0
+    "@fluencelabs/spell": 0.4.0
+    "@fluencelabs/registry": 0.7.1
   cargo:
     marine: 0.12.6
     mrepl: 0.19.1
+workers:
+  defaultWorker:
+    services: [ eth_rpc ]
+deals:
+  defaultWorker:
+    minWorkers: 1
+    targetWorkers: 3
+hosts:
+  defaultWorker:
+    peerIds:
+      - 12D3KooWEFFCZnar1cUJQ3rMWjvPQg6yMV2aXWs2DkJNSRbduBWn
+relays: stage
 services:
   eth_rpc:
-    get: wasm-modules
+    get: wasm-modules/

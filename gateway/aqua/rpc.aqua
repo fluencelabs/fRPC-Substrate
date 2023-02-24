@@ -1,4 +1,5 @@
 import "@fluencelabs/aqua-lib/builtin.aqua"
+import "deals.aqua"
 
 export randomLoadBalancingEth, roundRobinEth, Counter, Logger
 
