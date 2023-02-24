@@ -15,3 +15,11 @@ dependencies:
 services:
   eth_rpc:
     get: wasm-modules
+workers:
+  defaultWorker:
+    services: [ eth_rpc ]
+deals:
+  defaultWorker:
+    minWorkers: 1
+    targetWorkers: 3
+relays: stage
