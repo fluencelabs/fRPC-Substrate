@@ -99,6 +99,121 @@ export function registerLogger(...args) {
                 "codomain" : {
                     "tag" : "nil"
                 }
+            },
+            "logWorker" : {
+                "tag" : "arrow",
+                "domain" : {
+                    "tag" : "labeledProduct",
+                    "fields" : {
+                        "w" : {
+                            "tag" : "struct",
+                            "name" : "Record",
+                            "fields" : {
+                                "metadata" : {
+                                    "tag" : "struct",
+                                    "name" : "RecordMetadata",
+                                    "fields" : {
+                                        "relay_id" : {
+                                            "tag" : "array",
+                                            "type" : {
+                                                "tag" : "scalar",
+                                                "name" : "string"
+                                            }
+                                        },
+                                        "issued_by" : {
+                                            "tag" : "scalar",
+                                            "name" : "string"
+                                        },
+                                        "peer_id" : {
+                                            "tag" : "scalar",
+                                            "name" : "string"
+                                        },
+                                        "timestamp_issued" : {
+                                            "tag" : "scalar",
+                                            "name" : "u64"
+                                        },
+                                        "service_id" : {
+                                            "tag" : "array",
+                                            "type" : {
+                                                "tag" : "scalar",
+                                                "name" : "string"
+                                            }
+                                        },
+                                        "value" : {
+                                            "tag" : "scalar",
+                                            "name" : "string"
+                                        },
+                                        "key_id" : {
+                                            "tag" : "scalar",
+                                            "name" : "string"
+                                        },
+                                        "solution" : {
+                                            "tag" : "array",
+                                            "type" : {
+                                                "tag" : "scalar",
+                                                "name" : "u8"
+                                            }
+                                        },
+                                        "issuer_signature" : {
+                                            "tag" : "array",
+                                            "type" : {
+                                                "tag" : "scalar",
+                                                "name" : "u8"
+                                            }
+                                        }
+                                    }
+                                },
+                                "signature" : {
+                                    "tag" : "array",
+                                    "type" : {
+                                        "tag" : "scalar",
+                                        "name" : "u8"
+                                    }
+                                },
+                                "timestamp_created" : {
+                                    "tag" : "scalar",
+                                    "name" : "u64"
+                                }
+                            }
+                        }
+                    }
+                },
+                "codomain" : {
+                    "tag" : "nil"
+                }
+            }
+        }
+    }
+}
+    );
+}
+      
+
+
+
+
+export function registerCounter(...args) {
+    registerService$$(
+        args,
+        {
+    "defaultServiceId" : "counter",
+    "functions" : {
+        "tag" : "labeledProduct",
+        "fields" : {
+            "incrementAndReturn" : {
+                "tag" : "arrow",
+                "domain" : {
+                    "tag" : "nil"
+                },
+                "codomain" : {
+                    "tag" : "unlabeledProduct",
+                    "items" : [
+                        {
+                            "tag" : "scalar",
+                            "name" : "u32"
+                        }
+                    ]
+                }
             }
         }
     }
@@ -127,7 +242,7 @@ export function registerQuorumChecker(...args) {
                             "tag" : "array",
                             "type" : {
                                 "tag" : "struct",
-                                "name" : "EthResult",
+                                "name" : "JsonString",
                                 "fields" : {
                                     "error" : {
                                         "tag" : "scalar",
@@ -165,7 +280,7 @@ export function registerQuorumChecker(...args) {
                                     "tag" : "array",
                                     "type" : {
                                         "tag" : "struct",
-                                        "name" : "EthResult",
+                                        "name" : "JsonString",
                                         "fields" : {
                                             "error" : {
                                                 "tag" : "scalar",
@@ -187,102 +302,6 @@ export function registerQuorumChecker(...args) {
                                     "name" : "string"
                                 }
                             }
-                        }
-                    ]
-                }
-            }
-        }
-    }
-}
-    );
-}
-      
-
-
-
-
-export function registerEthCaller(...args) {
-    registerService$$(
-        args,
-        {
-    "functions" : {
-        "tag" : "labeledProduct",
-        "fields" : {
-            "eth_call" : {
-                "tag" : "arrow",
-                "domain" : {
-                    "tag" : "labeledProduct",
-                    "fields" : {
-                        "uri" : {
-                            "tag" : "scalar",
-                            "name" : "string"
-                        },
-                        "method" : {
-                            "tag" : "scalar",
-                            "name" : "string"
-                        },
-                        "jsonArgs" : {
-                            "tag" : "array",
-                            "type" : {
-                                "tag" : "scalar",
-                                "name" : "string"
-                            }
-                        }
-                    }
-                },
-                "codomain" : {
-                    "tag" : "unlabeledProduct",
-                    "items" : [
-                        {
-                            "tag" : "struct",
-                            "name" : "EthResult",
-                            "fields" : {
-                                "error" : {
-                                    "tag" : "scalar",
-                                    "name" : "string"
-                                },
-                                "success" : {
-                                    "tag" : "scalar",
-                                    "name" : "bool"
-                                },
-                                "value" : {
-                                    "tag" : "scalar",
-                                    "name" : "string"
-                                }
-                            }
-                        }
-                    ]
-                }
-            }
-        }
-    }
-}
-    );
-}
-      
-
-
-
-
-export function registerCounter(...args) {
-    registerService$$(
-        args,
-        {
-    "defaultServiceId" : "counter",
-    "functions" : {
-        "tag" : "labeledProduct",
-        "fields" : {
-            "incrementAndReturn" : {
-                "tag" : "arrow",
-                "domain" : {
-                    "tag" : "nil"
-                },
-                "codomain" : {
-                    "tag" : "unlabeledProduct",
-                    "items" : [
-                        {
-                            "tag" : "scalar",
-                            "name" : "u32"
                         }
                     ]
                 }
@@ -406,7 +425,7 @@ export function roundRobinEth(...args) {
             "items" : [
                 {
                     "tag" : "struct",
-                    "name" : "EthResult",
+                    "name" : "JsonString",
                     "fields" : {
                         "error" : {
                             "tag" : "scalar",
@@ -447,10 +466,10 @@ export function empty(...args) {
                      (seq
                       (seq
                        (call %init_peer_id% ("getDataSrv" "-relay-") [] -relay-)
-                       (call %init_peer_id% ("json" "obj") ["error" "" "success" true "value" ""] EthResult_obj)
+                       (call %init_peer_id% ("json" "obj") ["error" "" "success" true "value" ""] JsonString_obj)
                       )
                       (xor
-                       (call %init_peer_id% ("callbackSrv" "response") [EthResult_obj])
+                       (call %init_peer_id% ("callbackSrv" "response") [JsonString_obj])
                        (call %init_peer_id% ("errorHandlingSrv" "error") [%last_error% 1])
                       )
                      )
@@ -474,7 +493,7 @@ export function empty(...args) {
             "items" : [
                 {
                     "tag" : "struct",
-                    "name" : "EthResult",
+                    "name" : "JsonString",
                     "fields" : {
                         "error" : {
                             "tag" : "scalar",
@@ -703,7 +722,7 @@ export function quorumEth(...args) {
                             "tag" : "array",
                             "type" : {
                                 "tag" : "struct",
-                                "name" : "EthResult",
+                                "name" : "JsonString",
                                 "fields" : {
                                     "error" : {
                                         "tag" : "scalar",
@@ -769,12 +788,15 @@ export function randomLoadBalancing(...args) {
                           (seq
                            (seq
                             (seq
-                             (call %init_peer_id% ("peer" "timestamp_sec") [] timestamp_sec)
-                             (call %init_peer_id% ("op" "identity") [timestamp_sec] time)
+                             (seq
+                              (call %init_peer_id% ("peer" "timestamp_sec") [] timestamp_sec)
+                              (call %init_peer_id% ("op" "identity") [timestamp_sec] time)
+                             )
+                             (ap uris uris_to_functor)
                             )
-                            (call %init_peer_id% ("op" "array_length") [uris] array_length)
+                            (ap uris_to_functor.length uris_length)
                            )
-                           (call %init_peer_id% ("math" "rem") [time array_length] rem)
+                           (call %init_peer_id% ("math" "rem") [time uris_length] rem)
                           )
                           (call %init_peer_id% ("logger" "logCall") [uris.$.[rem]!])
                          )
@@ -856,7 +878,7 @@ export function randomLoadBalancing(...args) {
                         "items" : [
                             {
                                 "tag" : "struct",
-                                "name" : "EthResult",
+                                "name" : "JsonString",
                                 "fields" : {
                                     "error" : {
                                         "tag" : "scalar",
@@ -882,7 +904,7 @@ export function randomLoadBalancing(...args) {
             "items" : [
                 {
                     "tag" : "struct",
-                    "name" : "EthResult",
+                    "name" : "JsonString",
                     "fields" : {
                         "error" : {
                             "tag" : "scalar",
@@ -941,12 +963,15 @@ export function randomLoadBalancingEth(...args) {
                           (seq
                            (seq
                             (seq
-                             (call %init_peer_id% ("peer" "timestamp_sec") [] timestamp_sec)
-                             (call %init_peer_id% ("op" "identity") [timestamp_sec] time)
+                             (seq
+                              (call %init_peer_id% ("peer" "timestamp_sec") [] timestamp_sec)
+                              (call %init_peer_id% ("op" "identity") [timestamp_sec] time)
+                             )
+                             (ap uris uris_to_functor)
                             )
-                            (call %init_peer_id% ("op" "array_length") [uris] array_length)
+                            (ap uris_to_functor.length uris_length)
                            )
-                           (call %init_peer_id% ("math" "rem") [time array_length] rem)
+                           (call %init_peer_id% ("math" "rem") [time uris_length] rem)
                           )
                           (call %init_peer_id% ("logger" "logCall") [uris.$.[rem]!])
                          )
@@ -1004,7 +1029,7 @@ export function randomLoadBalancingEth(...args) {
             "items" : [
                 {
                     "tag" : "struct",
-                    "name" : "EthResult",
+                    "name" : "JsonString",
                     "fields" : {
                         "error" : {
                             "tag" : "scalar",
@@ -1247,7 +1272,7 @@ export function quorum(...args) {
                         "items" : [
                             {
                                 "tag" : "struct",
-                                "name" : "EthResult",
+                                "name" : "JsonString",
                                 "fields" : {
                                     "error" : {
                                         "tag" : "scalar",
@@ -1283,7 +1308,7 @@ export function quorum(...args) {
                             "tag" : "array",
                             "type" : {
                                 "tag" : "struct",
-                                "name" : "EthResult",
+                                "name" : "JsonString",
                                 "fields" : {
                                     "error" : {
                                         "tag" : "scalar",
@@ -1299,6 +1324,391 @@ export function quorum(...args) {
                                     }
                                 }
                             }
+                        },
+                        "value" : {
+                            "tag" : "scalar",
+                            "name" : "string"
+                        }
+                    }
+                }
+            ]
+        }
+    },
+    "names" : {
+        "relay" : "-relay-",
+        "getDataSrv" : "getDataSrv",
+        "callbackSrv" : "callbackSrv",
+        "responseSrv" : "callbackSrv",
+        "responseFnName" : "response",
+        "errorHandlingSrv" : "errorHandlingSrv",
+        "errorFnName" : "error"
+    }
+},
+        script
+    )
+}
+
+
+export function withSubnets(...args) {
+
+    let script = `
+                    (xor
+                     (seq
+                      (seq
+                       (seq
+                        (seq
+                         (seq
+                          (seq
+                           (seq
+                            (seq
+                             (seq
+                              (seq
+                               (seq
+                                (call %init_peer_id% ("getDataSrv" "-relay-") [] -relay-)
+                                (call %init_peer_id% ("getDataSrv" "uris") [] uris)
+                               )
+                               (call %init_peer_id% ("getDataSrv" "method") [] method)
+                              )
+                              (call %init_peer_id% ("getDataSrv" "jsonArgs") [] jsonArgs)
+                             )
+                             (call %init_peer_id% ("json" "obj") ["chainNetwork" "testnet" "chainNetworkId" 80001.0 "dealId" "48fb3e4cd0f3770dfd49106fe1fe2e5e783259cf" "dealIdOriginal" "0x48Fb3E4cd0f3770dfd49106fe1FE2E5E783259cF" "definition" "QmTLnhmbriGoAD7M7FHZFE2UQ7EJ2viUbWKuWkUXRC1qRR" "installationSpells" [] "timestamp" "2023-02-24T09:30:26.732Z"] GetWorkersInfoDefaultWorker_obj)
+                            )
+                            (call %init_peer_id% ("json" "obj") ["defaultWorker" GetWorkersInfoDefaultWorker_obj] GetWorkersInfo_obj)
+                           )
+                           (ap GetWorkersInfo_obj.$.defaultWorker! GetWorkersInfo_obj_flat)
+                          )
+                          (ap GetWorkersInfo_obj_flat.$.dealId! GetWorkersInfo_obj_flat_flat)
+                         )
+                         (xor
+                          (seq
+                           (seq
+                            (seq
+                             (seq
+                              (seq
+                               (seq
+                                (seq
+                                 (seq
+                                  (seq
+                                   (seq
+                                    (seq
+                                     (seq
+                                      (new $records
+                                       (new $successful
+                                        (new $result-0
+                                         (seq
+                                          (seq
+                                           (seq
+                                            (seq
+                                             (seq
+                                              (seq
+                                               (seq
+                                                (seq
+                                                 (call -relay- ("insecure_sig" "get_peer_id") [] peer_id)
+                                                 (call -relay- ("registry" "get_key_id") [GetWorkersInfo_obj_flat_flat peer_id] key_id)
+                                                )
+                                                (call -relay- ("op" "string_to_b58") [key_id] k)
+                                               )
+                                               (call -relay- ("kad" "neighborhood") [k [] []] nodes)
+                                              )
+                                              (xor
+                                               (par
+                                                (fold nodes n-0
+                                                 (par
+                                                  (seq
+                                                   (xor
+                                                    (xor
+                                                     (seq
+                                                      (seq
+                                                       (call n-0 ("peer" "timestamp_sec") [] t)
+                                                       (call n-0 ("registry" "get_records") [key_id t] get_result)
+                                                      )
+                                                      (xor
+                                                       (match get_result.$.success! true
+                                                        (seq
+                                                         (ap get_result.$.result! $records)
+                                                         (ap true $successful)
+                                                        )
+                                                       )
+                                                       (ap get_result.$.error! $error)
+                                                      )
+                                                     )
+                                                     (call n-0 ("op" "noop") [])
+                                                    )
+                                                    (seq
+                                                     (call -relay- ("op" "noop") [])
+                                                     (call %init_peer_id% ("errorHandlingSrv" "error") [%last_error% 1])
+                                                    )
+                                                   )
+                                                   (call -relay- ("op" "noop") [])
+                                                  )
+                                                  (next n-0)
+                                                 )
+                                                 (never)
+                                                )
+                                                (null)
+                                               )
+                                               (call %init_peer_id% ("errorHandlingSrv" "error") [%last_error% 2])
+                                              )
+                                             )
+                                             (new $status
+                                              (new $result-1
+                                               (seq
+                                                (seq
+                                                 (seq
+                                                  (par
+                                                   (seq
+                                                    (seq
+                                                     (seq
+                                                      (call -relay- ("math" "sub") [2 1] sub)
+                                                      (new $successful_test
+                                                       (seq
+                                                        (seq
+                                                         (seq
+                                                          (call -relay- ("math" "add") [sub 1] successful_incr)
+                                                          (fold $successful s
+                                                           (seq
+                                                            (seq
+                                                             (ap s $successful_test)
+                                                             (canon -relay- $successful_test  #successful_iter_canon)
+                                                            )
+                                                            (xor
+                                                             (match #successful_iter_canon.length successful_incr
+                                                              (null)
+                                                             )
+                                                             (next s)
+                                                            )
+                                                           )
+                                                           (never)
+                                                          )
+                                                         )
+                                                         (canon -relay- $successful_test  #successful_result_canon)
+                                                        )
+                                                        (ap #successful_result_canon successful_gate)
+                                                       )
+                                                      )
+                                                     )
+                                                     (call -relay- ("math" "sub") [2 1] sub-0)
+                                                    )
+                                                    (ap "ok" $status)
+                                                   )
+                                                   (call -relay- ("peer" "timeout") [6000 "timeout"] $status)
+                                                  )
+                                                  (new $status_test
+                                                   (seq
+                                                    (seq
+                                                     (seq
+                                                      (call -relay- ("math" "add") [0 1] status_incr)
+                                                      (fold $status s
+                                                       (seq
+                                                        (seq
+                                                         (ap s $status_test)
+                                                         (canon -relay- $status_test  #status_iter_canon)
+                                                        )
+                                                        (xor
+                                                         (match #status_iter_canon.length status_incr
+                                                          (null)
+                                                         )
+                                                         (next s)
+                                                        )
+                                                       )
+                                                       (never)
+                                                      )
+                                                     )
+                                                     (canon -relay- $status_test  #status_result_canon)
+                                                    )
+                                                    (ap #status_result_canon status_gate)
+                                                   )
+                                                  )
+                                                 )
+                                                 (xor
+                                                  (match status_gate.$.[0]! "ok"
+                                                   (ap true $result-1)
+                                                  )
+                                                  (ap false $result-1)
+                                                 )
+                                                )
+                                                (new $result-1_test
+                                                 (seq
+                                                  (seq
+                                                   (seq
+                                                    (call -relay- ("math" "add") [0 1] result-1_incr)
+                                                    (fold $result-1 s
+                                                     (seq
+                                                      (seq
+                                                       (ap s $result-1_test)
+                                                       (canon -relay- $result-1_test  #result-1_iter_canon)
+                                                      )
+                                                      (xor
+                                                       (match #result-1_iter_canon.length result-1_incr
+                                                        (null)
+                                                       )
+                                                       (next s)
+                                                      )
+                                                     )
+                                                     (never)
+                                                    )
+                                                   )
+                                                   (canon -relay- $result-1_test  #result-1_result_canon)
+                                                  )
+                                                  (ap #result-1_result_canon result-1_gate)
+                                                 )
+                                                )
+                                               )
+                                              )
+                                             )
+                                            )
+                                            (xor
+                                             (match result-1_gate.$.[0]! false
+                                              (ap "timeout exceeded" $error)
+                                             )
+                                             (seq
+                                              (seq
+                                               (canon -relay- $records  #records_canon)
+                                               (call -relay- ("registry" "merge") [#records_canon] merged)
+                                              )
+                                              (xor
+                                               (match merged.$.success! false
+                                                (ap merged.$.error! $error)
+                                               )
+                                               (ap merged.$.result! $result-0)
+                                              )
+                                             )
+                                            )
+                                           )
+                                           (canon -relay- $result-0  #-result-fix-0)
+                                          )
+                                          (ap #-result-fix-0 -result-flat-0)
+                                         )
+                                        )
+                                       )
+                                      )
+                                      (ap -result-flat-0.$.[0]! -result-flat-0_flat)
+                                     )
+                                     (ap -result-flat-0_flat -result-flat-0_flat_to_functor)
+                                    )
+                                    (ap -result-flat-0_flat_to_functor.length -result-flat-0_flat_length)
+                                   )
+                                   (call -relay- ("peer" "timestamp_sec") [] timestamp_sec)
+                                  )
+                                  (call -relay- ("op" "identity") [timestamp_sec] timeW)
+                                 )
+                                 (ap -result-flat-0.$.[0]! -result-flat-0_flat-0)
+                                )
+                                (ap -result-flat-0_flat-0 -result-flat-0_flat-0_to_functor)
+                               )
+                               (ap -result-flat-0_flat-0_to_functor.length -result-flat-0_flat-0_length)
+                              )
+                              (call -relay- ("math" "rem") [timeW -result-flat-0_flat-0_length] rem)
+                             )
+                             (null)
+                            )
+                            (fold -result-flat-0.$.[0].[rem].metadata.relay_id! -via-peer-
+                             (seq
+                              (call -via-peer- ("op" "noop") [])
+                              (next -via-peer-)
+                             )
+                            )
+                           )
+                           (xor
+                            (seq
+                             (seq
+                              (seq
+                               (seq
+                                (seq
+                                 (seq
+                                  (seq
+                                   (call -result-flat-0.$.[0].[rem].metadata.peer_id! ("peer" "timestamp_sec") [] timestamp_sec-0)
+                                   (call -result-flat-0.$.[0].[rem].metadata.peer_id! ("op" "identity") [timestamp_sec-0] timeP)
+                                  )
+                                  (ap uris uris_to_functor)
+                                 )
+                                 (ap uris_to_functor.length uris_length)
+                                )
+                                (call -result-flat-0.$.[0].[rem].metadata.peer_id! ("math" "rem") [timeW uris_length] rem-0)
+                               )
+                               (call -result-flat-0.$.[0].[rem].metadata.peer_id! ("ethRpc" "eth_call") [uris.$.[rem-0]! method jsonArgs] result)
+                              )
+                              (fold -result-flat-0.$.[0].[rem].metadata.relay_id! -via-peer-
+                               (seq
+                                (next -via-peer-)
+                                (call -via-peer- ("op" "noop") [])
+                               )
+                              )
+                             )
+                             (call -relay- ("op" "noop") [])
+                            )
+                            (seq
+                             (seq
+                              (fold -result-flat-0.$.[0].[rem].metadata.relay_id! -via-peer-
+                               (seq
+                                (call -via-peer- ("op" "noop") [])
+                                (next -via-peer-)
+                               )
+                              )
+                              (call -relay- ("op" "noop") [])
+                             )
+                             (call %init_peer_id% ("errorHandlingSrv" "error") [%last_error% 3])
+                            )
+                           )
+                          )
+                          (call %init_peer_id% ("errorHandlingSrv" "error") [%last_error% 4])
+                         )
+                        )
+                        (call %init_peer_id% ("logger" "logWorker") [-result-flat-0.$.[0].[rem]!])
+                       )
+                       (call %init_peer_id% ("logger" "logCall") [uris.$.[rem-0]!])
+                      )
+                      (xor
+                       (call %init_peer_id% ("callbackSrv" "response") [result])
+                       (call %init_peer_id% ("errorHandlingSrv" "error") [%last_error% 5])
+                      )
+                     )
+                     (call %init_peer_id% ("errorHandlingSrv" "error") [%last_error% 6])
+                    )
+    `
+    return callFunction$$(
+        args,
+        {
+    "functionName" : "withSubnets",
+    "arrow" : {
+        "tag" : "arrow",
+        "domain" : {
+            "tag" : "labeledProduct",
+            "fields" : {
+                "uris" : {
+                    "tag" : "array",
+                    "type" : {
+                        "tag" : "scalar",
+                        "name" : "string"
+                    }
+                },
+                "method" : {
+                    "tag" : "scalar",
+                    "name" : "string"
+                },
+                "jsonArgs" : {
+                    "tag" : "array",
+                    "type" : {
+                        "tag" : "scalar",
+                        "name" : "string"
+                    }
+                }
+            }
+        },
+        "codomain" : {
+            "tag" : "unlabeledProduct",
+            "items" : [
+                {
+                    "tag" : "struct",
+                    "name" : "JsonString",
+                    "fields" : {
+                        "error" : {
+                            "tag" : "scalar",
+                            "name" : "string"
+                        },
+                        "success" : {
+                            "tag" : "scalar",
+                            "name" : "bool"
                         },
                         "value" : {
                             "tag" : "scalar",
@@ -1459,7 +1869,7 @@ export function roundRobin(...args) {
                         "items" : [
                             {
                                 "tag" : "struct",
-                                "name" : "EthResult",
+                                "name" : "JsonString",
                                 "fields" : {
                                     "error" : {
                                         "tag" : "scalar",
@@ -1485,7 +1895,7 @@ export function roundRobin(...args) {
             "items" : [
                 {
                     "tag" : "struct",
-                    "name" : "EthResult",
+                    "name" : "JsonString",
                     "fields" : {
                         "error" : {
                             "tag" : "scalar",
@@ -1586,7 +1996,7 @@ export function call(...args) {
             "items" : [
                 {
                     "tag" : "struct",
-                    "name" : "EthResult",
+                    "name" : "JsonString",
                     "fields" : {
                         "error" : {
                             "tag" : "scalar",

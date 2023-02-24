@@ -28,25 +28,12 @@ export function registerNumOp(peer: IFluenceClient$$, serviceId: string, service
 export interface LoggerDef {
     log: (s: string[], callParams: CallParams$$<'s'>) => void | Promise<void>;
     logCall: (s: string, callParams: CallParams$$<'s'>) => void | Promise<void>;
+    logWorker: (w: { metadata: { issued_by: string; issuer_signature: number[]; key_id: string; peer_id: string; relay_id: string[]; service_id: string[]; solution: number[]; timestamp_issued: number; value: string; }; signature: number[]; timestamp_created: number; }, callParams: CallParams$$<'w'>) => void | Promise<void>;
 }
 export function registerLogger(service: LoggerDef): void;
 export function registerLogger(serviceId: string, service: LoggerDef): void;
 export function registerLogger(peer: IFluenceClient$$, service: LoggerDef): void;
 export function registerLogger(peer: IFluenceClient$$, serviceId: string, service: LoggerDef): void;
-       
-export interface QuorumCheckerDef {
-    check: (results: { error: string; success: boolean; value: string; }[], minResults: number, callParams: CallParams$$<'results' | 'minResults'>) => { error: string; results: { error: string; success: boolean; value: string; }[]; value: string; } | Promise<{ error: string; results: { error: string; success: boolean; value: string; }[]; value: string; }>;
-}
-export function registerQuorumChecker(service: QuorumCheckerDef): void;
-export function registerQuorumChecker(serviceId: string, service: QuorumCheckerDef): void;
-export function registerQuorumChecker(peer: IFluenceClient$$, service: QuorumCheckerDef): void;
-export function registerQuorumChecker(peer: IFluenceClient$$, serviceId: string, service: QuorumCheckerDef): void;
-       
-export interface EthCallerDef {
-    eth_call: (uri: string, method: string, jsonArgs: string[], callParams: CallParams$$<'uri' | 'method' | 'jsonArgs'>) => { error: string; success: boolean; value: string; } | Promise<{ error: string; success: boolean; value: string; }>;
-}
-export function registerEthCaller(serviceId: string, service: EthCallerDef): void;
-export function registerEthCaller(peer: IFluenceClient$$, serviceId: string, service: EthCallerDef): void;
        
 export interface CounterDef {
     incrementAndReturn: (callParams: CallParams$$<null>) => number | Promise<number>;
@@ -55,6 +42,14 @@ export function registerCounter(service: CounterDef): void;
 export function registerCounter(serviceId: string, service: CounterDef): void;
 export function registerCounter(peer: IFluenceClient$$, service: CounterDef): void;
 export function registerCounter(peer: IFluenceClient$$, serviceId: string, service: CounterDef): void;
+       
+export interface QuorumCheckerDef {
+    check: (results: { error: string; success: boolean; value: string; }[], minResults: number, callParams: CallParams$$<'results' | 'minResults'>) => { error: string; results: { error: string; success: boolean; value: string; }[]; value: string; } | Promise<{ error: string; results: { error: string; success: boolean; value: string; }[]; value: string; }>;
+}
+export function registerQuorumChecker(service: QuorumCheckerDef): void;
+export function registerQuorumChecker(serviceId: string, service: QuorumCheckerDef): void;
+export function registerQuorumChecker(peer: IFluenceClient$$, service: QuorumCheckerDef): void;
+export function registerQuorumChecker(peer: IFluenceClient$$, serviceId: string, service: QuorumCheckerDef): void;
        
 
 // Functions
@@ -187,6 +182,23 @@ export function quorum(
     callFunc: (arg0: string, arg1: string, arg2: string[], arg3: string, callParams: CallParams$$<'arg0' | 'arg1' | 'arg2' | 'arg3'>) => { error: string; success: boolean; value: string; } | Promise<{ error: string; success: boolean; value: string; }>,
     config?: {ttl?: number}
 ): Promise<QuorumResult>;
+
+ 
+export type WithSubnetsResult = { error: string; success: boolean; value: string; }
+export function withSubnets(
+    uris: string[],
+    method: string,
+    jsonArgs: string[],
+    config?: {ttl?: number}
+): Promise<WithSubnetsResult>;
+
+export function withSubnets(
+    peer: IFluenceClient$$,
+    uris: string[],
+    method: string,
+    jsonArgs: string[],
+    config?: {ttl?: number}
+): Promise<WithSubnetsResult>;
 
  
 export type RoundRobinResult = { error: string; success: boolean; value: string; }

@@ -13,7 +13,7 @@ import {
     registerCounter,
     registerLogger,
     registerQuorumChecker,
-    roundRobinEth
+    roundRobinEth, withSubnets
 } from "../aqua-compiled/rpc.js";
 import {readArguments} from "./arguments.js";
 import {readConfig} from "./config.js";
@@ -52,6 +52,9 @@ registerLogger({
     },
     logCall: s => {
         console.log("Call will be to : " + s);
+    },
+    logWorker: s => {
+        console.log("Worker used: " + s);
     },
 })
 
@@ -107,17 +110,18 @@ const quorumServiceId = config.quorumServiceId  || 'quorum'
 const quorumPeerId = config.quorumPeerId || peerId
 const quorumNumber = config.quorumNumber || 2
 
-async function methodHandler(req, method) {
+async function methodHandler(reqRaw, method) {
+    const req = reqRaw.map((s) => JSON.stringify(s))
     console.log(`Receiving request '${method}'`);
     let result;
     if (!config.mode || config.mode === "random") {
-        result = await randomLoadBalancingEth(config.providers, method, req.map((s) => JSON.stringify(s)), config.serviceId);
+        result = await randomLoadBalancingEth(config.providers, method, req, config.serviceId);
     } else if (config.mode === "round-robin") {
         console.log("peerId: " + peerId)
-        result = await roundRobinEth(config.providers, method, req.map((s) => JSON.stringify(s)), config.serviceId, counterServiceId, counterPeerId,
+        result = await roundRobinEth(config.providers, method, req, config.serviceId, counterServiceId, counterPeerId,
             config.serviceId);
     } else if (config.mode === "quorum") {
-        result = await quorumEth(config.providers, config.quorumNumber, 5000, method, req.map((s) => JSON.stringify(s)), config.serviceId, quorumServiceId, quorumPeerId,
+        result = await quorumEth(config.providers, config.quorumNumber, 5000, method, req, config.serviceId, quorumServiceId, quorumPeerId,
             config.serviceId);
 
         if (result.error) {
@@ -125,6 +129,8 @@ async function methodHandler(req, method) {
         }
 
         console.log(result)
+    } else if (config.mode === "subnet") {
+        result = await withSubnets(config.providers, method, req, {ttl: 60000})
     }
 
 
