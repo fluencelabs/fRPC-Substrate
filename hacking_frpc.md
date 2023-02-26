@@ -56,7 +56,7 @@ sequenceDiagram
 
 ```
 
-Whiles this sounds, and is, elaborate, *Fluence CLI*, see below, takes care of most of the process management for you.
+While this sounds, and is, elaborate, *Fluence CLI*, see below, takes care of most of the process management for you.
 
 At this point, the marketplace for deals isn't quite finished. Instead developers being able to to provide custom Deal parameters, such as willignness to pay for a service hosted, Fluence hard-coded a set of parameters, i.e. price of execution per epoch and epoch duration, which are used by Fluence CLI to create the corresponding Deal contract and transaction for you to sign. Moreover, economics are limited to the testnet using testnet tokens and throughout the EthDenver hackathon, resource owners may not claim their periodic share of revenue from the Deal's escrow.
 
@@ -116,7 +116,7 @@ Figure 2: Stylized Project Creation And Deployment Workflow With Fluence CLI
 
 See [FLuence CLI](https://github.com/fluencelabs/fluence-cli) for more details.
 
-For implementing your business logic with Rust and compile to wasm32-wasi, aka Wasm, module(s), see the [Marine book](https://fluence.dev/docs/marine-book/introduction). To learn more about distributed choreography and composition of services, see the [Aqua book](https://fluence.dev/docs/aqua-book/introduction). 
+For implementing your business logic with Rust and compile to wasm32-wasi, aka Wasm, module(s), see the [Marine book](https://fluence.dev/docs/marine-book/introduction). To learn more about distributed choreography and composition of services, see the [Aqua book](https://fluence.dev/docs/aqua-book/introduction).
 
 ## Hacking On fRPC Substrate
 
@@ -149,24 +149,167 @@ Figure 3: Stylized fRPC Use With dAPPs
 
 In order to use the fRPC substrate out-of-the-box or after customization, you need to:
 
-* have three or more centralized RPC endpoints ready where the provider url needs to contain the API key, e.g.,
+* have three or more centralized RPC endpoints ready, where each provider url needs to contain the API key, e.g.,
 * deploy a deal
 * deploy the service
 * update the gateway configuration
 * run the gateway
 * use the gateway url in your web3 sdk's HTTP transport config
+
+### On Services And Algorithms
+
+fRPC Substrate comes with one service comprised of two modules, which you cna find in the [wasm-modules]("./wasm-modules/") directory. The service is called 'eth_rpc' and the included modules are a [curl_adpater]("./../wasm-modules/curl-adapter") and ["eth_rpc]("./../wasm-modules/eth-rpc"). The *curl_apadter* modules is a generic module allowing access a peer's curl binary, if permissioned by the peer, and exposes the *curl_request* function. Any modules requiring curl access may use the curl_adapter modules via [FFI linking]() and make curl calls with the *curl_request* function.
+
+The *eth_rpc* module ...
+
+For all things Wasm, see the [Marine book](https://fluence.dev/docs/marine-book/introduction)
+
+Our *eth-rpc* service, once available on peers of the Fluence p2p network, essentially allows us to call one or more RPC endpoints using Aqua for choreograpy and composition of services. 
+
+
+
+### Algorithms Already Implemented
+
+The fRPC substrate comes with basic implementations of several algorithms useful in mitigating failure as the result of availability and lack of trustlessness. You cna find these 
+
+#### Round robin
+
+
+
+#### Failover
+
+
+#### Quorum
+
+
+#### Subnet
   
 ### Deploy <Deal, Worker, Service> ?
 
+#### fluence deal deploy
 
 
+```bash
+luence deal deploy
+   Compiling curl_adapter v0.1.0 (/Users/bebo/localdev/fRPC-Substrate/wasm-modules/curl-adapter)
+    Finished release [optimized] target(s) in 1.48s
+ipfs: did pin QmTvNwBeDop1yD9dLNjgrzfBMsgtrBmD859ahqQS1EWhbj to /dns4/ipfs.fluence.dev/tcp/5001
+ipfs: file QmTvNwBeDop1yD9dLNjgrzfBMsgtrBmD859ahqQS1EWhbj pinned to /dns4/ipfs.fluence.dev/tcp/5001
+ipfs: did pin QmWjbt6biEhsNEeDgspgHtwjwo7yS2asm7R7JjxnwMsupm to /dns4/ipfs.fluence.dev/tcp/5001
+ipfs: file QmWjbt6biEhsNEeDgspgHtwjwo7yS2asm7R7JjxnwMsupm pinned to /dns4/ipfs.fluence.dev/tcp/5001
+ipfs: did pin QmbHt422MnruToQvjMiHYLmQUwy4tejqm3JJMytCtsktUd to /dns4/ipfs.fluence.dev/tcp/5001
+ipfs: file QmbHt422MnruToQvjMiHYLmQUwy4tejqm3JJMytCtsktUd pinned to /dns4/ipfs.fluence.dev/tcp/5001
+ipfs: did pin QmP5nxY7nFdYw3PxUUbHe2yfHui9t2sGPpSeiSs1QNwFwK to /dns4/ipfs.fluence.dev/tcp/5001
+ipfs: file QmP5nxY7nFdYw3PxUUbHe2yfHui9t2sGPpSeiSs1QNwFwK pinned to /dns4/ipfs.fluence.dev/tcp/5001
+ipfs: did pin Qmc1XgSk5gB3pYd3oEY6t3tAZPAYUsptuCZgEFqsTcoBq2 to /dns4/ipfs.fluence.dev/tcp/5001
+ipfs: file Qmc1XgSk5gB3pYd3oEY6t3tAZPAYUsptuCZgEFqsTcoBq2 pinned to /dns4/ipfs.fluence.dev/tcp/5001
+log: [
+  'deployed workers',
+  [
+    {
+      definition: 'Qmc1XgSk5gB3pYd3oEY6t3tAZPAYUsptuCZgEFqsTcoBq2',
+      installation_spells: [],
+      name: 'defaultWorker'
+    }
+  ]
+]
+? There is a previously deployed deal for worker defaultWorker on network testnet. Do you want to update this existing deal? Yes
+
+Updating deal for worker defaultWorker
+
+To approve transactions with your to your wallet using metamask, open the following url:
+
+https://cli-connector.fluence.dev/?wc=464a007e-1102-46cb-9ffc-6243ef84b4db%401&bridge=https%3A%2F%2Fp.bridge.walletconnect.org&key=b6da0eae424d7c68fe32c6fadc8e372bee81e8162613e58ae6be0385c766b7bf
+
+or go to https://cli-connector.fluence.dev and enter the following connection string there:
+
+wc:464a007e-1102-46cb-9ffc-6243ef84b4db@1?bridge=https%3A%2F%2Fp.bridge.walletconnect.org&key=b6da0eae424d7c68fe32c6fadc8e372bee81e8162613e58ae6be0385c766b7bf
+
+Deploy completed successfully
+```
+
+Screen Shot 2023-02-25 at 4.58.20 PM.png
+
+#### fluence workers deploy
+
+
+#### fluence legacy deploy
+
+### Configuring And Running the Gateway
+
+As mentioned earlier, you can download the nom package and run it. Alteratively, change into the *gateway* dir and build from source:
+
+```bash
+npm i
+```
+
+to install the required node modules. Now you are ready to start the gateway with:
+
+```bash
+npm run run <path to your configuration file>
+```
+
+where the config file takes the form of:
+
+```json
+{
+  "providers": [
+    <provider_url/<api key>>
+  ],
+  "mode": "subnet",
+  "relay": "/dns4/stage.fluence.dev/tcp/19001/wss/p2p/12D3KooWHCJbJKGDfCgHSoCuK9q4STyRnVveqLoXAPBbXHTZx9Cv",
+  "serviceId": "25bf2293-7503-4a01-af00-d1b7d089ca37",
+  "port": 3000,
+  "counterServiceId": null,
+  "counterPeerId": null,
+  "quorumServiceId": null,
+  "quorumPeerId": null,
+  "quorumNumber": 2
+}
+```
+
+and
+
+* `counterServiceId` and `counterPeerId` is credentials to counter service for `round-robin` mode. Will be used local counter if undefined
+* `quorumServiceId` and `quorumPeerId` is credentials to counter service for `round-robin` mode. Will be used local counter if undefined
+* `quorumNumber`, `2`, is the minimum number of "equal" responses required to accept and pass on a response from multi-request query
+* mode:
+  * `random` - choose providers randomly
+  * `round-robin` - choose providers in circle order
+  * `quorum` - call all providers specified and choose the result that is the same for `>= quorumNumber` providers or return an error.
+  * `subnet` - use a pre-deployed subnet, choose worker and provider randomly
+
+
+
+
+
+
+
+
+
+### Customizing And Extending fRPC
+
+We identified two major issues with centralized RPC: single point of failure and lack of trustlessness
+
+
+Currenlty ...
+
+
+
+
+
+#### Eliminating 
+
+
+
+===============================================================================================================
 #### Distributed RPC API Adapters With Marine
 
 In the "./wasm-modules/" directory, you find two modules: *curl_adapter* and *eth-rpc*, each comprised of the Rust code and a configuration file called *module.yaml*, which are referenced in the top directory's *service.yaml* file. Now, what are those modules good for?
 
 #### Curl Adapter
 
-Wasm modules are socket-less, single-threaded entities confined to a sandbox keeping the host safe. However, Marine modules come with a configuration file that not only allows a module to "punch through" the sandbox and have access to a host's resources but also for a host to permission such access. No permission from the host, no access. This information if contained in the *module.yaml*:
+Wasm modules are socket-less, single-threaded entities confined to a sandbox keeping the host safe. However, Marine modules come with a configuration file that not only allows a module to "punch through" the sandbox and have access to a host's resources but also for a host to permission such access. No permission from the host, no access. This information is contained in the *module.yaml*:
 
 ```yaml
 version: 0
