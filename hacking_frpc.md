@@ -20,7 +20,7 @@ In the *gateway* directory, install the dependencies:
 npm i
 ```
 
-Before you proceed, you need at least two or three RPC endpoint urls, e.g., Infura, Alchemy and QuickNode, for the same EVM-based chain you are using in your dAPP. Update the `configs/quickstart_config.json` and provider your endpoints urls:
+Before you proceed, you  should have three RPC endpoint urls, e.g., Infura, Alchemy and QuickNode, for the same EVM-based chain you are using in your dAPP. Update the `configs/quickstart_config.json` and provide your endpoints urls:
 
 ```json
 {
@@ -44,7 +44,7 @@ Before you proceed, you need at least two or three RPC endpoint urls, e.g., Infu
 And now start the gateway:
 
 ```bash
-nnpm run run configs/quickstart_config.json
+npm run run configs/quickstart_config.json
 
 > @fluencelabs/aqua-eth-gateway@0.0.11 run
 > node src/index.js configs/quickstart_config.json
@@ -54,7 +54,7 @@ Server was started on port 3000
 
 ```
 
-All you have to do is change your dApps HTTP transport url to `http://127.0.0.1:3000`. In the absence of a dAPP, we can interact the gateway from the command line in a different shell:
+All you have to do is change your dApps HTTP transport url to `http://127.0.0.1:3000`. In the absence of a dAPP, we can interact the gateway from the command line:
 
 ```bash
 curl http://127.0.0.1:3000  \\
@@ -73,9 +73,9 @@ curl http://127.0.0.1:3000 \\
     -d '{"jsonrpc":"2.0","method":"eth_getBalance","params": ["0xe3F757E4f8D244cF1EF12522B2237E73765715E4", "latest"],"id":1}'
 ```
 
-Go ahead and replace the `round-robin` mode with a `random`, for example, stop and restart the gateway to use a different endpoint management algorithm provided by fRPC substrate. More on that later but the curious may want to have a quick look at the [Aqua script](./aqua/../gateway/aqua/rpc.aqua).
+Go ahead and replace the `round-robin` mode with a `random` mode and stop and restart the gateway to use the different endpoint management algorithm provided by fRPC substrate. More on that later but the curious may want to have a quick look at the [Aqua script](./aqua/../gateway/aqua/rpc.aqua).
 
-Congrat's, you just took a major step toward keeping you dAPP decentralized and performant!
+Congrat's, you just took a major step toward keeping you dAPP decentralized, available and performant!
 
 ## Developing With Fluence
 
@@ -179,13 +179,11 @@ Figure 2: Stylized Project Creation And Deployment Workflow With Fluence CLI
     DeployedService --> RunService: fluence run
 ```
 
-See [FLuence CLI](https://github.com/fluencelabs/fluence-cli) for more details.
-
-For implementing your business logic with Rust and compile to wasm32-wasi, aka Wasm, module(s), see the [Marine book](https://fluence.dev/docs/marine-book/introduction). To learn more about distributed choreography and composition of services, see the [Aqua book](https://fluence.dev/docs/aqua-book/introduction).
+See [FLuence CLI](https://github.com/fluencelabs/fluence-cli) for more details. For implementing your business logic with Rust and compiling it to wasm32-wasi, aka Wasm, module(s), see the [Marine book](https://fluence.dev/docs/marine-book/introduction). To learn more about distributed choreography and composition of services, see the [Aqua book](https://fluence.dev/docs/aqua-book/introduction).
 
 ## Hacking On fRPC Substrate
 
-Fluence's *fRPC Substrate* is a starter kit comprising all the components you need to quickly enable your dAPP with decentralized RPC using existing centralized RPC providers, e.g., Infura, Alchemy, QuickNode, etc., without touching your existing frontend Web3 code. fRPC substrate consists of the following code components, see Figure 2:
+Fluence's *fRPC Substrate* is a starter kit that includes all the components you need to quickly enable your dAPP with decentralized RPC using existing centralized RPC providers, e.g., Infura, Alchemy, QuickNode, etc., without touching your existing frontend Web3 code. fRPC substrate consists of the following code components, see Figure 3:
 
 * RPC API adapter code written in Rust and compiled to wasm32-wasi modules that are deployable to any peer in the Fluence p2p network
 * Aqua code for distributed algorithms, such as Round Robin, Failover and Quorum, using the distributed Wasm connectors for request-response handling over libp2p
@@ -221,19 +219,13 @@ In order to use the fRPC substrate out-of-the-box or after customization, you ne
 * run the gateway
 * use the gateway url in your web3 sdk's HTTP transport config
 
-### Services Already Implemented
+### Service Already Implemented
 
-fRPC Substrate comes with one service comprised of two modules, which you cna find in the [wasm-modules]("./wasm-modules/") directory. The service is called 'eth_rpc' and the included modules are a [curl_adpater]("./../wasm-modules/curl-adapter") and ["eth_rpc]("./../wasm-modules/eth-rpc"). The *curl_apadter* modules is a generic module allowing access a peer's curl binary, if permissioned by the peer, and exposes the *curl_request* function. Any modules requiring curl access may use the curl_adapter modules via [FFI linking]() and make curl calls with the *curl_request* function.
+fRPC Substrate comes with one service comprised of two modules, which you cna find in the [wasm-modules]("./wasm-modules/") directory. The service is called 'eth_rpc' and the included modules are a [curl_adapater]("./../wasm-modules/curl-adapter") and ["eth_rpc]("./../wasm-modules/eth-rpc"). The *curl_apadter* modules is a generic module allowing access a peer's curl binary, if permissioned by the peer, and exposes the *curl_request* function. Any modules requiring curl access may use the curl_adapter modules via [FFI linking](https://doc.rust-lang.org/nomicon/ffi.html) and make curl calls with the *curl_request* function.
 
-The *eth_rpc* module ...
+The *eth_rpc* module manages the json-rpc requests and responses initiated and consumed by Aqua scripts. Once available on peers of the Fluence p2p network, the *eth-rpc* services, aka RPC endpoint adapter, allows us to call one or more RPC endpoints using Aqua for choreography and composition of services.
 
-For all things Wasm, see the [Marine book](https://fluence.dev/docs/marine-book/introduction)
-
-Our *eth-rpc* service, once available on peers of the Fluence p2p network, essentially allows us to call one or more RPC endpoints using Aqua for choreograpy and composition of services. 
-
-
-
-Use `fluence build` in the root dir to build the Fluence project.
+Before you cna deploy your service, use `fluence build` in the root dir to compile each module's Rust code to wasm32-wasi output:
 
 ```bash
 fluence build
@@ -241,6 +233,8 @@ fluence build
 # Making sure all services are built...
     Finished release [optimized] target(s) in 0.61s
 ```
+
+See [target dir]("./target/wasm32-wasi/release") for *curl_adapter.wasm* and *eth_erpc.wasm*, respectively. With the wasm modules available, you can locally interact with them using [Marine REPL](https://crates.io/crates/mrepl):
 
 `fluence service repl`
 
@@ -299,26 +293,43 @@ eth_rpc:
   func call(uri: string, req: string, block: u64) -> BytesValue
   func eth_call(uri: string, method: string, json_args: []string) -> JsonString
 
-2>
+2>call eth_rpc eth_call ["https://<your network>.infura.io/v3/<your api key>", "eth_blockNumber", []]
+result: {
+  "error": "",
+  "success": true,
+  "value": "\"0x82a08d\""
+}
+ elapsed time: 588.092888ms
+
+3>
 ```
 
-Regardless of your customization requirements, you probably will have no reason to modify either one of those modules. However, you may want to create a new module that writes RPC endpoint specific information, such as response times or availability, to some Web3 storage, e.g., IPFS or Ceramic, for further analysis and, say, weight development for endpoint selection. In that case, you scaffold a new module like so:
+The *i* command lists all the exported interfaces from the wasm modules in Aqua instead of Rust notation. In *expoerted* functions you seee the module namespace, e.g., *curl_adapter* , and exported functions, e.g., *curl_request*. To execute a function, use `call <namespace> <function name> [<parameters>]`.
+
+### Adding Modules To Service
+
+Regardless of your customization requirements, you probably will have no reason to modify the *curl_adapter* and *eth_rpc* modules. However, you may want to add new modules, or even services, to handle your additional business logic requirements. For example, you may want to capture RPC endpoint performance data, such as response times and availability, to some Web3 storage, e.g., IPFS or Ceramic, for further analysis to, say, derive a weighting scheme for endpoint selection. 
+
+Fluence CLI allows you to quickly crate a new, or add an existing, module to your project. For example,
 
 ```bash
-fluence module new
+ fluence module new
+? Enter module path wasm-modules/demo-module
+Successfully generated template for new module at wasm-modules/demo-module
 ```
 
-and then you can edit the module code ....
-
-When you're done, you add the new module to yor service config, service.yaml:
+Which created a Rust project in the *wasm-module/demo-module* directory ready for you to customize. When you're done, you add the new module to your service config, service.yaml:
 
 ```bash
-
+fluence module add
+? Enter path to a module or url to .tar.gz archive wasm-modules/demo
+? Enter service name from fluence.yaml or path to the service directory wasm-modules
+Added demo to ~/localdev/fRPC-Substrate/wasm-modules/service.yaml
 ```
 
-Alternatively, you cna create a new service ... alows you to have it deployed seprately using a new deal.
+The demo module is now part of the service and  `fluence build`, for example, now compiles the *demo* module as part of the project build. You can crete a new service with the `fluence service new` command. Note that the implication of creating a new service, possibly in a new project directory, that you intend to deploy that service separately from the *eth-rpc* service. If you want to get rid of the demo project for now, use `fluence module remove`. 
 
-
+Of course, you will need to write Aqua code to be able to interact with your new module.
 
 ### Algorithms Already Implemented
 
