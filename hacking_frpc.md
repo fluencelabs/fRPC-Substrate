@@ -12,6 +12,71 @@ Upcoming Fluence hackathons with fRPC bounties:
 
 * [ETHDenver 2023](https://www.ethdenver.com/). See Fluence [events](https://www.notion.so/fluencenetwork/ETHDenver-Fluence-Team-66edb7a1a2624475844bfc11ff8c5756) and [bounty](https://github.com/fluencelabs/ethdenver-2023) repo for more info.
 
+## Quickstart
+
+In the *gateway* directory, install the dependencies:
+
+```bash
+npm i
+```
+
+Before you proceed, you need at least two or three RPC endpoint urls, e.g., Infura, Alchemy and QuickNode, for the same EVM-based chain you are using in your dAPP. Update the `configs/quickstart_config.json` and provider your endpoints urls:
+
+```json
+{
+  "providers": [
+    "<replace with your url_1/api-key>",
+    "<replace with your url_2/api-key>",
+    "<replace with your url_3/api-key>"
+  ],
+  "mode": "round-robin",
+  "relay": "/dns4/stage.fluence.dev/tcp/19002/wss/p2p/12D3KooWMigkP4jkVyufq5JnDJL6nXvyjeaDNpRfEZqQhsG3sYCU",
+  "serviceId": "e9e32b0b-3b19-4bdd-b1da-f5ff9cc0357f",
+  "port": 3000,
+  "counterServiceId": null,
+  "counterPeerId": null,
+  "quorumServiceId": null,
+  "quorumPeerId": null,
+  "quorumNumber": null
+}
+```
+
+And now start the gateway:
+
+```bash
+nnpm run run configs/quickstart_config.json
+
+> @fluencelabs/aqua-eth-gateway@0.0.11 run
+> node src/index.js configs/quickstart_config.json
+
+Running server...
+Server was started on port 3000
+
+```
+
+All you have to do is change your dApps HTTP transport url to `http://127.0.0.1:3000`. In the absence of a dAPP, we can interact the gateway from the command line in a different shell:
+
+```bash
+curl http://127.0.0.1:3000  \\
+    -X POST \\
+    -H "Content-Type: application/json" \\
+    -d '{"jsonrpc":"2.0","method":"eth_blockNumber","params": [],"id":1}'
+
+```
+
+Or any other eligible *eht rpc* method:
+
+```bash
+curl http://127.0.0.1:3000 \\
+    -X POST \\
+    -H "Content-Type: application/json" \\
+    -d '{"jsonrpc":"2.0","method":"eth_getBalance","params": ["0xe3F757E4f8D244cF1EF12522B2237E73765715E4", "latest"],"id":1}'
+```
+
+Go ahead and replace the `round-robin` mode with a `random`, for example, stop and restart the gateway to use a different endpoint management algorithm provided by fRPC substrate. More on that later but the curious may want to have a quick look at the [Aqua script](./aqua/../gateway/aqua/rpc.aqua).
+
+Congrat's, you just took a major step toward keeping you dAPP decentralized and performant!
+
 ## Developing With Fluence
 
 Fluence's decentralized serverless protocol and solution stack allows developers to quickly create decentralized applications and protocols services distributed to peers of the open and permissionless Fluence peer-to-peer compute network. Specifically, developers express their business logic in Rust code, compile it to wasm32-wasi and deploy those modules + linking instructions as a uniquely addressable *service* to p2p network storage, i.e., IPFS, from where peers willing to participate in the Deal, i.e., willing to host the service for the remuneration published in the Deal contract, can pull the service assets required for hosting. In order for developers to get their services hosted and executed, they need to escrow stablecoin, currently limited to (testnet) USDC, to the Deal contract.
@@ -56,15 +121,15 @@ sequenceDiagram
 
 ```
 
-While this sounds, and is, elaborate, *Fluence CLI*, see below, takes care of most of the process management for you.
+While this sounds, and is, elaborate, *Fluence CLI*, see below, takes care of most of the scaffolding and workflow management for you.
 
-At this point, the marketplace for deals isn't quite finished. Instead developers being able to to provide custom Deal parameters, such as willignness to pay for a service hosted, Fluence hard-coded a set of parameters, i.e. price of execution per epoch and epoch duration, which are used by Fluence CLI to create the corresponding Deal contract and transaction for you to sign. Moreover, economics are limited to the testnet using testnet tokens and throughout the EthDenver hackathon, resource owners may not claim their periodic share of revenue from the Deal's escrow.
+At this point, the marketplace for deals isn't quite finished. Instead developers being able to to provide custom Deal parameters, such as willingness to pay for a service hosted, Fluence hard-coded a set of parameters, i.e. price of execution per epoch and epoch duration, which are used by Fluence CLI to create the corresponding Deal contract and transaction for you to sign. Moreover, economics are limited to the testnet using testnet tokens and throughout the EthDenver hackathon, resource owners may not claim their periodic share of revenue from the Deal's escrow.
 
 If you are not familiar with Fluence terminology or just need a quick reminder, see the [Glossary](https://fluence.dev/docs/build/glossary) or [documentation](TBD).
 
 ## Setting Up For Developing With Fluence
 
-To get going, you need install and setup a few dependencies outlined below.
+To get going, you need to install and setup a few dependencies.
 
 ### Off-chain Dependencies
 
@@ -156,7 +221,7 @@ In order to use the fRPC substrate out-of-the-box or after customization, you ne
 * run the gateway
 * use the gateway url in your web3 sdk's HTTP transport config
 
-### On Services And Algorithms
+### Services Already Implemented
 
 fRPC Substrate comes with one service comprised of two modules, which you cna find in the [wasm-modules]("./wasm-modules/") directory. The service is called 'eth_rpc' and the included modules are a [curl_adpater]("./../wasm-modules/curl-adapter") and ["eth_rpc]("./../wasm-modules/eth-rpc"). The *curl_apadter* modules is a generic module allowing access a peer's curl binary, if permissioned by the peer, and exposes the *curl_request* function. Any modules requiring curl access may use the curl_adapter modules via [FFI linking]() and make curl calls with the *curl_request* function.
 
@@ -165,6 +230,93 @@ The *eth_rpc* module ...
 For all things Wasm, see the [Marine book](https://fluence.dev/docs/marine-book/introduction)
 
 Our *eth-rpc* service, once available on peers of the Fluence p2p network, essentially allows us to call one or more RPC endpoints using Aqua for choreograpy and composition of services. 
+
+
+
+Use `fluence build` in the root dir to build the Fluence project.
+
+```bash
+fluence build
+# Making sure all services are downloaded...
+# Making sure all services are built...
+    Finished release [optimized] target(s) in 0.61s
+```
+
+`fluence service repl`
+
+```bash
+fluence service repl
+? Enter service name from fluence.yaml, path to a service or url to .tar.gz archive wasm-modules
+# Making sure service and modules are downloaded and built...
+    Finished release [optimized] target(s) in 0.18s
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Execute help inside repl to see available commands.
+Current service <module_name> is: eth_rpc
+Call eth_rpc service functions in repl like this:
+
+call eth_rpc <function_name> [<arg1>, <arg2>]
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Welcome to the Marine REPL (version 0.19.1)
+Minimal supported versions
+  sdk: 0.6.0
+  interface-types: 0.20.0
+
+app service was created with service id = f0fc66d9-1fc6-494f-bcc1-104970875730
+elapsed time 254.67135ms
+
+1> i
+Loaded modules interface:
+exported data types (combined from all modules):
+data MountedBinaryResult:
+  ret_code: i32
+  error: string
+  stdout: []u8
+  stderr: []u8
+data U64Value:
+  value: u64
+  success: bool
+  error: string
+data BytesValue:
+  value: []u8
+  success: bool
+  error: string
+data JsonString:
+  value: string
+  success: bool
+  error: string
+
+exported functions:
+curl_adapter:
+  func curl_request(cmd: []string) -> MountedBinaryResult
+eth_rpc:
+  func block_number(uri: string) -> U64Value
+  func call_get_accounts(uri: string) -> [][]u8
+  func accounts(uri: string) -> []JsonString
+  func call(uri: string, req: string, block: u64) -> BytesValue
+  func eth_call(uri: string, method: string, json_args: []string) -> JsonString
+
+2>
+```
+
+Regardless of your customization requirements, you probably will have no reason to modify either one of those modules. However, you may want to create a new module that writes RPC endpoint specific information, such as response times or availability, to some Web3 storage, e.g., IPFS or Ceramic, for further analysis and, say, weight development for endpoint selection. In that case, you scaffold a new module like so:
+
+```bash
+fluence module new
+```
+
+and then you can edit the module code ....
+
+When you're done, you add the new module to yor service config, service.yaml:
+
+```bash
+
+```
+
+Alternatively, you cna create a new service ... alows you to have it deployed seprately using a new deal.
 
 
 
