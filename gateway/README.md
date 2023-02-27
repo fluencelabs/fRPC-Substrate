@@ -37,11 +37,10 @@ where config is:
 
 `counterServiceId` and `counterPeerId` is credentials to counter service for `round-robin` mode. Will be used local counter if undefined.
 `quorumServiceId` and `quorumPeerId` is credentials to counter service for `round-robin` mode. Will be used local counter if undefined.
-`quorumNumber` is `2` by default.
+`quorumNumber` is `3` by default.
 
 ## Mode
 
-`random` - choose providers randomly
-`round-robin` - choose providers in circle order
-`quorum` - call all providers and choose the result that is the same from `>= quorumNumber` providers. Or return an error.
-`subnet` - use predeployed subnet, choose worker and provider randomly
+`random` - choose workers and providers randomly
+`round-robin` - choose workers and providers in circle order
+`quorum` - call all workers and choose the result that is the same from `>= quorumNumber` providers. Or return an error.
