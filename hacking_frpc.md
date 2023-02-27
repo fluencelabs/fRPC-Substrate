@@ -6,7 +6,7 @@
 
 Running blockchain nodes to support your dApps' read and write requirements to/from a node tends to be rather resource intensive. Not surprisingly, Web3 developers have been flocking toward integrating their dApps with hosted blockchain JSON-RPC gateways. Alas, centralized "RPC as SaaS" introduces bottlenecks challenging the availability, reliability and Web3 ethos of dApps while quite often raising the exit barriers by providing custom API overlays to the EVM JSON-RPC API convention.
 
-To accelerate dApp developers ability to utilize decentralized RPC in their dApps, Fluence is providing a decentralized RPC (fRPC) substrate, i.e., a starter kit that includes a gateway to bridge HTTP and Aqua, a Wasm service to connect to RPC endpoints and Aqua scripts implementing basic availability, failover and verification algorithms. See Figure 1. Hence, fRPC substrate allows existing dApps to be upgraded to decentralized RPC while not requiring any changes on their front end other than changing the HTTP transport url and making it easy to implement more complex control algorithms.
+To accelerate dApp developers ability to utilize decentralized RPC in their dApps, Fluence is providing a decentralized RPC (fRPC) substrate, i.e., a starter kit that includes a gateway to bridge HTTP and Aqua, a Wasm service to connect to RPC endpoints and Aqua scripts implementing basic availability, failover and verification algorithms. See Figure 1. Hence, fRPC substrate allows existing dApps to be upgraded to decentralized RPC while not requiring any changes to their frontend other than changing the HTTP transport url and making it easy to implement more complex control algorithms.
 
 Figure 1: Stylized fRPC Workflow With dAPP
 
@@ -54,7 +54,7 @@ In the *gateway* directory, install the dependencies:
 npm i
 ```
 
-Before you proceed, you  should have three RPC endpoint urls, e.g., Infura, Alchemy and QuickNode, for the same EVM-based chain you are using in your dAPP. Update the `configs/quickstart_config.json` and provide your endpoints urls and ignore the rest for now:
+Before you proceed, you  should have, say, three RPC endpoint urls, e.g., Infura, Alchemy and QuickNode, for the same EVM-based chain you are using in your dAPP. Update the `configs/quickstart_config.json` and provide your endpoints urls and ignore the rest of the parameters for now:
 
 ```json
 {
@@ -88,7 +88,7 @@ Server was started on port 3000
 
 ```
 
-All you have to do is change your dApps HTTP transport url to `http://127.0.0.1:3000` and keep using your dApp as is. In the absence of a dAPP, we can interact the gateway from the command line:
+All you have to do is change your dApps HTTP transport url to `http://127.0.0.1:3000` and keep using your dApp as is. In the absence of a dAPP, we can interact with the gateway from the command line:
 
 ```bash
 curl http://127.0.0.1:3000  \\
@@ -115,7 +115,7 @@ Congrat's, you just took a major step toward keeping you dAPP decentralized, ava
 
 Fluence's decentralized serverless protocol and solution stack allows developers to quickly create decentralized applications and protocols services distributed to peers of the open and permissionless Fluence peer-to-peer compute network. Specifically, developers express their business logic in Rust code, compile it to wasm32-wasi and deploy those modules + linking instructions as a uniquely addressable *service* to p2p network storage, i.e., IPFS, from where peers willing to participate in the Deal, i.e., willing to host the service for the remuneration published in the Deal contract, can pull the service assets required for hosting. In order for developers to get their services hosted and executed, they need to escrow stablecoin, currently limited to (testnet) USDC, to the Deal contract.
 
-The Fluence protocol uses the concept of a [Deal](https://fluence.dev/docs/build/glossary#deal) to implement the economics and to bridge on- and off-chain state. A Deal describes a service(s), the service's "owner, e.g., developer, availability requirements, e.g., make the service available on, say, five peers, and other metadata and commits that data plus an escrow payment from the "owner" in an on-chain contract. Resource owners, i.e., actors who own/operate one or more peers, interested in participating in a deal also join the deal with a stake. See Figure 2.
+The Fluence protocol uses the concept of a [Deal](https://fluence.dev/docs/build/glossary#deal) to implement the economics and to bridge on- and off-chain state. A Deal describes a service(s), the service's "owner", e.g., developer, availability requirements, e.g., make the service available on, say, five peers, and other metadata and commits that data plus an escrow payment from the "owner" in an on-chain contract. Resource owners, i.e., actors who own/operate one or more peers, interested in participating in a deal also join the deal with a stake. See Figure 2.
 
 ```mermaid
 
@@ -157,7 +157,7 @@ sequenceDiagram
 
 While this sounds, and is, elaborate, *Fluence CLI*, see below, takes care of most of the scaffolding and workflow management for you.
 
-At this point, the marketplace for deals isn't quite finished. The supply side has not been enabled and on the demand side, parameters are fixed for the testnet. That is, developers are not able to provide custom Deal parameters, such as willingness to pay for service execution. Instead, these parameters, i.e. price of execution per epoch and epoch duration, are hard-coded and used by Fluence CLI to create the corresponding Deal contract and transaction for you to sign. Moreover, economics are limited to the testnet using testnet tokens and throughout the EthDenver hackathon, resource owners may not claim their periodic share of revenue from the Deal's escrow.
+At this point, the marketplace for Fluence's decentralized serverless isn't quite finished. The supply side has not been enabled and on the demand side, parameters are fixed for the testnet. That is, developers are not able to provide custom Deal parameters, such as willingness to pay for service execution. Instead, these parameters, i.e. price of execution per epoch and epoch duration, are hard-coded and used by Fluence CLI to create the corresponding Deal contract and transaction for you to sign. Moreover, economics are limited to the testnet using testnet tokens and throughout the EthDenver hackathon, resource owners may not claim their periodic share of revenue from the Deal's escrow.
 
 If you are not familiar with Fluence terminology or just need a quick reminder, see the [Glossary](https://fluence.dev/docs/build/glossary) or [documentation](TBD).
 
@@ -181,15 +181,15 @@ Note that Fluence CLI installs missing dependencies as need ("lazy install"). If
   * [MATIC testnet faucet](https://faucet.polygon.technology/) [or](https://mumbaifaucet.com/)
   * [Fluence USDC testnet faucet](https://faucet.fluence.dev/)
 
-### API Keys
+### RPC Endpoints
 
-Since fRPC works with existing RPC providers, you want at least three provider urls/API keys to *the* chain of your choice. Yes, multi-chain support is currently not supported by fRPC but for you to implement. For Ethereum's Goerli testnet, for example:
+Since fRPC works with existing RPC providers, you want at least three provider urls/API keys to *the* chain of your choice as multi-chain support is currently not supported (hint, hint to all you hackathoners). For Ethereum's Goerli testnet, for example:
 
 * Infura: https://goerli.infura.io/v3/<your key>
 * Alchemy: https://eth-goerli.g.alchemy.com/v2/<your key>
 * QuickNode: https://frequent-sleek-river.ethereum-goerli.discover.quiknode.pro/<your key>/
 
-All three of the listed providers have a free account option and support the API key in the url, rather than the header, which is the current gateway implementation choice; a choice you should feel free to override and customize to your needs.
+Each of the listed providers has a free account option and supports the API key in the url style, rather than the header, which is the current gateway implementation choice; a choice you should feel free to override and customize to your needs.
 
 ### Tools And Tooling
 
@@ -219,9 +219,9 @@ See [FLuence CLI](https://github.com/fluencelabs/fluence-cli) for more details. 
 
 Fluence's *fRPC Substrate* is a starter kit that includes all the components you need to quickly enable your dAPP with decentralized RPC using existing centralized RPC providers, e.g., Infura, Alchemy, QuickNode, etc., without touching your existing frontend Web3 code. fRPC substrate consists of the following code components, see Figure 4:
 
-* RPC API adapter code written in Rust and compiled to wasm32-wasi modules that are deployable to any peer in the Fluence p2p network
-* Aqua code for distributed algorithms, such as Round Robin, Failover and Quorum, using the distributed Wasm connectors for request-response handling over libp2p
-* A gateway app server that bridges libp2p transport to the HTTP transport expected by your dAPPs' Web3 SDK, such as web3js, ethers, etc. Note that the expectation at this point is for you to *self-host* the gateway locally or in the cloud.
+* RPC API "adapter" code written in Rust and compiled to wasm32-wasi modules that are deployable to any peer in the Fluence p2p network
+* Aqua code for distributed algorithms, such as Random and Round Robin selection, using the distributed Wasm connectors for request-response handling over libp2p
+* A gateway app server that bridges libp2p transport to the HTTP transport expected by your dAPPs' Web3 SDK, such as web3js, ethers, etc. Note that the expectation at this point is for you to *self-host* the gateway at a location of your choosing.
 
 Figure 4: Stylized fRPC Use With dAPPs
 
