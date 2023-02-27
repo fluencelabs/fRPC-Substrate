@@ -130,7 +130,6 @@ async function methodHandler(reqRaw, method) {
 
         console.log(result)
     } else if (config.mode === "subnet") {
-        console.log("subnet!")
         result = await withSubnets(config.providers, method, req, {ttl: 60000})
     }
 
