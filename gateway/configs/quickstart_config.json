@@ -6,7 +6,6 @@
   ],
   "mode": "round-robin",
   "relay": "/dns4/stage.fluence.dev/tcp/19002/wss/p2p/12D3KooWMigkP4jkVyufq5JnDJL6nXvyjeaDNpRfEZqQhsG3sYCU",
-  "serviceId": "e9e32b0b-3b19-4bdd-b1da-f5ff9cc0357f",
   "port": 3000,
   "counterServiceId": null,
   "counterPeerId": null,
