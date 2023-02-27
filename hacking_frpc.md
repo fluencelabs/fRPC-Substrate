@@ -208,7 +208,7 @@ To get going, you need to install and setup a few dependencies.
   * [MATIC testnet faucet](https://faucet.polygon.technology/) [or](https://mumbaifaucet.com/)
   * [Fluence USDC testnet faucet](https://faucet.fluence.dev/)
 
-You will need  Mumbai (testnet) MATIC and Fluence (testnet) USDC. This is as good a time as any to head over to those faucets and get your allocations. As an experienced Web3 dev, you know it's safest to set up a new account, say, fRPC-dev, for the Mumbai testnet and testnet tokens.
+You will need  Mumbai (testnet) MATIC and Fluence (testnet) USDC. This is as good a time as any to head over to those faucets and get your allocations. As an experienced Web3 dev, you know it's god hygiene to set up a new account, say, fRPC-dev, for the Mumbai testnet and testnet tokens.
 
 ### RPC Endpoints
 
@@ -241,6 +241,68 @@ Figure 3: Stylized Project Creation And Deployment Workflow With Fluence CLI
     Service --> DeployedService: fluence deal deploy
     DeployedService --> RunService: fluence run
 ```
+
+Fluence CLI uses multiple *yaml* config files. Below find references to the most important one populated with parameters from our fRPC-Substrate project. You can find the schemas in the [schemas](./.fluence/schemas) directory.
+
+#### fluence.yaml -- the root project config file that manages version, dependencies, and more:
+
+```yaml
+version: 2
+aquaInputPath: src/aqua/main.aqua             # path where to look for default aqua files, you can change that
+dependencies:
+  npm:                                        # js dependencies
+    "@fluencelabs/aqua-lib": 0.6.0
+    "@fluencelabs/aqua": 0.10.2
+    "@fluencelabs/spell": 0.1.0
+    "@fluencelabs/registry": 0.8.1
+  cargo:                                      # rust dependencies
+    marine: 0.12.6
+    mrepl: 0.19.1
+workers:                                      # worker settings for deploy
+  defaultWorker:
+    services: [ eth_rpc ]
+deals:                                        # deal settings for deploy
+  defaultWorker:
+    minWorkers: 1                             # default min worker settings -- you want your service deployed ot at least 1 worker
+    targetWorkers: 3                          # default max worker settings -- you want your service deployed ot at least 3 workers  
+relays: stage                                 # Name of Fluence network used
+services: 
+  eth_rpc:                                    # service name
+    get: wasm-modules/                        # and where to get the service config
+```
+
+#### service.yaml -- the service config file that manages module dependencies
+
+You find this in the service directory root, i.e., *wasm-modules* in our case.
+
+```yaml
+version: 0
+name: eth_rpc                 # name of the service which is referenced in fluence.yaml
+modules:                      # modules included
+  facade:                     # service API module, see https://fluence.dev/docs/marine-book/marine-runtime/module-types/ for more info
+    get: eth-rpc
+  curl-adapter:               # other modules
+    get: curl-adapter
+```
+
+#### module.yaml -- the module config file
+
+Each module includes a module.yaml file in its root, e.g., [eth_rpc](./wasm-modules/eth-rpc/module.yaml)  and [curl-adapter](./wasm-modules/curl-adapter/module.yaml).
+
+```yaml
+# curl-adapter/module.yaml
+version: 0
+type: rust                    # language used to code the module
+name: curl_adapter                      
+mountedBinaries:              # effector module specific: what mechanism is used to access host resources
+  curl: /usr/bin/curl         # host path to binary mapped to the alias used in the module's FFI link section
+```
+
+The minimum key for a module file are: version, type and name. Effector modules, however, may need additional information such as [MountedBinaries](https://fluence.dev/docs/marine-book/marine-runtime/mounted-binaries). Such information needs to be manually added.
+
+todo: deals, services, deployed, project-secrets.
+
+
 
 See [FLuence CLI](https://github.com/fluencelabs/fluence-cli) for more details. For implementing your business logic with Rust and compiling it to wasm32-wasi, aka Wasm, module(s), see the [Marine book](https://fluence.dev/docs/marine-book/introduction). To learn more about distributed choreography and composition of services, see the [Aqua book](https://fluence.dev/docs/aqua-book/introduction).
 
