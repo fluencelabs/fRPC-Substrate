@@ -13,7 +13,7 @@ import {
     registerCounter,
     registerLogger,
     registerQuorumChecker,
-    roundRobinEth, withSubnets
+    roundRobinEth
 } from "../aqua-compiled/rpc.js";
 import {readArguments} from "./arguments.js";
 import {readConfig} from "./config.js";
@@ -56,6 +56,9 @@ registerLogger({
     logWorker: s => {
         console.log("Worker used: " + JSON.stringify(s.metadata.peer_id));
     },
+    logNum: s => {
+        console.log("Number: " + s);
+    },
 })
 
 let counter = 0;
@@ -68,7 +71,7 @@ registerCounter("counter", {
 })
 
 function findSameResults(results, minNum) {
-    const resultCounts = results.filter((obj) => obj.success).map((obj) => obj.value).reduce(function(i, v, idx) {
+    const resultCounts = results.filter((obj) => obj.success).map((obj) => obj.value).reduce(function(i, v) {
         if (i[v] === undefined) {
             i[v] = 1
         } else {
@@ -98,6 +101,7 @@ function findSameResults(results, minNum) {
 registerQuorumChecker("quorum",
     {
         check: (ethResults, minQuorum) => {
+            console.log("Check quorum for:")
             console.log(ethResults)
             return findSameResults(ethResults, minQuorum)
         }
@@ -115,22 +119,19 @@ async function methodHandler(reqRaw, method) {
     console.log(`Receiving request '${method}'`);
     let result;
     if (!config.mode || config.mode === "random") {
-        result = await randomLoadBalancingEth(config.providers, method, req, config.serviceId);
+        result = await randomLoadBalancingEth(config.providers, method, req);
     } else if (config.mode === "round-robin") {
         console.log("peerId: " + peerId)
-        result = await roundRobinEth(config.providers, method, req, config.serviceId, counterServiceId, counterPeerId,
+        result = await roundRobinEth(config.providers, method, req, counterServiceId, counterPeerId,
             config.serviceId);
     } else if (config.mode === "quorum") {
-        result = await quorumEth(config.providers, config.quorumNumber, 5000, method, req, config.serviceId, quorumServiceId, quorumPeerId,
-            config.serviceId);
+        result = await quorumEth(config.providers, quorumNumber, 10000, method, req, quorumServiceId, quorumPeerId, {ttl: 20000});
 
         if (result.error) {
             return {error: result.error, results: result.results}
         }
 
         console.log(result)
-    } else if (config.mode === "subnet") {
-        result = await withSubnets(config.providers, method, req, {ttl: 60000})
     }
 
 

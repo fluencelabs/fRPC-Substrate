@@ -17,10 +17,6 @@ export function readConfig(path) {
         errors.push("Specify Fluence peer address ('relay') in config")
     }
 
-    if (!config.serviceId) {
-        errors.push("Specify id to ethereum Aqua service ('serviceId') in config")
-    }
-
     return {
         config, errors,
         help: configHelp
