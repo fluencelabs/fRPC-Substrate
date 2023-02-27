@@ -13,3 +13,5 @@ npm:
 cargo:
   marine: 0.12.6
   mrepl: 0.19.1
+npm:
+  "@fluencelabs/aqua-lib": 0.6.0
