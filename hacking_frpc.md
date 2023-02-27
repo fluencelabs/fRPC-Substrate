@@ -451,7 +451,7 @@ wc:6db18e37-90cc-4977-bee9-892676c1e218@1?bridge=https%3A%2F%2Fu.bridge.walletco
 Deploy completed successfully
 ```
 
-One little ol' command is doing quite a bit so you don't have to. Let's work through the process:
+One little command is doing quite a bit so you don't have to. Let's work through the process:
 
 * once we launch `fluence deal deploy` we create a (new) Deal with both on-chain and off-chain activities
 * for an up-to-date look, all service assets, i.e., modules, are (re-) compiled (1)
@@ -462,10 +462,7 @@ One little ol' command is doing quite a bit so you don't have to. Let's work thr
 ![Sign TX](./images/sign_tx_metamask.png)
 * once you signed the transaction and the contract was successfully updated, we are done (6) !
 
-
-
-
-
+Fluence CLI did a hole bunch of work for us behind the scenes and signing the transaction is a lot quicker than entering (virtual) credit card information. The parametric details necessary to write Aqua scripts are save in [deals.aqua](./.fluence/aqua/deals.aqua) and serves as an important dependency in your Aqua scripts, as we'll see in the next section.
 ### fRPC Algorithms
 
 The fRPC substrate comes with basic implementations of several algorithms useful in mitigating failure as the result of availability and lack of trustlessness. You cna find these 
