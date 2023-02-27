@@ -1,6 +1,2 @@
 [workspace]
-members = [
-  "wasm-modules/curl-adapter",
-  "wasm-modules/eth-rpc",
-  "wasm-modules/performance-keeper"
-]
+members = [ "wasm-modules/eth-rpc", "wasm-modules/curl-adapter" ]

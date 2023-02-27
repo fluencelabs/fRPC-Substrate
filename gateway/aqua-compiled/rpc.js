@@ -1371,7 +1371,7 @@ export function withSubnets(...args) {
                               )
                               (call %init_peer_id% ("getDataSrv" "jsonArgs") [] jsonArgs)
                              )
-                             (call %init_peer_id% ("json" "obj") ["chainNetwork" "testnet" "chainNetworkId" 80001.0 "dealId" "48fb3e4cd0f3770dfd49106fe1fe2e5e783259cf" "dealIdOriginal" "0x48Fb3E4cd0f3770dfd49106fe1FE2E5E783259cF" "definition" "QmTLnhmbriGoAD7M7FHZFE2UQ7EJ2viUbWKuWkUXRC1qRR" "installationSpells" [] "timestamp" "2023-02-24T09:30:26.732Z"] GetWorkersInfoDefaultWorker_obj)
+                             (call %init_peer_id% ("json" "obj") ["chainNetwork" "testnet" "chainNetworkId" 80001.0 "dealId" "88b26ba2524928ca9ff7e5946810d361fc13afe8" "dealIdOriginal" "0x88b26bA2524928Ca9FF7e5946810D361fC13aFE8" "definition" "QmTLnhmbriGoAD7M7FHZFE2UQ7EJ2viUbWKuWkUXRC1qRR" "installationSpells" [] "timestamp" "2023-02-27T10:02:08.573Z"] GetWorkersInfoDefaultWorker_obj)
                             )
                             (call %init_peer_id% ("json" "obj") ["defaultWorker" GetWorkersInfoDefaultWorker_obj] GetWorkersInfo_obj)
                            )
@@ -1626,7 +1626,7 @@ export function withSubnets(...args) {
                                 )
                                 (call -result-flat-0.$.[0].[rem].metadata.peer_id! ("math" "rem") [timeW uris_length] rem-0)
                                )
-                               (call -result-flat-0.$.[0].[rem].metadata.peer_id! ("ethRpc" "eth_call") [uris.$.[rem-0]! method jsonArgs] result)
+                               (call -result-flat-0.$.[0].[rem].metadata.peer_id! ("eth_rpc" "eth_call") [uris.$.[rem-0]! method jsonArgs] result)
                               )
                               (fold -result-flat-0.$.[0].[rem].metadata.relay_id! -via-peer-
                                (seq
