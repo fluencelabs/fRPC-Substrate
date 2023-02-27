@@ -208,6 +208,8 @@ To get going, you need to install and setup a few dependencies.
   * [MATIC testnet faucet](https://faucet.polygon.technology/) [or](https://mumbaifaucet.com/)
   * [Fluence USDC testnet faucet](https://faucet.fluence.dev/)
 
+You will need  Mumbai (testnet) MATIC and Fluence (testnet) USDC. This is as good a time as any to head over to those faucets and get your allocations. As an experienced Web3 dev, you know it's safest to set up a new account, say, fRPC-dev, for the Mumbai testnet and testnet tokens.
+
 ### RPC Endpoints
 
 Since fRPC works with existing centralized or self-hosted RPC providers, you want at least three provider urls with appended API keys to *the* chain of your choice. Multi-chain support is currently not supported by fRPC SUbstrate (hint, hint to all you hackathoners). For Ethereum's Goerli testnet, for example:
@@ -388,10 +390,9 @@ fluence module add
 Added demo to ~/localdev/fRPC-Substrate/wasm-modules/service.yaml
 ```
 
-The demo module is now part of the service and  `fluence build`, for example, now compiles the *demo* module as part of the project build. You can crete a new service with the `fluence service new` command. Note that the implication of creating a new service, possibly in a new project directory, that you intend to deploy that service separately from the *eth-rpc* service. If you want to get rid of the demo project for now, use `fluence module remove`. 
+The demo module is now part of the service and  `fluence build`, for example, now compiles the *demo* module as part of the project build. You can create a new service with the `fluence service new` command. Note that the implication of creating a new service, possibly in a new project directory, is that you intend to deploy that service separately from the *eth-rpc* service. Of course, you will need to write Aqua code to be able to interact with your new module.
 
-Of course, you will need to write Aqua code to be able to interact with your new module.
-
+To get rid of the demo project for now, use `fluence module remove` to unlink the module from the *fluence.yaml* and *service.yaml* files; the old *rm -r <path/demo>* gets rid of the code template.
 
 ### Deploying A Service
 
@@ -399,11 +400,15 @@ With a service, in this case the *eth-rpc* service, ready for deployment, we sim
 
 ```bash
 fluence deal deploy
+
+# 1 compile assets
    Compiling proc-macro2 v1.0.51
    <...>
    Compiling web3 v0.18.0
    Compiling eth_rpc v0.1.0 (/Users/bebo/localdev/fRPC-demo/wasm-modules/eth-rpc)
     Finished release [optimized] target(s) in 28.32s
+
+# 2 upload packaged assets
 ipfs: did pin QmTvNwBeDop1yD9dLNjgrzfBMsgtrBmD859ahqQS1EWhbj to /dns4/ipfs.fluence.dev/tcp/5001
 ipfs: file QmTvNwBeDop1yD9dLNjgrzfBMsgtrBmD859ahqQS1EWhbj pinned to /dns4/ipfs.fluence.dev/tcp/5001
 ipfs: did pin QmWjbt6biEhsNEeDgspgHtwjwo7yS2asm7R7JjxnwMsupm to /dns4/ipfs.fluence.dev/tcp/5001
@@ -415,7 +420,7 @@ ipfs: file QmP5nxY7nFdYw3PxUUbHe2yfHui9t2sGPpSeiSs1QNwFwK pinned to /dns4/ipfs.f
 ipfs: did pin QmVsTtmsUF66raAdmCdbdvJXWZW69QoqJ2iMffvxaXHgAQ to /dns4/ipfs.fluence.dev/tcp/5001
 ipfs: file QmVsTtmsUF66raAdmCdbdvJXWZW69QoqJ2iMffvxaXHgAQ pinned to /dns4/ipfs.fluence.dev/tcp/5001
 
-# 1
+# 3 process upload responses for local updates
 log: [
   'deployed workers',
   [
@@ -427,13 +432,13 @@ log: [
   ]
 ]
 
-# 2
+# 4 if Deal is already in place update or create new Deal?
 ? There is a previously deployed deal for worker defaultWorker on network testnet. Do you want to update this existing deal?
 No
 
 Creating deal for worker defaultWorker
 
-# 3
+# 5 request signing of escrow payment transaction
 To approve transactions with your to your wallet using metamask, open the following url:
 
 https://cli-connector.fluence.dev/?wc=6db18e37-90cc-4977-bee9-892676c1e218%401&bridge=https%3A%2F%2Fu.bridge.walletconnect.org&key=5d31de7d9c7f4cbe26032a1eaa4a7cbe5a55ed88df3073dfe5dd084cd5f80539
@@ -442,9 +447,23 @@ or go to https://cli-connector.fluence.dev and enter the following connection st
 
 wc:6db18e37-90cc-4977-bee9-892676c1e218@1?bridge=https%3A%2F%2Fu.bridge.walletconnect.org&key=5d31de7d9c7f4cbe26032a1eaa4a7cbe5a55ed88df3073dfe5dd084cd5f80539
 
-# 4
+# 6 if escrow payment is processed, deal deployment is finalized
 Deploy completed successfully
 ```
+
+One little ol' command is doing quite a bit so you don't have to. Let's work through the process:
+
+* once we launch `fluence deal deploy` we create a (new) Deal with both on-chain and off-chain activities
+* for an up-to-date look, all service assets, i.e., modules, are (re-) compiled (1)
+* the wasm modules and config are uploaded to IPFS node where deal-participating peer's workers can fetch the package by CID (2)
+* get back CID and update local file(s) (3)
+* if a deal is already in place, which was so you could run the Quickstart demo *quickly*, either update existing deal or create a new one: create a new one ! (4)
+* now you have to get involved! you are presented with the uri to get metamask to ask you to sign your escrow payment to the contract (5). Copy and paste the uri to your browser and eventually, Metamask should pop-up with a signing request. The transaction displays only in hex, so double check the other request params to make sure you're signing the Fluence Mumbai testnet transaction. This is what you should see:
+![Sign TX](./images/sign_tx_metamask.png)
+* once you signed the transaction and the contract was successfully updated, we are done (6) !
+
+
+
 
 
 ### fRPC Algorithms
