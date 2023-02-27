@@ -1,0 +1,16 @@
+{
+  "providers": [
+    "<replace with your url_1/api-key>",
+    "<replace with your url_2/api-key>",
+    "<replace with your url_3/api-key>"
+  ],
+  "mode": "round-robin",
+  "relay": "/dns4/stage.fluence.dev/tcp/19002/wss/p2p/12D3KooWMigkP4jkVyufq5JnDJL6nXvyjeaDNpRfEZqQhsG3sYCU",
+  "serviceId": "e9e32b0b-3b19-4bdd-b1da-f5ff9cc0357f",
+  "port": 3000,
+  "counterServiceId": null,
+  "counterPeerId": null,
+  "quorumServiceId": null,
+  "quorumPeerId": null,
+  "quorumNumber": null
+}

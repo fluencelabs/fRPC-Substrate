@@ -44,3 +44,4 @@ where config is:
 `random` - choose providers randomly
 `round-robin` - choose providers in circle order
 `quorum` - call all providers and choose the result that is the same from `>= quorumNumber` providers. Or return an error.
+`subnet` - use predeployed subnet, choose worker and provider randomly

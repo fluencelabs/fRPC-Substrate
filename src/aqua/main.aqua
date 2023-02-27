@@ -1,32 +1,42 @@
 aqua Main
 
 import "@fluencelabs/aqua-lib/builtin.aqua"
+import "@fluencelabs/registry/subnetwork.aqua"
+import Registry, Record from "@fluencelabs/registry/registry-service.aqua"
+import "@fluencelabs/spell/spell_service.aqua"
 
--- -- Uncomment the following when you deploy your app with Adder service:
+import "deals.aqua"
+import "services.aqua"
 
 -- import App from "deployed.app.aqua"
--- import Adder from "services/adder.aqua"
 -- export App, addOne
 
 
 
 -- IMPORTANT: Add exports for all functions that you want to run
-export helloWorld, helloWorldRemote, getInfo, getInfos, getInfosInParallel
+export helloWorld, helloWorldRemote, getInfo, getInfos, getInfosInParallel, getWorkers
 
 -- DOCUMENTATION:
 -- https://fluence.dev
 
 
--- -- Uncomment the following when you deploy your app with Adder service:
+-- export status
 
--- func addOne(x: u64) -> u64:
-    -- services <- App.services()
-    -- on services.adder.default!.peerId:
-        -- Adder services.adder.default!.serviceId
-        -- res <- Adder.add_one(x)
-    -- <- res
+-- service Console("run-console"):
+    -- print(any: ⊤)
 
-
+func getWorkers() -> u32, [][]Service:
+  workersInfo <- getWorkersInfo()
+  dealId = workersInfo.defaultWorker.dealId
+  services: *[]Service
+  on HOST_PEER_ID:
+    workersOp <- resolveSubnetwork(dealId)
+    workers = workersOp!
+    for worker <- workers par:
+      on worker.metadata.peer_id via worker.metadata.relay_id:
+        services <- Srv.list()
+  join services[workers.length - 1]
+  <- workers.length, services
 
 -- local
 func helloWorld(name: string) -> string:

@@ -5,8 +5,9 @@
   "main": "src/index.js",
   "type": "module",
   "scripts": {
-    "run:example": "node src/index.js \"config.json\"",
-    "run": "node src/index.js",
+    "run:example": "fluence aqua -i aqua/ -o aqua-compiled/ --js && node src/index.js \"config.json\"",
+    "run": "fluence aqua -i aqua/ -o aqua-compiled/ --js && node src/index.js",
+    "compile": "fluence aqua -i aqua/ -o aqua-compiled/ --js",
     "req": "node web3run.js"
   },
   "bin": {
@@ -21,11 +22,10 @@
   "license": "Apache-2.0",
   "dependencies": {
     "json-rpc-2.0": "1.4.2",
-    "web3": "1.8.2",
-    "@fluencelabs/fluence": "0.28.0"
+    "web3": "1.8.2"
   },
   "devDependencies": {
-    "@fluencelabs/js-client.node": "0.6.5",
-    "@fluencelabs/js-client.api": "0.11.3"
+    "@fluencelabs/js-client.api": "0.11.3",
+    "@fluencelabs/js-client.node": "0.6.5"
   }
 }

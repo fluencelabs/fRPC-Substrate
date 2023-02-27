@@ -12,9 +12,6 @@ dependencies:
   cargo:
     marine: 0.12.6
     mrepl: 0.19.1
-services:
-  eth_rpc:
-    get: wasm-modules
 workers:
   defaultWorker:
     services: [ eth_rpc ]
@@ -23,3 +20,6 @@ deals:
     minWorkers: 1
     targetWorkers: 3
 relays: stage
+services:
+  eth_rpc:
+    get: wasm-modules/
