@@ -48,7 +48,7 @@ Upcoming Fluence hackathons with fRPC bounties:
 
 ## Quickstart
 
-In the *gateway* directory, install the dependencies:
+Clone the repo, if you havne't done so already, and in the *gateway* directory, install the dependencies:
 
 ```bash
 npm i
@@ -190,6 +190,8 @@ At this point, the marketplace for Fluence's decentralized serverless isn't quit
 
 To get going, you need to install and setup a few dependencies.
 
+> Note: Fluence tooling works on most *nix systems including OSX and Windows Linux Subsystem. At this time, Windows is not supported.
+
 ### Off-chain Dependencies
 
 * [node](https://nodejs.org/en/) 16 LTS (versions 18.* and 19.* are currently not supported)
@@ -197,7 +199,9 @@ To get going, you need to install and setup a few dependencies.
 * [Rust](https://www.rust-lang.org/tools/install) (optional; Fluence CLI will install if not already in your environment)
 * For VSCode, there is a helpful [Aqua language support](https://marketplace.visualstudio.com/items?itemName=FluenceLabs.aqua) package available
 
-Note that Fluence CLI installs missing dependencies as need ("lazy install"). If you want all your dependencies installed at once, use the `fluence dependencies i`.
+Note that Fluence CLI installs missing dependencies as need ("lazy install"). If you want all your dependencies installed at once, use the `fluence dependencies i`, which includes Rust if not already present in your environment.
+
+
 
 ### On-chain Dependencies
 
