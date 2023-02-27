@@ -54,7 +54,7 @@ registerLogger({
         console.log("Call will be to : " + s);
     },
     logWorker: s => {
-        console.log("Worker used: " + s);
+        console.log("Worker used: " + JSON.stringify(s.metadata.peer_id));
     },
 })
 
