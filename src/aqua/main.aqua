@@ -35,6 +35,7 @@ func getWorkers() -> u32, [][]Service:
     for worker <- workers par:
       on worker.metadata.peer_id via worker.metadata.relay_id:
         services <- Srv.list()
+  join services[workers.length - 1]
   <- workers.length, services
 
 -- local

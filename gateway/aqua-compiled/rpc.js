@@ -1371,7 +1371,7 @@ export function withSubnets(...args) {
                               )
                               (call %init_peer_id% ("getDataSrv" "jsonArgs") [] jsonArgs)
                              )
-                             (call %init_peer_id% ("json" "obj") ["chainNetwork" "testnet" "chainNetworkId" 80001.0 "dealId" "88b26ba2524928ca9ff7e5946810d361fc13afe8" "dealIdOriginal" "0x88b26bA2524928Ca9FF7e5946810D361fC13aFE8" "definition" "QmTLnhmbriGoAD7M7FHZFE2UQ7EJ2viUbWKuWkUXRC1qRR" "installationSpells" [] "timestamp" "2023-02-27T10:02:08.573Z"] GetWorkersInfoDefaultWorker_obj)
+                             (call %init_peer_id% ("json" "obj") ["chainNetwork" "testnet" "chainNetworkId" 80001.0 "dealId" "db94c6e5ce5313a5760b7d90527844a91889a9ee" "dealIdOriginal" "0xdB94c6E5CE5313A5760b7D90527844A91889A9Ee" "definition" "QmQSHQiDipuWWJwrZX3YQG2k3o768HuEjwkrxQo1UgSRtA" "installationSpells" [] "timestamp" "2023-02-27T10:38:09.025Z"] GetWorkersInfoDefaultWorker_obj)
                             )
                             (call %init_peer_id% ("json" "obj") ["defaultWorker" GetWorkersInfoDefaultWorker_obj] GetWorkersInfo_obj)
                            )
