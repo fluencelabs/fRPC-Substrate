@@ -1,14 +1,13 @@
 {
-  "providers": [
-    "https://polygon-mainnet.g.alchemy.com/v2/Y-8iIn9QtvyUr-TWutJ4Mmkp2lsRBdNY",
-    "https://polygon-mainnet.g.alchemy.com/v2/aL9DGTI7ccFecyVX1LxxQ1u-jNqqDGR-",
-    "https://eth-mainnet.g.alchemy.com/v2/Px4CdLeDgVEXG1Lywk4l3oa2fPQDXsum",
-    "https://eth-mainnet.g.alchemy.com/v2/uz3tL83cMLjYs3k-rE7pHAm8y3vsfvR8"
-  ],
-  "mode": "quorum",
-  "relay": "/dns4/stage.fluence.dev/tcp/19002/wss/p2p/12D3KooWMigkP4jkVyufq5JnDJL6nXvyjeaDNpRfEZqQhsG3sYCU",
-  "port": 3000,
-  "counterServiceId": null,
+   "providers": [
+     "<replace with your url_1/api-key>",
+     "<replace with your url_2/api-key>",
+     "<replace with your url_3/api-key>"
+   ],
+   "mode": "round-robin",
+   "relay": "/dns4/stage.fluence.dev/tcp/19002/wss/p2p/12D3KooWMigkP4jkVyufq5JnDJL6nXvyjeaDNpRfEZqQhsG3sYCU",
+   "port": 3000,
+   "counterServiceId": null,
   "counterPeerId": null,
   "quorumServiceId": null,
   "quorumPeerId": null,
