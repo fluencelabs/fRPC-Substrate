@@ -5,7 +5,6 @@ import "@fluencelabs/registry/subnetwork.aqua"
 import Registry, Record from "@fluencelabs/registry/registry-service.aqua"
 import "@fluencelabs/spell/spell_service.aqua"
 
-
 export randomLoadBalancingEth, roundRobinEth, quorumEth, Counter, Logger
 
 data QuorumResult:
@@ -49,12 +48,12 @@ func callOnWorker(worker: Record, uri: string, method: string, jsonArgs: []strin
 
 func randomLoadBalancing(uris: []string, method: string, jsonArgs: []string, callFunc: string, string, []string -> JsonString) -> JsonString:
   on HOST_PEER_ID:
-    workers <- getWorkers()  
+    workers <- getWorkers()
     workersNum = workers.length
     -- choose worker randomly
     timeW <- NumOp.identity(Peer.timestamp_sec())
     workerNumber = timeW % workers.length
-    worker = workers[workerNumber] 
+    worker = workers[workerNumber]
     -- choose provider randomly
     timeP <- NumOp.identity(Peer.timestamp_sec())
     providerNumber = timeP % uris.length
@@ -74,7 +73,7 @@ func roundRobin(uris: []string, method: string, jsonArgs: []string, counterServi
   on HOST_PEER_ID:
     workers <- getWorkers()
     workerNumber = requestNumber % workers.length
-    worker = workers[workerNumber] 
+    worker = workers[workerNumber]
     providerNumber = requestNumber % uris.length
     provider = uris[providerNumber]
     result <- callOnWorker(worker, provider, method, jsonArgs, callFunc)
@@ -85,22 +84,24 @@ func roundRobin(uris: []string, method: string, jsonArgs: []string, counterServi
 func roundRobinEth(uris: []string, method: string, jsonArgs: []string, counterServiceId: string, counterPeerId: string) -> JsonString:
   <- roundRobin(uris, method, jsonArgs, counterServiceId, counterPeerId, call)
 
-func quorum(uris: []string, quorumNumber: u32, timeout: u32, method: string, jsonArgs: []string, quorumServiceId: string, quorumPeerId: string, 
-    callFunc: string, string, []string -> JsonString) -> QuorumResult:
+func quorum(
+  uris: []string, quorumNumber: u32, timeout: u32, method: string, jsonArgs: []string, quorumServiceId: string, quorumPeerId: string,
+  callFunc: string, string, []string -> JsonString
+) -> QuorumResult:
   results: *JsonString
   on HOST_PEER_ID:
     workers <- getWorkers()
     for worker <- workers par:
-      on worker.metadata.peer_id via worker.metadata.relay_id:                
+      on worker.metadata.peer_id via worker.metadata.relay_id:
         -- choose provider randomly
-        timeP <- NumOp.identity(Peer.timestamp_sec())
+        timeP <- NumOp.identity(Peer.timestamp_ms())
         providerNumber = timeP % uris.length
-        provider = uris[providerNumber]  
+        provider = uris[providerNumber]
         results <- callFunc(provider, method, jsonArgs)
     -- wait all results from all workers with timeout
     join results[workers.length - 1]
-    par Peer.timeout(timeout, "") 
-  on quorumPeerId via HOST_PEER_ID:    
+    par Peer.timeout(timeout, "")
+  on quorumPeerId via HOST_PEER_ID:
     Counter quorumServiceId
     -- check all results that we got
     quorumResult <- QuorumChecker.check(results, quorumNumber)
