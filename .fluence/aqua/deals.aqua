@@ -11,4 +11,4 @@ data GetWorkersInfo:
     defaultWorker: GetWorkersInfoDefaultWorker
 
 func getWorkersInfo() -> GetWorkersInfo:
-    <- GetWorkersInfo(defaultWorker=GetWorkersInfoDefaultWorker(installationSpells=nil,definition="QmSdxCGodCPwu3M9xKJxXrFSx1fdn7s1ZZoyCMuSMoZZNt",timestamp="2023-02-27T19:25:56.232Z",dealIdOriginal="0xa69870eB16D3B44dDEaf4D97E59e29B0F099B427",dealId="a69870eb16d3b44ddeaf4d97e59e29b0f099b427",chainNetwork="testnet",chainNetworkId=80001.0))
+    <- GetWorkersInfo(defaultWorker=GetWorkersInfoDefaultWorker(installationSpells=nil,definition="QmcMxbxh8rHpJAYba78AYGaEw5s5sgMLV4PozbtMxzyzvj",timestamp="2023-02-28T17:05:59.636Z",dealIdOriginal="0x2ed56e62b96fed6DA7455351492435CA56B2E555",dealId="2ed56e62b96fed6da7455351492435ca56b2e555",chainNetwork="testnet",chainNetworkId=80001.0))
