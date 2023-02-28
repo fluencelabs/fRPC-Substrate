@@ -1,6 +1,6 @@
 # Hacking Decentralized RPC with Fluence
 
-**WIP*
+WIP
 
 ## Overview
 
@@ -48,13 +48,13 @@ Upcoming Fluence hackathons with fRPC bounties:
 
 ## Quickstart
 
-Clone the repo, if you havne't done so already, and in the *gateway* directory, install the dependencies:
+Clone the repo, if you haven't done so already, and in the *gateway* directory, install the dependencies:
 
 ```bash
 npm i
 ```
 
-Before you proceed, you  should have, say, three RPC endpoint urls, e.g., Infura, Alchemy and QuickNode, for the same EVM-based chain you are using in your dAPP. Update the `configs/quickstart_config.json` and provide your endpoint urls and ignore the rest of the parameters for now:
+Before you proceed, you  should have, say, three RPC endpoint urls, e.g., Infura, Alchemy and QuickNode, for the same EVM-based chain you are using in your dAPP. Update the `configs/quickstart_config.json` by providing your endpoint urls and ignore the rest of the parameters for now:
 
 ```json
 {
@@ -133,7 +133,7 @@ Call will be to : https://frequent-sleek-river.ethereum-goerli.discover.quiknode
 
 Success! Go ahead and replace the `round-robin` mode with the `random` mode in your config file, stop and start the gateway and have a look at the different endpoint management.
 
-Congrat's, you just took a major step toward keeping you dAPP decentralized, available and performant! Now it's time to dive into the Fluence protocol and technology stack to learn how to improve upon the basic substrate.
+Congrat's, you just took a major step toward keeping you dAPP decentralized, available and performant! Now it's time to dive into the Fluence protocol and technology stack to learn how to improve upon the basic substrate and compete for hackathon bounties.
 
 ## Developing With Fluence
 
@@ -184,7 +184,7 @@ sequenceDiagram
 
 While this sounds, and is, elaborate, *Fluence CLI*, see below, takes care of most of the scaffolding and workflow management for you.
 
-At this point, the marketplace for Fluence's decentralized serverless isn't quite finished. The supply side has not been enabled and on the demand side, parameters are fixed for the testnet. That is, developers are not able to provide custom Deal parameters, such as willingness to pay for service execution. Instead, these parameters, i.e. price of execution per epoch and epoch duration, are hard-coded and used by Fluence CLI to create the corresponding Deal contract and transaction for you to sign. Moreover, economics are limited to the testnet using testnet tokens and throughout the EthDenver hackathon, resource owners may not claim their periodic share of revenue from the Deal's escrow.
+**Note:** At this point, the marketplace for Fluence's decentralized serverless isn't quite finished. The supply side has not been enabled and on the demand side, parameters are fixed for the testnet. That is, developers are not able to provide custom Deal parameters, such as willingness to pay for service execution. Instead, these parameters, i.e. price of execution per epoch and epoch duration, are hard-coded and used by Fluence CLI to create the corresponding Deal contract and transaction for you to sign. Moreover, economics are limited to the testnet using testnet tokens and throughout the EthDenver hackathon, resource owners may not claim their periodic share of revenue from the Deal's escrow.
 
 ## Setting Up For Developing With Fluence
 
@@ -194,14 +194,12 @@ To get going, you need to install and setup a few dependencies.
 
 ### Off-chain Dependencies
 
-* [node](https://nodejs.org/en/) 16 LTS (versions 18.* and 19.* are currently not supported)
+* [node](https://nodejs.org/en/) 16 LTS (versions 18.* and above are currently not supported)
 * [Fluence CLI](https://github.com/fluencelabs/fluence-cli)
 * [Rust](https://www.rust-lang.org/tools/install) (optional; Fluence CLI will install if not already in your environment)
 * For VSCode, there is a helpful [Aqua language support](https://marketplace.visualstudio.com/items?itemName=FluenceLabs.aqua) package available
 
-Note that Fluence CLI installs missing dependencies as need ("lazy install"). If you want all your dependencies installed at once, use the `fluence dependencies i`, which includes Rust if not already present in your environment.
-
-
+**Note** that Fluence CLI installs missing dependencies as neededs ("lazy install"). If you want all your dependencies installed at once, use the `fluence dependencies i` command.
 
 ### On-chain Dependencies
 
@@ -210,9 +208,11 @@ Note that Fluence CLI installs missing dependencies as need ("lazy install"). If
   * [MATIC testnet faucet](https://faucet.polygon.technology/) [or](https://mumbaifaucet.com/)
   * [Fluence USDC testnet faucet](https://faucet.fluence.dev/)
 
+You will need  Mumbai (testnet) MATIC and Fluence (testnet) USDC. This is as good a time as any to head over to those faucets and get your allocations. As an experienced Web3 dev, you know it's god hygiene to set up a new account, say, fRPC-dev, for the Mumbai testnet and testnet tokens.
+
 ### RPC Endpoints
 
-Since fRPC works with existing RPC providers, you want at least three provider urls/API keys to *the* chain of your choice as multi-chain support is currently not supported (hint, hint to all you hackathoners). For Ethereum's Goerli testnet, for example:
+Since fRPC works with existing centralized or self-hosted RPC providers, you want at least three provider urls with appended API keys to *the* chain of your choice. Multi-chain support is currently not supported by fRPC SUbstrate (hint, hint to all you hackathoners). For Ethereum's Goerli testnet, for example:
 
 * Infura: https://goerli.infura.io/v3/<your key>
 * Alchemy: https://eth-goerli.g.alchemy.com/v2/<your key>
@@ -240,6 +240,109 @@ Figure 3: Stylized Project Creation And Deployment Workflow With Fluence CLI
     Service --> LocalTesting: fluence service repl, cargo test
     Service --> DeployedService: fluence deal deploy
     DeployedService --> RunService: fluence run
+```
+
+Fluence CLI uses multiple *yaml* config files. Below find references to the most important one populated with parameters from our fRPC-Substrate project. You can find the schemas in the [schemas](./.fluence/schemas) directory. Note that Fluence CLI creates config files lazily, i.e., as needed.
+
+#### fluence.yaml -- the root project config file that manages version, dependencies, and more:
+
+```yaml
+version: 2
+aquaInputPath: src/aqua/main.aqua             # path where to look for default aqua files, you can change that
+dependencies:
+  npm:                                        # js dependencies
+    "@fluencelabs/aqua-lib": 0.6.0
+    "@fluencelabs/aqua": 0.10.2
+    "@fluencelabs/spell": 0.1.0
+    "@fluencelabs/registry": 0.8.1
+  cargo:                                      # rust dependencies
+    marine: 0.12.6
+    mrepl: 0.19.1
+workers:                                      # worker settings for deploy
+  defaultWorker:
+    services: [ eth_rpc ]
+deals:                                        # deal settings for deploy
+  defaultWorker:
+    minWorkers: 1                             # default min worker settings -- you want your service deployed ot at least 1 worker
+    targetWorkers: 3                          # default max worker settings -- you want your service deployed ot at least 3 workers  
+relays: stage                                 # Name of Fluence network used
+services: 
+  eth_rpc:                                    # service name
+    get: wasm-modules/                        # and where to get the service config
+```
+
+#### service.yaml -- the service config file that manages module dependencies
+
+You find this in the service directory root, i.e., *wasm-modules* in our case.
+
+```yaml
+version: 0
+name: eth_rpc                 # name of the service which is referenced in fluence.yaml
+modules:                      # modules included
+  facade:                     # service API module, see https://fluence.dev/docs/marine-book/marine-runtime/module-types/ for more info
+    get: eth-rpc
+  curl-adapter:               # other modules
+    get: curl-adapter
+```
+
+#### module.yaml -- the module config file
+
+Each module includes a module.yaml file in its root, e.g., [eth_rpc](./wasm-modules/eth-rpc/module.yaml)  and [curl-adapter](./wasm-modules/curl-adapter/module.yaml).
+
+```yaml
+# curl-adapter/module.yaml
+version: 0
+type: rust                    # language used to code the module
+name: curl_adapter                      
+mountedBinaries:              # effector module specific: what mechanism is used to access host resources
+  curl: /usr/bin/curl         # host path to binary mapped to the alias used in the module's FFI link section
+```
+
+The minimum key for a module file are: version, type and name. Effector modules, however, may need additional information such as [MountedBinaries](https://fluence.dev/docs/marine-book/marine-runtime/mounted-binaries). Such information needs to be manually added.
+
+
+#### project-secrets.yaml, user-secrets.yaml -- the cryptographic key file
+
+Fluence uses cryptographic keys in a variety of contexts including end-to-end encryption, client peer id determination and securing services. By default, Fluence CLI creates a keypair in *user-secrets.yaml*, which is placed in the global *.fluence* directory in your home directory.
+
+```yaml
+# user-secrets.yaml
+version: 0
+keyPairs:
+  - peerId: 12D3KooWS8G1SdmBe...6SU2Ay3nZMqezpW3tGqoBXwozDnT
+    secretKey: z0DrDzCaqRHI1T...mh7MHav1v2Q2daJogfOUBFMc=
+    publicKey: CAESIPJQetYHX4...VdCwTqXvfGBa+kiIUK5Ee9bh6u8oE
+    name: auto-generated
+defaultKeyPairName: auto-generated
+```
+
+The default keys are available and used by all your projects unless you create a project-specific key pair with the `fluence key` command and saved in the *project-secrets.yaml* file in the project-local *.fluence* directory. Since we are in defualt mode for our current setup, *projects-secrets.yaml* is not populated.
+
+```yaml
+# projects-secrets.yaml
+version: 0
+keyPairs: []
+```
+
+#### deployed.yaml
+
+This file, also localted in the project *.fluence* directory,  holds all the deployment information necessary to track your distributed resources both on- and off-chain.
+
+```yaml
+version: 0
+workers:
+  {
+    defaultWorker:
+      {
+        installation_spells: [],                                          # ignore for now
+        definition: Qmcvoi6tZeBEkva2yn7cXJd8GiocKmkuzuz8L9VtfNdSG2,       # CID
+        timestamp: 2023-02-27T13:51:14.618Z,
+        dealIdOriginal: "0x0CC9E494CaFDea602b09013a8743012Ce720def2",     #  Original deal id 
+        dealId: 0cc9e494cafdea602b09013a8743012ce720def2,                 # current deal id which may change after deal update 
+        chainNetwork: testnet,                                            # Fluence on-chain network alias
+        chainNetworkId: 80001                                             # Fluence on-chain chain id 
+      }
+  }
 ```
 
 See [FLuence CLI](https://github.com/fluencelabs/fluence-cli) for more details. For implementing your business logic with Rust and compiling it to wasm32-wasi, aka Wasm, module(s), see the [Marine book](https://fluence.dev/docs/marine-book/introduction). To learn more about distributed choreography and composition of services, see the [Aqua book](https://fluence.dev/docs/aqua-book/introduction).
@@ -282,13 +385,13 @@ In order to use the fRPC substrate out-of-the-box or after customization, you ne
 * run the gateway
 * use the gateway url in your web3 sdk's HTTP transport config
 
-### fRPC Service Component
+### fRPC Wasm Components
 
-fRPC Substrate comes with one service comprised of two modules, which you cna find in the [wasm-modules]("./wasm-modules/") directory. The service is called 'eth_rpc' and the included modules are a [curl_adapater]("./../wasm-modules/curl-adapter") and ["eth_rpc]("./../wasm-modules/eth-rpc"). The *curl_apadter* modules is a generic module allowing access a peer's curl binary, if permissioned by the peer, and exposes the *curl_request* function. Any modules requiring curl access may use the curl_adapter modules via [FFI linking](https://doc.rust-lang.org/nomicon/ffi.html) and make curl calls with the *curl_request* function.
+fRPC Substrate comes with one *service* comprised of two Wasm modules, which you can find in the [wasm-modules]("./wasm-modules/") directory. The service is called 'eth_rpc' and the included modules are a [curl_adapater]("./../wasm-modules/curl-adapter") and ["eth_rpc]("./../wasm-modules/eth-rpc"). The *curl_adapter* module is a generic, re-usable module allowing access a peer's curl binary, if permissioned by the peer, and exposes the *curl_request* function. Any modules requiring curl access may use the curl_adapter modules via [FFI linking](https://doc.rust-lang.org/nomicon/ffi.html) with the *curl_request* function.
 
-The *eth_rpc* module manages the json-rpc requests and responses initiated and consumed by Aqua scripts. Once available on peers of the Fluence p2p network, the *eth-rpc* services, aka RPC endpoint adapter, allows us to call one or more RPC endpoints using Aqua for choreography and composition of services.
+The *eth_rpc* module manages the json-rpc requests and responses initiated and consumed by Aqua scripts as he result of some frontend event, .e.g. our dAPP or curl request. Once available on peers of the Fluence p2p network, the *eth-rpc* services, aka RPC endpoint adapter, allows us to call one or more RPC endpoints using Aqua for choreography and composition of services.
 
-Before you cna deploy your service, use `fluence build` in the root dir to compile each module's Rust code to wasm32-wasi output:
+Before you can deploy your service, use `fluence build` in the root dir to compile each module's Rust code to wasm32-wasi output:
 
 ```bash
 fluence build
@@ -369,7 +472,7 @@ result: {
 
 The *i* command lists all the exported interfaces from the wasm modules in Aqua instead of Rust notation. In *expoerted* functions you seee the module namespace, e.g., *curl_adapter* , and exported functions, e.g., *curl_request*. To execute a function, use `call <namespace> <function name> [<parameters>]`.
 
-### Adding Modules To Service
+### Adding Modules To A Service
 
 Regardless of your customization requirements, you probably will have no reason to modify the *curl_adapter* and *eth_rpc* modules. However, you may want to add new modules, or even services, to handle your additional business logic requirements. For example, you may want to capture RPC endpoint performance data, such as response times and availability, to some Web3 storage, e.g., IPFS or Ceramic, for further analysis to, say, derive a weighting scheme for endpoint selection. 
 
@@ -390,13 +493,91 @@ fluence module add
 Added demo to ~/localdev/fRPC-Substrate/wasm-modules/service.yaml
 ```
 
-The demo module is now part of the service and  `fluence build`, for example, now compiles the *demo* module as part of the project build. You can crete a new service with the `fluence service new` command. Note that the implication of creating a new service, possibly in a new project directory, that you intend to deploy that service separately from the *eth-rpc* service. If you want to get rid of the demo project for now, use `fluence module remove`. 
+The demo module is now part of the service and  `fluence build`, for example, now compiles the *demo* module as part of the project build. You can create a new service with the `fluence service new` command. Note that the implication of creating a new service, possibly in a new project directory, is that you intend to deploy that service separately from the *eth-rpc* service. Of course, you will need to write Aqua code to be able to interact with your new module.
 
-Of course, you will need to write Aqua code to be able to interact with your new module.
+To get rid of the demo project for now, use `fluence module remove` to unlink the module from the *fluence.yaml* and *service.yaml* files; the old *rm -r <path/demo>* gets rid of the code template.
+
+### Deploying A Service
+
+With a service, in this case the *eth-rpc* service, ready for deployment, we simply use the `fluence deal deploy` command:
+
+```bash
+fluence deal deploy
+
+# 1 compile assets
+   Compiling proc-macro2 v1.0.51
+   <...>
+   Compiling web3 v0.18.0
+   Compiling eth_rpc v0.1.0 (/Users/bebo/localdev/fRPC-demo/wasm-modules/eth-rpc)
+    Finished release [optimized] target(s) in 28.32s
+
+# 2 upload packaged assets
+ipfs: did pin QmTvNwBeDop1yD9dLNjgrzfBMsgtrBmD859ahqQS1EWhbj to /dns4/ipfs.fluence.dev/tcp/5001
+ipfs: file QmTvNwBeDop1yD9dLNjgrzfBMsgtrBmD859ahqQS1EWhbj pinned to /dns4/ipfs.fluence.dev/tcp/5001
+ipfs: did pin QmWjbt6biEhsNEeDgspgHtwjwo7yS2asm7R7JjxnwMsupm to /dns4/ipfs.fluence.dev/tcp/5001
+ipfs: file QmWjbt6biEhsNEeDgspgHtwjwo7yS2asm7R7JjxnwMsupm pinned to /dns4/ipfs.fluence.dev/tcp/5001
+ipfs: did pin Qmb5ZTnkSBfzYdCfcVYUn7oBDTiVeoUX3oZvM7bRUhMPXZ to /dns4/ipfs.fluence.dev/tcp/5001
+ipfs: file Qmb5ZTnkSBfzYdCfcVYUn7oBDTiVeoUX3oZvM7bRUhMPXZ pinned to /dns4/ipfs.fluence.dev/tcp/5001
+ipfs: did pin QmP5nxY7nFdYw3PxUUbHe2yfHui9t2sGPpSeiSs1QNwFwK to /dns4/ipfs.fluence.dev/tcp/5001
+ipfs: file QmP5nxY7nFdYw3PxUUbHe2yfHui9t2sGPpSeiSs1QNwFwK pinned to /dns4/ipfs.fluence.dev/tcp/5001
+ipfs: did pin QmVsTtmsUF66raAdmCdbdvJXWZW69QoqJ2iMffvxaXHgAQ to /dns4/ipfs.fluence.dev/tcp/5001
+ipfs: file QmVsTtmsUF66raAdmCdbdvJXWZW69QoqJ2iMffvxaXHgAQ pinned to /dns4/ipfs.fluence.dev/tcp/5001
+
+# 3 process upload responses for local updates
+log: [
+  'deployed workers',
+  [
+    {
+      definition: 'QmVsTtmsUF66raAdmCdbdvJXWZW69QoqJ2iMffvxaXHgAQ',
+      installation_spells: [],
+      name: 'defaultWorker'
+    }
+  ]
+]
+
+# 4 if Deal is already in place update or create new Deal?
+? There is a previously deployed deal for worker defaultWorker on network testnet. Do you want to update this existing deal?
+No
+
+Creating deal for worker defaultWorker
+
+# 5 request signing of escrow payment transaction
+To approve transactions with your to your wallet using metamask, open the following url:
+
+https://cli-connector.fluence.dev/?wc=6db18e37-90cc-4977-bee9-892676c1e218%401&bridge=https%3A%2F%2Fu.bridge.walletconnect.org&key=5d31de7d9c7f4cbe26032a1eaa4a7cbe5a55ed88df3073dfe5dd084cd5f80539
+
+or go to https://cli-connector.fluence.dev and enter the following connection string there:
+
+wc:6db18e37-90cc-4977-bee9-892676c1e218@1?bridge=https%3A%2F%2Fu.bridge.walletconnect.org&key=5d31de7d9c7f4cbe26032a1eaa4a7cbe5a55ed88df3073dfe5dd084cd5f80539
+
+# 6 if escrow payment is processed, deal deployment is finalized
+Deploy completed successfully
+```
+
+One little command is doing quite a bit so you don't have to. Let's work through the process:
+
+* once we launch `fluence deal deploy` we create a (new) Deal with both on-chain and off-chain activities
+* for an up-to-date look, all service assets, i.e., modules, are (re-) compiled (1)
+* the wasm modules and config are uploaded to IPFS node where deal-participating peer's workers can fetch the package by CID (2)
+* get back CID and update local file(s) (3)
+* if a deal is already in place, which was so you could run the Quickstart demo *quickly*, either update existing deal or create a new one: create a new one ! (4)
+* now you have to get involved! you are presented with the uri to get metamask to ask you to sign your escrow payment to the contract (5). Copy and paste the uri to your browser and eventually, Metamask should pop-up with a signing request. The transaction displays only in hex, so double check the other request params to make sure you're signing the Fluence Mumbai testnet transaction. This is what you should see:
+![Sign TX](./images/sign_tx_metamask.png)
+* once you signed the transaction and the contract was successfully updated, we are done (6) !
+
+Fluence CLI did a hole bunch of work for us behind the scenes and signing the transaction is a lot quicker than entering (virtual) credit card information. The parametric details necessary to write Aqua scripts are save in [deals.aqua](./.fluence/aqua/deals.aqua) and serves as an important dependency in your Aqua scripts, as we'll see in the next section.
 
 ### fRPC Algorithms
 
-The fRPC substrate comes with basic implementations of several algorithms useful in mitigating failure as the result of availability and lack of trustlessness. You cna find these 
+The fRPC substrate comes with basic implementations of several algorithms useful in mitigating failure as the result of availability and lack of trustlessness. Before we dive into the algorithms, let's have a look a the Aqua code and structure.
+
+
+#### Enough Aqua To Hang Yourself
+
+
+
+
+#### Random
 
 #### Round robin
 
@@ -410,9 +591,6 @@ func roundRobin(uris: []string, method: string, jsonArgs: []string, serviceId: s
     Logger.logCall(uris[providerNumber])
   <- callFunc(uris[providerNumber], method, jsonArgs, serviceId)
 ```
-
-#### Failover
-
 
 #### Quorum
 
@@ -454,57 +632,6 @@ func withSubnets(uris: []string, method: string, jsonArgs: []string) -> JsonStri
   Logger.logCall(uris[providerNumber])
   <- result
 ```
-  
-### Deploy <Deal, Worker, Service> ?
-
-#### fluence deal deploy
-
-
-```bash
-fluence deal deploy
-   Compiling curl_adapter v0.1.0 (/Users/bebo/localdev/fRPC-Substrate/wasm-modules/curl-adapter)
-    Finished release [optimized] target(s) in 1.48s
-ipfs: did pin QmTvNwBeDop1yD9dLNjgrzfBMsgtrBmD859ahqQS1EWhbj to /dns4/ipfs.fluence.dev/tcp/5001
-ipfs: file QmTvNwBeDop1yD9dLNjgrzfBMsgtrBmD859ahqQS1EWhbj pinned to /dns4/ipfs.fluence.dev/tcp/5001
-ipfs: did pin QmWjbt6biEhsNEeDgspgHtwjwo7yS2asm7R7JjxnwMsupm to /dns4/ipfs.fluence.dev/tcp/5001
-ipfs: file QmWjbt6biEhsNEeDgspgHtwjwo7yS2asm7R7JjxnwMsupm pinned to /dns4/ipfs.fluence.dev/tcp/5001
-ipfs: did pin QmbHt422MnruToQvjMiHYLmQUwy4tejqm3JJMytCtsktUd to /dns4/ipfs.fluence.dev/tcp/5001
-ipfs: file QmbHt422MnruToQvjMiHYLmQUwy4tejqm3JJMytCtsktUd pinned to /dns4/ipfs.fluence.dev/tcp/5001
-ipfs: did pin QmP5nxY7nFdYw3PxUUbHe2yfHui9t2sGPpSeiSs1QNwFwK to /dns4/ipfs.fluence.dev/tcp/5001
-ipfs: file QmP5nxY7nFdYw3PxUUbHe2yfHui9t2sGPpSeiSs1QNwFwK pinned to /dns4/ipfs.fluence.dev/tcp/5001
-ipfs: did pin Qmc1XgSk5gB3pYd3oEY6t3tAZPAYUsptuCZgEFqsTcoBq2 to /dns4/ipfs.fluence.dev/tcp/5001
-ipfs: file Qmc1XgSk5gB3pYd3oEY6t3tAZPAYUsptuCZgEFqsTcoBq2 pinned to /dns4/ipfs.fluence.dev/tcp/5001
-log: [
-  'deployed workers',
-  [
-    {
-      definition: 'Qmc1XgSk5gB3pYd3oEY6t3tAZPAYUsptuCZgEFqsTcoBq2',
-      installation_spells: [],
-      name: 'defaultWorker'
-    }
-  ]
-]
-? There is a previously deployed deal for worker defaultWorker on network testnet. Do you want to update this existing deal? Yes
-
-Updating deal for worker defaultWorker
-
-To approve transactions with your to your wallet using metamask, open the following url:
-
-https://cli-connector.fluence.dev/?wc=464a007e-1102-46cb-9ffc-6243ef84b4db%401&bridge=https%3A%2F%2Fp.bridge.walletconnect.org&key=b6da0eae424d7c68fe32c6fadc8e372bee81e8162613e58ae6be0385c766b7bf
-
-or go to https://cli-connector.fluence.dev and enter the following connection string there:
-
-wc:464a007e-1102-46cb-9ffc-6243ef84b4db@1?bridge=https%3A%2F%2Fp.bridge.walletconnect.org&key=b6da0eae424d7c68fe32c6fadc8e372bee81e8162613e58ae6be0385c766b7bf
-
-Deploy completed successfully
-```
-
-Screen Shot 2023-02-25 at 4.58.20 PM.png
-
-#### fluence workers deploy
-
-
-#### fluence legacy deploy
 
 ### Configuring And Running the Gateway
 
@@ -549,77 +676,3 @@ and
   * `round-robin` - choose providers in circle order
   * `quorum` - call all providers specified and choose the result that is the same for `>= quorumNumber` providers or return an error.
   * `subnet` - use a pre-deployed subnet, choose worker and provider randomly
-
-### Customizing And Extending fRPC
-
-We identified two major issues with centralized RPC: availability and verifiability.
-
-∑
-
-
-===============================================================================================================
-#### Distributed RPC API Adapters With Marine
-
-In the "./wasm-modules/" directory, you find two modules: *curl_adapter* and *eth-rpc*, each comprised of the Rust code and a configuration file called *module.yaml*, which are referenced in the top directory's *service.yaml* file. Now, what are those modules good for?
-
-#### Curl Adapter
-
-Wasm modules are socket-less, single-threaded entities confined to a sandbox keeping the host safe. However, Marine modules come with a configuration file that not only allows a module to "punch through" the sandbox and have access to a host's resources but also for a host to permission such access. No permission from the host, no access. This information is contained in the *module.yaml*:
-
-```yaml
-version: 0
-type: rust
-name: curl_adapter
-mountedBinaries:
-  curl: /usr/bin/curl
-```
-
-Which basically states that the Wasm module named *curl_adapter* wants access to a binary callable with the (host) path `/usr/bin/curl`. Looking at the the *main.rs* file:
-
-```Rust
-use marine_rs_sdk::{marine, MountedBinaryResult};
-
-pub fn main() {}
-
-#[marine]
-pub fn curl_request(cmd: Vec<String>) -> MountedBinaryResult {
-    curl(cmd)
-}
-
-#[marine]
-#[link(wasm_import_module = "host")]
-extern "C" {
-    fn curl(cmd: Vec<String>) -> MountedBinaryResult;
-}
-```
-
-In order to make access to the host's binary happen, we use Rust's FFI interface to link a function names *curl*, taking an array of strings as its argument, and expose it to the module via the `#[marine]` macro. We then wrap the *curl* function with the *curl_request* function for the whole purpose to expose it, via the `#[marine]` macro, as the sole exported function. Why? so any other Wasm module in need of curl access can link to the *curl_adapter* and utilize the *curl_request* function to make *curl* calls including out *eth-rpc* module.
-
-#### ETH RPC Module
-
-The *eth_rpc* module uses [Web3](https://crates.io/crates/web3), a Rust EVM json-rpc client.
-
-```Rust
-
-```
-
-TODO: need to clean up code.
-
-For all things Wasm, see the [Marine book](https://fluence.dev/docs/marine-book/introduction) and the Fluence [developer documentation](TBD). Also note, that unless you need some EVM method not currently made available or customize special RPC provider interaction, you may not have to touch this module and the service.
-
-
-#### Deploying The Service
-
-Even if you don't change the Rust code, you still need to deploy the service to one or more peers to be usable by you dAPP via the gateway. 
-
-#### Distributed Workflow Orchestration With Aqua
-
-soon
-
-#### Bridging P2P and HTTP With The Gateway
-
-soon
-
-### Running fRPC Substrate
-
-soon
