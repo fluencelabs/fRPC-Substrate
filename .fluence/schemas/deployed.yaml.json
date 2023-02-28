@@ -1,0 +1,84 @@
+{
+  "$id": "https://fluence.dev/schemas/deployed.yaml",
+  "title": "deployed.yaml",
+  "type": "object",
+  "description": "A result of app deployment. This file is created automatically after successful deployment using `fluence workers deploy` command",
+  "properties": {
+    "version": {
+      "type": "number",
+      "const": 0
+    },
+    "workers": {
+      "type": "object",
+      "description": "A map of deployed workers",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "installation_spells": {
+            "type": "array",
+            "description": "A list of installation spells",
+            "items": {
+              "type": "object",
+              "properties": {
+                "host_id": {
+                  "type": "string"
+                },
+                "spell_id": {
+                  "type": "string"
+                },
+                "worker_id": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "host_id",
+                "spell_id",
+                "worker_id"
+              ]
+            }
+          },
+          "definition": {
+            "type": "string"
+          },
+          "workerCID": {
+            "type": "string",
+            "nullable": true
+          },
+          "dealId": {
+            "type": "string",
+            "nullable": true
+          },
+          "dealIdOriginal": {
+            "type": "string",
+            "nullable": true
+          },
+          "chainNetwork": {
+            "type": "string",
+            "enum": [
+              "local",
+              "testnet"
+            ],
+            "nullable": true
+          },
+          "chainNetworkId": {
+            "type": "number",
+            "nullable": true
+          },
+          "timestamp": {
+            "type": "string",
+            "description": "ISO timestamp of the time when the worker was deployed"
+          }
+        },
+        "required": [
+          "installation_spells",
+          "timestamp",
+          "definition"
+        ]
+      },
+      "required": []
+    }
+  },
+  "required": [
+    "version"
+  ]
+}

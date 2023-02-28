@@ -1,0 +1,58 @@
+{
+  "$id": "https://fluence.dev/schemas/deals.yaml",
+  "title": "deals.yaml",
+  "description": "Defines deal configuration for each worker you wanna deploy",
+  "type": "object",
+  "properties": {
+    "deals": {
+      "description": "Array of objects, each object defines a worker and a list of peer IDs to host it on",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "workerName": {
+            "type": "string",
+            "description": "Name of the worker. The same as in workers.yaml"
+          },
+          "minWorkers": {
+            "type": "number",
+            "description": "Required workers to activate the deal",
+            "default": 1,
+            "nullable": true,
+            "minimum": 1
+          },
+          "targetWorkers": {
+            "type": "number",
+            "description": "Max workers in the deal",
+            "default": 3,
+            "nullable": true,
+            "minimum": 1
+          }
+        },
+        "required": [
+          "workerName"
+        ]
+      }
+    },
+    "network": {
+      "type": "string",
+      "description": "The network in which the transactions will be carried out",
+      "enum": [
+        "local",
+        "testnet"
+      ],
+      "default": "testnet",
+      "nullable": true
+    },
+    "version": {
+      "type": "number",
+      "enum": [
+        0
+      ]
+    }
+  },
+  "required": [
+    "version",
+    "deals"
+  ]
+}

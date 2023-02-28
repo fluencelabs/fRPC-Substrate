@@ -1,0 +1,21 @@
+data BytesValue:
+  value: []u8
+  success: bool
+  error: string
+
+data JsonString:
+  value: string
+  success: bool
+  error: string
+
+data U64Value:
+  value: u64
+  success: bool
+  error: string
+
+service EthRpc("eth_rpc"):
+  accounts(uri: string) -> []JsonString
+  block_number(uri: string) -> U64Value
+  call(uri: string, req: string, block: u64) -> BytesValue
+  call_get_accounts(uri: string) -> [][]u8
+  eth_call(uri: string, method: string, json_args: []string) -> JsonString
