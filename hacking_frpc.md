@@ -205,7 +205,7 @@ To get going, you need to install and setup a few dependencies.
 
 * Wallectconnect compatible wallet, e.g., MetaMask, setup for and funded with:
   * [Polygon](https://polygon.technology/) [Mumbai testnet](https://chainlist.org/?testnets=true&search=mumbai)
-  * [MATIC testnet faucet](https://faucet.polygon.technology/) [or](https://mumbaifaucet.com/)
+  * [MATIC testnet faucet](https://faucet.polygon.technology/) or [alterantive faucet](https://mumbaifaucet.com/)
   * [Fluence USDC testnet faucet](https://faucet.fluence.dev/)
 
 You will need  Mumbai (testnet) MATIC and Fluence (testnet) USDC. This is as good a time as any to head over to those faucets and get your allocations. As an experienced Web3 dev, you know it's god hygiene to set up a new account, say, fRPC-dev, for the Mumbai testnet and testnet tokens.
