@@ -643,18 +643,39 @@ A round robin algorithm cycles through the different options usually in a predic
 **Use: Set `mode` to "quorum" in your gateway config file**
 
 ```aqua
-func quorum(uris: []string, quorumNumber: u32, timeout: u32, method: string, jsonArgs: []string, serviceId: string, quorumServiceId: string, quorumPeerId: string, 
-    callFunc: string, string, []string, string -> JsonString) -> QuorumResult:
+func quorum(
+  uris: []string, quorumNumber: u32, timeout: u32, method: string, jsonArgs: []string, quorumServiceId: string, quorumPeerId: string,
+  callFunc: string, string, []string -> JsonString
+) -> QuorumResult:
   results: *JsonString
-  on INIT_PEER_ID:                                                  --< 1
-    for uri <- uris par:
-      results <- callFunc(uri, method, jsonArgs, serviceId)         --< 2
-  join results[uris.length - 1]
-  par Peer.timeout(timeout, "")
-  on quorumPeerId: 
+  on HOST_PEER_ID:
+    workers <- getWorkers()
+    for worker <- workers par:                                        --< 1
+      on worker.metadata.peer_id via worker.metadata.relay_id:
+        -- choose provider randomly
+        timeP <- NumOp.identity(Peer.timestamp_ms())
+        providerNumber = timeP % uris.length
+        provider = uris[providerNumber]
+        results <- callFunc(provider, method, jsonArgs)               --< 2
+    -- wait all results from all workers with timeout
+    join results[workers.length - 1]
+    par Peer.timeout(timeout, "")                                     --< 3
+  on quorumPeerId via HOST_PEER_ID:
     Counter quorumServiceId
-    quorumResult <- QuorumChecker.check(results, quorumNumber)
+    -- check all results that we got
+    quorumResult <- QuorumChecker.check(results, quorumNumber)        --< 4
   <- quorumResult
 ```
 
-A quorum, aka "off-chain consensus", "determines" a result by a ranked frequency distribution of the result pool and makes a selection against a quorum threshold value, e.g., 2/3 of items in the results pool must be equal for a quorum result to accepted. Moreover, additional parameters such as minimum number of items in the result pool may be added. 
+A quorum, aka "off-chain consensus", "determines" a result by a ranked frequency distribution of the result pool and makes a selection against a quorum threshold value, e.g., 2/3 of items in the results pool must be equal for a quorum result to accepted. Moreover, additional parameters such as minimum number of items in the result pool may be added. depending on you trust of the peers processing the endpoint requests or even the peer executing the quorum algorithm, additional verification steps may have to be added.
+
+In the fRPC substrate implementation, we provide a basic quorum algo that polls each endpoint in parallel (1) and captures the results in a stream variable (2) and bound the loop with a timeout condition running (3) in parallel to (1). See the [Aqua book](https://fluence.dev/docs/aqua-book/language/flow/parallel#timeout-and-race-patterns) for more details. Finally, we check the results and return the result (4).
+
+
+## Summary
+
+fRPC is a design pattern to efficiently mitigate risks inherent in centralized RPC providers for dApps using Fluence's decentralized serverless compute protocol. fRPC Substrate is a basic implementation of the fRPC design pattern that dApp users can use put of the box with no changes to their frontend. Moreover, Fluence is sponsoring hackathons, like EthDenver 2023, for developers to try the substrate and hack on and expand on the control algorithms provided to serve their needs and provide improvements to the community.
+
+For support, to discuss your ideas or to schedule presenntations of your solutions to the Fluence and fRPC community at large, reach out in [discord]("https://fluence.chat") or [telegram](https://t.me/fluence_project).
+
+Happy Hacking!
