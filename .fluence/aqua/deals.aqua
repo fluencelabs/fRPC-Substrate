@@ -1,0 +1,14 @@
+data GetWorkersInfoDefaultWorker:
+    installationSpells: ?u8
+    definition: string
+    timestamp: string
+    dealIdOriginal: string
+    dealId: string
+    chainNetwork: string
+    chainNetworkId: f64
+
+data GetWorkersInfo:
+    defaultWorker: GetWorkersInfoDefaultWorker
+
+func getWorkersInfo() -> GetWorkersInfo:
+    <- GetWorkersInfo(defaultWorker=GetWorkersInfoDefaultWorker(installationSpells=nil,definition="QmcMxbxh8rHpJAYba78AYGaEw5s5sgMLV4PozbtMxzyzvj",timestamp="2023-02-28T17:05:59.636Z",dealIdOriginal="0x2ed56e62b96fed6DA7455351492435CA56B2E555",dealId="2ed56e62b96fed6da7455351492435ca56b2e555",chainNetwork="testnet",chainNetworkId=80001.0))

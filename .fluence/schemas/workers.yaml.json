@@ -1,0 +1,39 @@
+{
+  "$id": "https://fluence.dev/schemas/workers.yaml",
+  "title": "workers.yaml",
+  "description": "Defines workers and what they consist of. Currently worker includes a set of services that you want to deploy on a particular peer",
+  "type": "object",
+  "properties": {
+    "workers": {
+      "description": "A Map with worker names as keys and worker configs as values",
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "description": "Worker config",
+        "properties": {
+          "services": {
+            "description": "An array of service names to include in this worker. Service names must be listed in fluence.yaml",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "services"
+        ]
+      },
+      "required": []
+    },
+    "version": {
+      "type": "number",
+      "enum": [
+        0
+      ]
+    }
+  },
+  "required": [
+    "version",
+    "workers"
+  ]
+}
