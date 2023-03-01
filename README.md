@@ -24,13 +24,13 @@ Figure 1: Stylized fRPC Workflow With dAPP
     R ->> N: Response or timeout
     alt response
       N ->> G: response to gateway
-      G ->> D: response to dApp  
+      G ->> A: response to dApp  
     else timeout
       loop over endpoint urls
         N ->> R: try another request
         alt response
           N ->> G: response to gateway
-          G ->> D: response to dApp -- break
+          G ->> A: response to dApp -- break
         end
       end
       G ->> G: timeout 
@@ -683,3 +683,7 @@ fRPC is a design pattern to efficiently mitigate risks inherent in centralized R
 For support, to discuss your ideas or to schedule presenntations of your solutions to the Fluence and fRPC community at large, reach out in [discord]("https://fluence.chat") or [telegram](https://t.me/fluence_project).
 
 Happy Hacking!
+
+## Contribution
+
+Found a mistake, inaccuracy or have other improvement suggestions? Open an issue or a pull request! Note that contributions submitted will be licensed according to the terms of [LICENSE]("./LICENSE.md").
