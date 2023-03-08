@@ -5,11 +5,10 @@
 # Documentation: https://github.com/fluencelabs/fluence-cli/tree/main/docs/configs/fluence-lock.md
 
 version: 0
-npm:
-  "@fluencelabs/aqua": 0.10.2
-  "@fluencelabs/aqua-lib": 0.6.0
-  "@fluencelabs/spell": 0.1.0
-  "@fluencelabs/registry": 0.8.1
 cargo:
   marine: 0.12.6
-  mrepl: 0.19.1
+npm:
+  "@fluencelabs/aqua-lib": 0.6.0
+  "@fluencelabs/aqua": 0.10.3
+  "@fluencelabs/spell": 0.4.0
+  "@fluencelabs/registry": 0.8.2
