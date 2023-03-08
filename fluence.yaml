@@ -22,7 +22,7 @@ deals:
   defaultWorker:
     minWorkers: 1
     targetWorkers: 3
-relays: stage
+relays: kras
 services:
   eth_rpc:
     get: wasm-modules/
