@@ -571,6 +571,8 @@ One little command is doing quite a bit so you don't have to. Let's work through
 
 Fluence CLI did a hole bunch of work for us behind the scenes and signing the transaction is a lot quicker than entering (virtual) credit card information. The parametric details necessary to write Aqua scripts are save in [deals.aqua](./.fluence/aqua/deals.aqua) and serves as an important dependency in your Aqua scripts, as we'll see in the next section.
 
+Note that the deal's section in [fluence.yaml](./fluence.yaml) specifies the number of workers that should be deployed specified by *targetWorkers*. The default is three (3) and can be customized. It is important to note that this is a desire not a guarantee as the actual deployment depends on the number of peers willing to participate in the deal. Currently, *all* the testnet peers operate by Fluence will participate in your deal.  
+
 ### fRPC Algorithms
 
 Now that we got our services deployed and ready for action, it's time to look at Aqua, which is utilized by the Gateway to bridge HTTP to/fro libp2p. The fRPC substrate comes with basic implementations of several algorithms useful in mitigating failure as the result of availability and lack of trustlessness with respect to RPC endpoints and possibly peers. Before we dive into the algorithms, let's have a look at the Aqua code and structure.
