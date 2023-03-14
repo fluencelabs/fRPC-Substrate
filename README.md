@@ -97,6 +97,12 @@ Server was started on port 3000
 
 ```
 
+Alternatively, you can run the gateway as a Docker container by running the following commands (must be run from the base of the repo rather than from the *gateway* folder): 
+```
+docker build -t frpc-gateway .
+docker run -p 3000:3000 frpc-gateway
+```
+
 With the gateway ready for action, all you have to do is change your dApps HTTP transport url to `http://127.0.0.1:3000` and keep using your dApp as usual. In the absence of a dAPP, we can interact with the gateway from the command line:
 
 ```bash
@@ -135,7 +141,7 @@ Call will be to : https://frequent-sleek-river.ethereum-goerli.discover.quiknode
 
 ```
 
-Success! Go ahead and replace the `round-robin` mode with the `random` mode in your config file, stop and start the gateway and have a look at the different endpoint management.
+Success! Go ahead and replace the `round-robin` mode with the `random` mode in your config file, stop and start the gateway and have a look at the different endpoint management. Note that if you are using the Docker approach, you will need to re-run the `docker build` and `docker run` commands after making the config file change in order for the change to take effect. 
 
 Congrat's, you just took a major step toward keeping you dAPP decentralized, available and performant! Now it's time to dive into the Fluence protocol and technology stack to learn how to improve upon the basic substrate and compete for hackathon bounties.
 
