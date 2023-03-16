@@ -1,39 +1,138 @@
 {
   "$id": "https://fluence.dev/schemas/workers.yaml",
   "title": "workers.yaml",
-  "description": "Defines workers and what they consist of. Currently worker includes a set of services that you want to deploy on a particular peer",
   "type": "object",
+  "description": "A result of app deployment. This file is created automatically after successful deployment using `fluence workers deploy` command",
   "properties": {
-    "workers": {
-      "description": "A Map with worker names as keys and worker configs as values",
+    "version": {
+      "type": "number",
+      "const": 0
+    },
+    "deals": {
       "type": "object",
+      "description": "A map of created deals",
       "additionalProperties": {
         "type": "object",
-        "description": "Worker config",
         "properties": {
-          "services": {
-            "description": "An array of service names to include in this worker. Service names must be listed in fluence.yaml",
+          "installation_spells": {
+            "type": "array",
+            "description": "A list of installation spells",
+            "items": {
+              "type": "object",
+              "properties": {
+                "host_id": {
+                  "type": "string"
+                },
+                "spell_id": {
+                  "type": "string"
+                },
+                "worker_id": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "host_id",
+                "spell_id",
+                "worker_id"
+              ]
+            }
+          },
+          "definition": {
+            "type": "string"
+          },
+          "timestamp": {
+            "type": "string",
+            "description": "ISO timestamp of the time when the worker was deployed"
+          },
+          "dealId": {
+            "type": "string"
+          },
+          "dealIdOriginal": {
+            "type": "string"
+          },
+          "chainNetwork": {
+            "type": "string",
+            "enum": [
+              "local",
+              "testnet"
+            ]
+          },
+          "chainNetworkId": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "installation_spells",
+          "timestamp",
+          "definition",
+          "dealId",
+          "dealIdOriginal",
+          "chainNetwork",
+          "chainNetworkId"
+        ]
+      },
+      "required": [],
+      "nullable": true
+    },
+    "hosts": {
+      "type": "object",
+      "description": "A map of deployed workers",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "installation_spells": {
+            "type": "array",
+            "description": "A list of installation spells",
+            "items": {
+              "type": "object",
+              "properties": {
+                "host_id": {
+                  "type": "string"
+                },
+                "spell_id": {
+                  "type": "string"
+                },
+                "worker_id": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "host_id",
+                "spell_id",
+                "worker_id"
+              ]
+            }
+          },
+          "definition": {
+            "type": "string"
+          },
+          "timestamp": {
+            "type": "string",
+            "description": "ISO timestamp of the time when the worker was deployed"
+          },
+          "peerIds": {
             "type": "array",
             "items": {
               "type": "string"
             }
+          },
+          "relayId": {
+            "type": "string"
           }
         },
         "required": [
-          "services"
+          "installation_spells",
+          "timestamp",
+          "definition",
+          "peerIds",
+          "relayId"
         ]
       },
-      "required": []
-    },
-    "version": {
-      "type": "number",
-      "enum": [
-        0
-      ]
+      "required": [],
+      "nullable": true
     }
   },
   "required": [
-    "version",
-    "workers"
+    "version"
   ]
 }

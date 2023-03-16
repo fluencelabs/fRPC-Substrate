@@ -107,7 +107,7 @@
             "items": {
               "type": "object",
               "title": "Deployment",
-              "description": "A small config for a particular deployment. You can have specific overrides for each and specific deployment properties like count, distribution, etc.",
+              "description": "A small config for a particular deployment. You can have specific overrides for each and specific deployment properties like count, etc.",
               "properties": {
                 "keyPairName": {
                   "type": "string",
@@ -137,15 +137,6 @@
                   "nullable": true,
                   "title": "Peer ids",
                   "description": "Peer ids or peer id names to deploy to. Overrides \"peerId\" property. Named peerIds can be listed in \"peerIds\" property of fluence.yaml)"
-                },
-                "distribution": {
-                  "type": "string",
-                  "enum": [
-                    "even",
-                    "random"
-                  ],
-                  "nullable": true,
-                  "description": "\"even\" distribution is used by default, means that the services will be deployed evenly across the listed peers. \"random\" distribution means that the services will be deployed randomly across the listed peers."
                 },
                 "overrideModules": {
                   "type": "object",
@@ -274,7 +265,8 @@
           "title": "Multi addresses",
           "items": {
             "type": "string"
-          }
+          },
+          "minItems": 1
         }
       ],
       "nullable": true
@@ -325,17 +317,17 @@
     "aquaInputPath": {
       "type": "string",
       "nullable": true,
-      "description": "Path to the aqua file or directory with aqua files that you want to compile by default"
+      "description": "Path to the aqua file or directory with aqua files that you want to compile by default. Must be relative to the project root dir"
     },
     "aquaOutputTSPath": {
       "type": "string",
       "nullable": true,
-      "description": "Default compilation target dir from aqua to ts"
+      "description": "Path to the default compilation target dir from aqua to ts. Must be relative to the project root dir"
     },
     "aquaOutputJSPath": {
       "type": "string",
       "nullable": true,
-      "description": "Default compilation target dir from aqua to js. Overrides \"aquaOutputTSPath\" property"
+      "description": "Path to the default compilation target dir from aqua to js. Must be relative to the project root dir. Overrides 'aquaOutputTSPath' property"
     },
     "appTSPath": {
       "type": "string",

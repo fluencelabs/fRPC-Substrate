@@ -328,7 +328,7 @@ version: 0
 keyPairs: []
 ```
 
-#### deployed.yaml
+#### workers.yaml
 
 This file, also localted in the project *.fluence* directory,  holds all the deployment information necessary to track your distributed resources both on- and off-chain.
 
@@ -582,7 +582,7 @@ Now that we got our services deployed and ready for action, it's time to look at
 ```aqua
 -- rpc.aqua
 import "@fluencelabs/aqua-lib/builtin.aqua"
-import "deals.aqua"
+import "workers.aqua"
 import "services.aqua"
 import "@fluencelabs/registry/subnetwork.aqua"
 import Registry, Record from "@fluencelabs/registry/registry-service.aqua"

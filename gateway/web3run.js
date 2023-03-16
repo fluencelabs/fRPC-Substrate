@@ -6,7 +6,7 @@ async function main() {
     const bn = await web3.eth.getBlockNumber()
     console.log(bn)
 
-    const resp = await web3.eth.getTransaction("0x8bad403edde37642e4dab6c91eeca77b979fce1c979c14ca8755f5c3573eaeb4")
+    const resp = await web3.eth.getTransaction("0x538d389383f069cce103a2aad905815dbff1dce88eeef07a3e8f2d4348a6353e")
     console.log(resp)
 }
 
