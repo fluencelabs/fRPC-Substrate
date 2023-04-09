@@ -14,4 +14,4 @@ data GetWorkersInfo:
     hosts: ?u8
 
 func getWorkersInfo() -> GetWorkersInfo:
-    <- GetWorkersInfo(deals=GetWorkersInfoDeals(defaultWorker=GetWorkersInfoDealsDefaultWorker(definition="bafkreigy5m3hh3phuopu3ss3b5cbw5tizhi27d6vf7ckfeptahvynlzgxi",timestamp="2023-04-09T06:21:36.559Z",dealIdOriginal="0xF8B17fbC8d416845a9e1d0A6b513CC89e87a154a",dealId="f8b17fbc8d416845a9e1d0a6b513cc89e87a154a",chainNetwork="testnet",chainNetworkId=80001.0)),hosts=nil)
+    <- GetWorkersInfo(deals=GetWorkersInfoDeals(defaultWorker=GetWorkersInfoDealsDefaultWorker(definition="bafkreigy5m3hh3phuopu3ss3b5cbw5tizhi27d6vf7ckfeptahvynlzgxi",timestamp="2023-04-09T07:26:34.351Z",dealIdOriginal="0x1604975c582c6f0f1eb639312cdA368f4F017E3c",dealId="1604975c582c6f0f1eb639312cda368f4f017e3c",chainNetwork="testnet",chainNetworkId=80001.0)),hosts=nil)
