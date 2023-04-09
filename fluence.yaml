@@ -10,11 +10,11 @@ dependencies:
   npm:
     "@fluencelabs/aqua-lib": 0.6.0
     "@fluencelabs/aqua": 0.10.3
-    "@fluencelabs/spell": 0.4.0
-    "@fluencelabs/registry": 0.8.2
+    "@fluencelabs/spell": 0.5.7
+    "@fluencelabs/registry": 0.8.3
   cargo:
-    marine: 0.12.6
-    mrepl: 0.19.1
+    marine: 0.14.1
+    mrepl: 0.21.3
 workers:
   defaultWorker:
     services: [ eth_rpc ]
@@ -22,6 +22,11 @@ deals:
   defaultWorker:
     minWorkers: 1
     targetWorkers: 3
+hosts:
+  defaultWorker:
+    peerIds:
+      -  12D3KooWFtf3rfCDAfWwt6oLZYZbDfn9Vn7bv7g6QjjQxUUEFVBt
+      # - 12D3KooWJ4bTHirdTFNZpCS72TAzwtdmavTBkkEXtzo6wHL25CtE
 relays: kras
 services:
   eth_rpc:

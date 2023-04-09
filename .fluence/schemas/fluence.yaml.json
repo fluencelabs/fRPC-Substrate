@@ -23,20 +23,10 @@
               "title": "Module overrides",
               "description": "Module names as keys and overrides for the module config as values",
               "properties": {
-                "type": {
+                "get": {
                   "type": "string",
-                  "enum": [
-                    "rust",
-                    "compiled"
-                  ],
                   "nullable": true,
-                  "default": "compiled",
-                  "description": "Module type \"compiled\" is for the precompiled modules. Module type \"rust\" is for the source code written in rust which can be compiled into a Marine module"
-                },
-                "name": {
-                  "type": "string",
-                  "description": "\"name\" property from the Cargo.toml (for module type \"rust\") or name of the precompiled .wasm file (for module type \"compiled\")",
-                  "nullable": true
+                  "description": "Path to module directory or URL to the tar.gz archive with the module"
                 },
                 "maxHeapSize": {
                   "type": "string",
@@ -58,16 +48,7 @@
                   "nullable": true,
                   "required": [],
                   "title": "Volumes",
-                  "description": "A map of accessible files and their aliases. Aliases should be used in Marine module development because it's hard to know the full path to a file. (This property replaces the legacy \"mapped_dirs\" property so there is no need to duplicate the same paths in \"preopenedFiles\" dir)"
-                },
-                "preopenedFiles": {
-                  "type": "array",
-                  "title": "Preopened files",
-                  "description": "A list of files and directories that this module could access with WASI",
-                  "items": {
-                    "type": "string"
-                  },
-                  "nullable": true
+                  "description": "A map of accessible files and their aliases. Aliases should be used in Marine module development because it's hard to know the full path to a file"
                 },
                 "envs": {
                   "type": "object",
@@ -82,15 +63,6 @@
                   "nullable": true,
                   "required": [],
                   "description": "A map of binary executable files that module is allowed to call. Example: curl: /usr/bin/curl"
-                },
-                "version": {
-                  "type": "number",
-                  "const": 0
-                },
-                "get": {
-                  "type": "string",
-                  "nullable": true,
-                  "description": "Path to module directory or URL to the tar.gz archive with the module"
                 }
               },
               "required": [],
@@ -107,7 +79,7 @@
             "items": {
               "type": "object",
               "title": "Deployment",
-              "description": "A small config for a particular deployment. You can have specific overrides for each and specific deployment properties like count, distribution, etc.",
+              "description": "A small config for a particular deployment. You can have specific overrides for each and specific deployment properties like count, etc.",
               "properties": {
                 "keyPairName": {
                   "type": "string",
@@ -138,15 +110,6 @@
                   "title": "Peer ids",
                   "description": "Peer ids or peer id names to deploy to. Overrides \"peerId\" property. Named peerIds can be listed in \"peerIds\" property of fluence.yaml)"
                 },
-                "distribution": {
-                  "type": "string",
-                  "enum": [
-                    "even",
-                    "random"
-                  ],
-                  "nullable": true,
-                  "description": "\"even\" distribution is used by default, means that the services will be deployed evenly across the listed peers. \"random\" distribution means that the services will be deployed randomly across the listed peers."
-                },
                 "overrideModules": {
                   "type": "object",
                   "title": "Overrides",
@@ -156,20 +119,10 @@
                     "title": "Module overrides",
                     "description": "Module names as keys and overrides for the module config as values",
                     "properties": {
-                      "type": {
+                      "get": {
                         "type": "string",
-                        "enum": [
-                          "rust",
-                          "compiled"
-                        ],
                         "nullable": true,
-                        "default": "compiled",
-                        "description": "Module type \"compiled\" is for the precompiled modules. Module type \"rust\" is for the source code written in rust which can be compiled into a Marine module"
-                      },
-                      "name": {
-                        "type": "string",
-                        "description": "\"name\" property from the Cargo.toml (for module type \"rust\") or name of the precompiled .wasm file (for module type \"compiled\")",
-                        "nullable": true
+                        "description": "Path to module directory or URL to the tar.gz archive with the module"
                       },
                       "maxHeapSize": {
                         "type": "string",
@@ -191,16 +144,7 @@
                         "nullable": true,
                         "required": [],
                         "title": "Volumes",
-                        "description": "A map of accessible files and their aliases. Aliases should be used in Marine module development because it's hard to know the full path to a file. (This property replaces the legacy \"mapped_dirs\" property so there is no need to duplicate the same paths in \"preopenedFiles\" dir)"
-                      },
-                      "preopenedFiles": {
-                        "type": "array",
-                        "title": "Preopened files",
-                        "description": "A list of files and directories that this module could access with WASI",
-                        "items": {
-                          "type": "string"
-                        },
-                        "nullable": true
+                        "description": "A map of accessible files and their aliases. Aliases should be used in Marine module development because it's hard to know the full path to a file"
                       },
                       "envs": {
                         "type": "object",
@@ -215,15 +159,6 @@
                         "nullable": true,
                         "required": [],
                         "description": "A map of binary executable files that module is allowed to call. Example: curl: /usr/bin/curl"
-                      },
-                      "version": {
-                        "type": "number",
-                        "const": 0
-                      },
-                      "get": {
-                        "type": "string",
-                        "nullable": true,
-                        "description": "Path to module directory or URL to the tar.gz archive with the module"
                       }
                     },
                     "required": [],
@@ -274,7 +209,8 @@
           "title": "Multi addresses",
           "items": {
             "type": "string"
-          }
+          },
+          "minItems": 1
         }
       ],
       "nullable": true
@@ -325,17 +261,17 @@
     "aquaInputPath": {
       "type": "string",
       "nullable": true,
-      "description": "Path to the aqua file or directory with aqua files that you want to compile by default"
+      "description": "Path to the aqua file or directory with aqua files that you want to compile by default. Must be relative to the project root dir"
     },
     "aquaOutputTSPath": {
       "type": "string",
       "nullable": true,
-      "description": "Default compilation target dir from aqua to ts"
+      "description": "Path to the default compilation target dir from aqua to ts. Must be relative to the project root dir"
     },
     "aquaOutputJSPath": {
       "type": "string",
       "nullable": true,
-      "description": "Default compilation target dir from aqua to js. Overrides \"aquaOutputTSPath\" property"
+      "description": "Path to the default compilation target dir from aqua to js. Must be relative to the project root dir. Overrides 'aquaOutputTSPath' property"
     },
     "appTSPath": {
       "type": "string",
@@ -381,12 +317,19 @@
             "type": "array",
             "items": {
               "type": "string"
-            }
+            },
+            "nullable": true
+          },
+          "spells": {
+            "description": "An array of spell names to include in this worker. Spell names must be listed in fluence.yaml",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
           }
         },
-        "required": [
-          "services"
-        ]
+        "required": []
       },
       "required": []
     },
@@ -425,6 +368,83 @@
       ],
       "default": "testnet",
       "nullable": true
+    },
+    "spells": {
+      "type": "object",
+      "nullable": true,
+      "description": "A map with spell names as keys and spell configs as values",
+      "additionalProperties": {
+        "type": "object",
+        "description": "Spell config",
+        "properties": {
+          "get": {
+            "type": "string",
+            "description": "Path to spell"
+          },
+          "version": {
+            "type": "number",
+            "const": 0
+          },
+          "aquaFilePath": {
+            "type": "string",
+            "description": "Path to Aqua file which contains an Aqua function that you want to use as a spell",
+            "nullable": true
+          },
+          "function": {
+            "type": "string",
+            "description": "Name of the Aqua function that you want to use as a spell",
+            "nullable": true
+          },
+          "initArgs": {
+            "type": "object",
+            "description": "A map of Aqua function arguments names as keys and arguments values as values. They will be passed to the spell function and will be stored in the key-value storage for this particular spell.",
+            "nullable": true
+          },
+          "clock": {
+            "type": "object",
+            "nullable": true,
+            "description": "Trigger the spell execution periodically. If you want to disable this property by overriding it in fluence.yaml - pass empty config for it like this: `clock: {}`",
+            "properties": {
+              "periodSec": {
+                "type": "number",
+                "description": "How often the spell will be executed. If set to 0, the spell will be executed only once. If this value not provided at all - the spell will never be executed",
+                "minimum": 0,
+                "maximum": 3153600000,
+                "nullable": true
+              },
+              "startTimestamp": {
+                "type": "string",
+                "description": "An ISO timestamp when the periodic execution should start. If this property or `startDelaySec` not specified, periodic execution will start immediately. If it is set to 0 - the spell will never be executed",
+                "nullable": true
+              },
+              "endTimestamp": {
+                "type": "string",
+                "description": "An ISO timestamp when the periodic execution should end. If this property or `endDelaySec` not specified, periodic execution will never end. If it is in the past at the moment of spell creation on Rust peer - the spell will never be executed",
+                "nullable": true
+              },
+              "startDelaySec": {
+                "type": "number",
+                "description": "How long to wait before the first execution in seconds. If this property or `startTimestamp` not specified, periodic execution will start immediately. WARNING! Currently your computer's clock is used to determine a final timestamp that is sent to the server. This property conflicts with `startTimestamp`. You can specify only one of them",
+                "nullable": true,
+                "minimum": 0,
+                "maximum": 4294967295
+              },
+              "endDelaySec": {
+                "type": "number",
+                "description": "How long to wait before the last execution in seconds. If this property or `endTimestamp` not specified, periodic execution will never end. WARNING! Currently your computer's clock is used to determine a final timestamp that is sent to the server. If it is in the past at the moment of spell creation - the spell will never be executed. This property conflicts with `endTimestamp`. You can specify only one of them",
+                "nullable": true,
+                "minimum": 0,
+                "maximum": 4294967295
+              }
+            },
+            "required": []
+          }
+        },
+        "required": [
+          "get"
+        ]
+      },
+      "required": []
     }
   },
   "required": [

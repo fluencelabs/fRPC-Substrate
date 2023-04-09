@@ -2,7 +2,7 @@
   "type": "object",
   "$id": "https://fluence.dev/schemas/service.yaml",
   "title": "service.yaml",
-  "description": "Defines a [Marine service](https://fluence.dev/docs/build/concepts/#services), most importantly the modules that the service consists of. For Fluence CLI, **service** - is a directory which contains this config. You can use `fluence service new` command to generate a template for new service",
+  "description": "Defines a [Marine service](https://fluence.dev/docs/build/concepts/#services), most importantly the modules that the service consists of. You can use `fluence service new` command to generate a template for new service",
   "properties": {
     "name": {
       "type": "string",
@@ -16,20 +16,9 @@
         "type": "object",
         "title": "Module",
         "properties": {
-          "type": {
+          "get": {
             "type": "string",
-            "enum": [
-              "rust",
-              "compiled"
-            ],
-            "nullable": true,
-            "default": "compiled",
-            "description": "Module type \"compiled\" is for the precompiled modules. Module type \"rust\" is for the source code written in rust which can be compiled into a Marine module"
-          },
-          "name": {
-            "type": "string",
-            "description": "\"name\" property from the Cargo.toml (for module type \"rust\") or name of the precompiled .wasm file (for module type \"compiled\")",
-            "nullable": true
+            "description": "Either path to the module directory or URL to the tar.gz archive which contains the content of the module directory"
           },
           "maxHeapSize": {
             "type": "string",
@@ -51,16 +40,7 @@
             "nullable": true,
             "required": [],
             "title": "Volumes",
-            "description": "A map of accessible files and their aliases. Aliases should be used in Marine module development because it's hard to know the full path to a file. (This property replaces the legacy \"mapped_dirs\" property so there is no need to duplicate the same paths in \"preopenedFiles\" dir)"
-          },
-          "preopenedFiles": {
-            "type": "array",
-            "title": "Preopened files",
-            "description": "A list of files and directories that this module could access with WASI",
-            "items": {
-              "type": "string"
-            },
-            "nullable": true
+            "description": "A map of accessible files and their aliases. Aliases should be used in Marine module development because it's hard to know the full path to a file"
           },
           "envs": {
             "type": "object",
@@ -75,14 +55,6 @@
             "nullable": true,
             "required": [],
             "description": "A map of binary executable files that module is allowed to call. Example: curl: /usr/bin/curl"
-          },
-          "version": {
-            "type": "number",
-            "const": 0
-          },
-          "get": {
-            "type": "string",
-            "description": "Either path to the module directory or URL to the tar.gz archive which contains the content of the module directory"
           }
         },
         "required": [
@@ -94,20 +66,9 @@
           "type": "object",
           "title": "Module",
           "properties": {
-            "type": {
+            "get": {
               "type": "string",
-              "enum": [
-                "rust",
-                "compiled"
-              ],
-              "nullable": true,
-              "default": "compiled",
-              "description": "Module type \"compiled\" is for the precompiled modules. Module type \"rust\" is for the source code written in rust which can be compiled into a Marine module"
-            },
-            "name": {
-              "type": "string",
-              "description": "\"name\" property from the Cargo.toml (for module type \"rust\") or name of the precompiled .wasm file (for module type \"compiled\")",
-              "nullable": true
+              "description": "Either path to the module directory or URL to the tar.gz archive which contains the content of the module directory"
             },
             "maxHeapSize": {
               "type": "string",
@@ -129,16 +90,7 @@
               "nullable": true,
               "required": [],
               "title": "Volumes",
-              "description": "A map of accessible files and their aliases. Aliases should be used in Marine module development because it's hard to know the full path to a file. (This property replaces the legacy \"mapped_dirs\" property so there is no need to duplicate the same paths in \"preopenedFiles\" dir)"
-            },
-            "preopenedFiles": {
-              "type": "array",
-              "title": "Preopened files",
-              "description": "A list of files and directories that this module could access with WASI",
-              "items": {
-                "type": "string"
-              },
-              "nullable": true
+              "description": "A map of accessible files and their aliases. Aliases should be used in Marine module development because it's hard to know the full path to a file"
             },
             "envs": {
               "type": "object",
@@ -153,14 +105,6 @@
               "nullable": true,
               "required": [],
               "description": "A map of binary executable files that module is allowed to call. Example: curl: /usr/bin/curl"
-            },
-            "version": {
-              "type": "number",
-              "const": 0
-            },
-            "get": {
-              "type": "string",
-              "description": "Either path to the module directory or URL to the tar.gz archive which contains the content of the module directory"
             }
           },
           "required": [

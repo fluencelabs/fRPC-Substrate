@@ -1,0 +1,10 @@
+[[module]]
+name = "curl_adapter"
+load_from = "/Users/bebo/localdev/fRPC-Substrate/target/wasm32-wasi/release/curl_adapter.wasm"
+
+  [module.mounted_binaries]
+  curl = "/usr/bin/curl"
+
+[[module]]
+name = "eth_rpc"
+load_from = "/Users/bebo/localdev/fRPC-Substrate/target/wasm32-wasi/release/eth_rpc.wasm"
