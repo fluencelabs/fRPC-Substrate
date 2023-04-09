@@ -55,7 +55,7 @@ npm i
 If you don't have Fluence CLI installed, do:
 
 ```bash
-npm -g i @fluencelabs/cli@latest
+npm -g i @fluencelabs/cli@0.4.3
 ```
 
 Before you proceed, you  should have, say, three RPC endpoint urls, e.g., Infura, Alchemy and QuickNode, for the same EVM-based chain you are using in your dAPP. Update the `configs/quickstart_config.json` by providing your endpoint urls and ignore the rest of the parameters for now:
@@ -256,19 +256,24 @@ aquaInputPath: src/aqua/main.aqua             # path where to look for default a
 dependencies:
   npm:                                        # js dependencies
     "@fluencelabs/aqua-lib": 0.6.0
-    "@fluencelabs/aqua": 0.10.2
-    "@fluencelabs/spell": 0.1.0
-    "@fluencelabs/registry": 0.8.1
+    "@fluencelabs/aqua": 0.10.3
+    "@fluencelabs/spell": 0.5.7
+    "@fluencelabs/registry": 0.8.3
   cargo:                                      # rust dependencies
-    marine: 0.12.6
-    mrepl: 0.19.1
+    marine: 0.14.1
+    mrepl: 0.21.3
 workers:                                      # worker settings for deploy
   defaultWorker:
     services: [ eth_rpc ]
 deals:                                        # deal settings for deploy
   defaultWorker:
     minWorkers: 1                             # default min worker settings -- you want your service deployed ot at least 1 worker
-    targetWorkers: 3                          # default max worker settings -- you want your service deployed ot at least 3 workers  
+    targetWorkers: 3                          # default max worker settings -- you want your service deployed ot at least 3 workers 
+hosts:
+  defaultWorker:
+    peerIds:
+      - 12D3KooWJ4bTHirdTFNZpCS72TAzwtdmavTBkkEXtzo6wHL25CtE
+
 relays: stage                                 # Name of Fluence network used
 services: 
   eth_rpc:                                    # service name
@@ -328,25 +333,20 @@ version: 0
 keyPairs: []
 ```
 
-#### deployed.yaml
+#### workers.yaml
 
-This file, also localted in the project *.fluence* directory,  holds all the deployment information necessary to track your distributed resources both on- and off-chain.
+This file, also located in the project *.fluence* directory,  holds all the deployment information necessary to track your distributed resources both on- and off-chain.
 
 ```yaml
 version: 0
-workers:
-  {
-    defaultWorker:
-      {
-        installation_spells: [],                                          # ignore for now
-        definition: Qmcvoi6tZeBEkva2yn7cXJd8GiocKmkuzuz8L9VtfNdSG2,       # CID
-        timestamp: 2023-02-27T13:51:14.618Z,
-        dealIdOriginal: "0x0CC9E494CaFDea602b09013a8743012Ce720def2",     #  Original deal id 
-        dealId: 0cc9e494cafdea602b09013a8743012ce720def2,                 # current deal id which may change after deal update 
-        chainNetwork: testnet,                                            # Fluence on-chain network alias
-        chainNetworkId: 80001                                             # Fluence on-chain chain id 
-      }
-  }
+deals:
+  defaultWorker:
+    definition: Qmcvoi6tZeBEkva2yn7cXJd8GiocKmkuzuz8L9VtfNdSG2,       # CID
+    timestamp: 2023-04-09T06:21:36.559Z,
+    dealIdOriginal: "0x0CC9E494CaFDea602b09013a8743012Ce720def2",     #  Original deal id 
+    dealId: 0cc9e494cafdea602b09013a8743012ce720def2,                 # current deal id which may change after deal update 
+    chainNetwork: testnet,                                            # Fluence on-chain network alias
+    chainNetworkId: 80001                                             # Fluence on-chain chain id 
 ```
 
 See [FLuence CLI](https://github.com/fluencelabs/fluence-cli) for more details. For implementing your business logic with Rust and compiling it to wasm32-wasi, aka Wasm, module(s), see the [Marine book](https://fluence.dev/docs/marine-book/introduction). To learn more about distributed choreography and composition of services, see the [Aqua book](https://fluence.dev/docs/aqua-book/introduction).
@@ -507,13 +507,11 @@ With a service, in this case the *eth-rpc* service, ready for deployment, we sim
 
 ```bash
 fluence deal deploy
+Connecting to: /dns4/kras-00.fluence.dev/tcp/19990/wss/p2p/12D3KooWSD5PToNiLQwKDXsu8JSysCwUt8BVUJEqCHcDe7P5h45e
 
-# 1 compile assets
-   Compiling proc-macro2 v1.0.51
-   <...>
-   Compiling web3 v0.18.0
-   Compiling eth_rpc v0.1.0 (/Users/bebo/localdev/fRPC-demo/wasm-modules/eth-rpc)
-    Finished release [optimized] target(s) in 28.32s
+# 1 if Deal is already in place update or create new Deal?
+? Do you want to redeploy worker defaultWorker Yes
+    Finished release [optimized] target(s) in 0.22s
 
 # 2 upload packaged assets
 ipfs: did pin QmTvNwBeDop1yD9dLNjgrzfBMsgtrBmD859ahqQS1EWhbj to /dns4/ipfs.fluence.dev/tcp/5001
@@ -527,35 +525,31 @@ ipfs: file QmP5nxY7nFdYw3PxUUbHe2yfHui9t2sGPpSeiSs1QNwFwK pinned to /dns4/ipfs.f
 ipfs: did pin QmVsTtmsUF66raAdmCdbdvJXWZW69QoqJ2iMffvxaXHgAQ to /dns4/ipfs.fluence.dev/tcp/5001
 ipfs: file QmVsTtmsUF66raAdmCdbdvJXWZW69QoqJ2iMffvxaXHgAQ pinned to /dns4/ipfs.fluence.dev/tcp/5001
 
-# 3 process upload responses for local updates
-log: [
-  'deployed workers',
-  [
-    {
-      definition: 'QmVsTtmsUF66raAdmCdbdvJXWZW69QoqJ2iMffvxaXHgAQ',
-      installation_spells: [],
-      name: 'defaultWorker'
-    }
-  ]
-]
+# 3 process upload responses for local updates in workers.yaml
+Updating deal for worker defaultWorker
 
-# 4 if Deal is already in place update or create new Deal?
-? There is a previously deployed deal for worker defaultWorker on network testnet. Do you want to update this existing deal?
-No
+# 4 request signing of escrow payment transaction
 
-Creating deal for worker defaultWorker
+# Connecting to wallet......
+To approve transactions to your wallet using metamask, open the following url:
 
-# 5 request signing of escrow payment transaction
-To approve transactions with your to your wallet using metamask, open the following url:
-
-https://cli-connector.fluence.dev/?wc=6db18e37-90cc-4977-bee9-892676c1e218%401&bridge=https%3A%2F%2Fu.bridge.walletconnect.org&key=5d31de7d9c7f4cbe26032a1eaa4a7cbe5a55ed88df3073dfe5dd084cd5f80539
+https://cli-connector.fluence.dev/?wc=09bb4a3...d%402&relay-protocol=irn&symKey=d62...7c
 
 or go to https://cli-connector.fluence.dev and enter the following connection string there:
 
-wc:6db18e37-90cc-4977-bee9-892676c1e218@1?bridge=https%3A%2F%2Fu.bridge.walletconnect.org&key=5d31de7d9c7f4cbe26032a1eaa4a7cbe5a55ed88df3073dfe5dd084cd5f80539
+wc:09bb4a39...43d@2?relay-protocol=irn&symKey=d62...e7c
 
-# 6 if escrow payment is processed, deal deployment is finalized
-Deploy completed successfully
+Confirm transaction in your wallet...
+# Waiting for transaction to be mined......
+
+# 5 if escrow payment is processed, deal deployment is finalized
+Success!
+
+updated deals:
+  defaultWorker:
+    deal: https://mumbai.polygonscan.com/address/0xF8B17fbC...89e87a154a
+    old worker definition: QmRtPPAJP...RwgGZuAs
+    new worker definition: bafkreigy...lzgxi
 ```
 
 One little command is doing quite a bit so you don't have to. Let's work through the process:
