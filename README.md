@@ -46,7 +46,7 @@ Upcoming Fluence hackathons with fRPC bounties:
 
 ## Quickstart
 
-Clone the repo, if you haven't done so already, and in the *gateway* directory, install the dependencies:
+Clone the repo, if you haven't done so already, and in the `/gateway` directory, install the dependencies:
 
 ```bash
 npm i
@@ -57,8 +57,9 @@ If you don't have Fluence CLI installed, do:
 ```bash
 npm -g i @fluencelabs/cli@0.4.3
 ```
+*Note: @fluencelabs/cli require node version 16.x.x not higher*
 
-Before you proceed, you  should have, say, three RPC endpoint urls, e.g., Infura, Alchemy and QuickNode, for the same EVM-based chain you are using in your dAPP. Update the `configs/quickstart_config.json` by providing your endpoint urls and ignore the rest of the parameters for now:
+Before you proceed, you  should have, say, three RPC endpoint urls, e.g., Infura, Alchemy and QuickNode, for the same EVM-based chain you are using in your dAPP. Update the `/gateway/configs/quickstart_config.json` by providing your endpoint urls and ignore the rest of the parameters for now:
 
 ```json
 {
@@ -83,6 +84,8 @@ Now start the gateway:
 
 ```bash
 npm run run configs/quickstart_config.json
+```
+```bash
 > @fluencelabs/aqua-eth-gateway@0.0.11 run
 > fluence aqua -i aqua/ -o aqua-compiled/ --js && node src/index.js configs/my_quickstart_config.json
 
