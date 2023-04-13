@@ -1371,9 +1371,9 @@ checksum = "3e2e65a1a2e43cfcb47a895c4c8b10d1f4a61097f9f254f183aee60cad9c651d"
 
 [[package]]
 name = "marine-build-rs-generator"
-version = "0.9.0"
+version = "0.9.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e4558590a28ab5e801707fc7f333b00917965e32b776f36d5554a340de55ad50"
+checksum = "a36d5f557a1983b71d2a7daec70078257868e6c10c9c9435b65fc26fc9beea13"
 dependencies = [
  "marine-test-macro-impl",
 ]
@@ -1544,9 +1544,9 @@ dependencies = [
 
 [[package]]
 name = "marine-rs-sdk-test"
-version = "0.9.0"
+version = "0.9.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a98def87c931ecbd240a5f5faf0e8a69ffeaf5fd8feafb78d321f55b653b6365"
+checksum = "916b81e8a804b78429331bd8ddb7207f9bea9ade4065d335d31fa3db36a082bf"
 dependencies = [
  "fluence-app-service",
  "marine-build-rs-generator",
@@ -1587,9 +1587,9 @@ dependencies = [
 
 [[package]]
 name = "marine-test-macro"
-version = "0.9.0"
+version = "0.9.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "48a22ad5ffd4573be447e3862948c6b48022b23368f2b734ceb2aea92ed178e8"
+checksum = "dea9808bcabbc43bd9fdbf74e4d6f03f1cef252ab422933beab4083acc12136c"
 dependencies = [
  "marine-test-macro-impl",
  "proc-macro-error",
@@ -1600,9 +1600,9 @@ dependencies = [
 
 [[package]]
 name = "marine-test-macro-impl"
-version = "0.9.0"
+version = "0.9.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ee61fffb5e7af2774b494480d7fbe898c7d48c81d30e155c88190cc7dab6dd31"
+checksum = "e53da2a35d049f7e44d2cca46baba6ca0e240c59775042b86b9d7001e4eb679f"
 dependencies = [
  "darling",
  "fluence-app-service",
