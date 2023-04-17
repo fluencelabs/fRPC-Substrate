@@ -6,10 +6,11 @@ Running blockchain nodes to support your dApps' read and write requirements to/f
 
 To accelerate dApp developers ability to utilize decentralized RPC in their dApps, Fluence is providing a decentralized RPC (fRPC) substrate, i.e., a starter kit that includes a gateway to bridge HTTP and Aqua, a Wasm service to connect to RPC endpoints and Aqua scripts implementing basic availability, failover and verification algorithms. See Figure 1.
 
-Figure 1: Stylized fRPC Workflow With dAPP
+### Figure 1: Stylized fRPC Workflow With dAPP
 
 ```mermaid
     sequenceDiagram
+    title: Figure 1: Stylized fRPC Workflow With dAPP
 
     participant A as dAPP
     participant G as fRPC Gateway
@@ -153,6 +154,7 @@ Fluence's decentralized serverless protocol and solution stack allows developers
 
 With a Deal in place, resource owners, i.e., owner/operators of one or more peer, make a decision whether to host the service and if so, participate in the Deal by providing a stake to the Deal contract and pulling the corresponding service assets required for hosting from IPFS. As a matter of fact, peers utilize [Workers](https://fluence.dev/docs/build/glossary#worker), omitted from Figure 2 for simplicity reasons, to implement their side of a Deal. See Figure 2.
 
+### Figure 2: Stylized Deal Creation For Service Deployment
 ```mermaid
 
 sequenceDiagram
