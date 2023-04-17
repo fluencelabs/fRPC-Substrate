@@ -109,8 +109,9 @@ curl http://127.0.0.1:3000  \
     -d '{"jsonrpc":"2.0","method":"eth_blockNumber","params": [],"id":100}'
 
 {"jsonrpc":"2.0","id":100,"result":"0x82b950"
-
-# with the corresponding gateway log output
+```
+with the corresponding gateway log output
+```baash
 Receiving request 'eth_blockNumber'
 peerId: 12D3KooWKDnWpCLPJrycSevracdEgGznfDPwG1g5CWbt8uccdL79
 Counter: 1
@@ -127,9 +128,9 @@ curl http://127.0.0.1:3000  \
     -d '{"jsonrpc":"2.0","method":"eth_blockNumber","params": [],"id":100}'
 
 {"jsonrpc":"2.0","id":100,"result":"0x82b956"
-
-# with the corresponding gateway log output
-
+```
+with the corresponding gateway log output
+```baash
 Receiving request 'eth_blockNumber'
 peerId: 12D3KooWKDnWpCLPJrycSevracdEgGznfDPwG1g5CWbt8uccdL79
 Counter: 2
@@ -206,7 +207,7 @@ To get going, you need to install and setup a few dependencies.
 * [Rust](https://www.rust-lang.org/tools/install) (optional; Fluence CLI will install if not already in your environment)
 * For VSCode, there is a helpful [Aqua language support](https://marketplace.visualstudio.com/items?itemName=FluenceLabs.aqua) package available
 
-**Note** that Fluence CLI installs missing dependencies as neededs ("lazy install"). If you want all your dependencies installed at once, use the `fluence dependencies i` command.
+**Note** that Fluence CLI installs missing dependencies as neededs ("lazy install"). If you want all your dependencies installed at once, use the `fluence dependency i` command.
 
 ### On-chain Dependencies
 
@@ -477,7 +478,7 @@ result: {
 3>
 ```
 
-The *i* command lists all the exported interfaces from the wasm modules in Aqua instead of Rust notation. In *expoerted* functions you seee the module namespace, e.g., *curl_adapter* , and exported functions, e.g., *curl_request*. To execute a function, use `call <namespace> <function name> [<parameters>]`.
+The `interface` command lists all the exported interfaces from the wasm modules in Aqua instead of Rust notation. In *expoerted* functions you seee the module namespace, e.g., *curl_adapter* , and exported functions, e.g., *curl_request*. To execute a function, use `call <namespace> <function name> [<parameters>]`.
 
 ### Adding Modules To A Service
 
@@ -495,7 +496,7 @@ Which created a Rust project in the *wasm-module/demo-module* directory ready fo
 
 ```bash
 fluence module add
-? Enter path to a module or url to .tar.gz archive wasm-modules/demo
+? Enter path to a module or url to .tar.gz archive wasm-modules/demo-module
 ? Enter service name from fluence.yaml or path to the service directory wasm-modules
 Added demo to ~/localdev/fRPC-Substrate/wasm-modules/service.yaml
 ```
