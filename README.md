@@ -208,15 +208,15 @@ To get going, you need to install and setup a few dependencies.
 ### On-chain Dependencies
 
 * Wallectconnect compatible wallet, e.g., MetaMask, setup for and funded with:
-  * [Polygon](https://polygon.technology/) [Mumbai testnet](https://chainlist.org/?testnets=true&search=mumbai)
-  * [MATIC testnet faucet](https://faucet.polygon.technology/) or [alterantive faucet](https://mumbaifaucet.com/)
+  * [Aurora testnet](https://chainlist.org/chain/1313161555) parameters
+  * [Aurora faucet](https://aurora.dev/faucet)
   * [Fluence USDC testnet faucet](https://faucet.fluence.dev/)
 
-You will need  Mumbai (testnet) MATIC and Fluence (testnet) USDC. This is as good a time as any to head over to those faucets and get your allocations. As an experienced Web3 dev, you know it's god hygiene to set up a new account, say, fRPC-dev, for the Mumbai testnet and testnet tokens.
+You will need  Aurora (testnet) ETH and Fluence (testnet) USDC. This is as good a time as any to head over to those faucets and get your allocations. As an experienced Web3 dev, you know it's god hygiene to set up a new account, say, fRPC-dev, for the Aurora testnet and testnet tokens.
 
 ### RPC Endpoints
 
-Since fRPC works with existing centralized or self-hosted RPC providers, you want at least three provider urls with appended API keys to *the* chain of your choice. Multi-chain support is currently not supported by fRPC SUbstrate (hint, hint to all you hackathoners). For Ethereum's Goerli testnet, for example:
+Since fRPC works with existing centralized or self-hosted RPC providers, you want at least three provider urls with appended API keys to *the* chain of your choice. Multi-chain support is currently not supported by fRPC Substrate (hint, hint to all you hackathoners). For Ethereum's Goerli testnet, for example:
 
 * Infura: https://goerli.infura.io/v3/<your key>
 * Alchemy: https://eth-goerli.g.alchemy.com/v2/<your key>
@@ -391,7 +391,7 @@ In order to use the fRPC substrate out-of-the-box or after customization, you ne
 
 ### fRPC Wasm Components
 
-fRPC Substrate comes with one *service* comprised of two Wasm modules, which you can find in the [wasm-modules]("./wasm-modules/") directory. The service is called 'eth_rpc' and the included modules are a [curl_adapater]("./../wasm-modules/curl-adapter") and ["eth_rpc]("./../wasm-modules/eth-rpc"). The *curl_adapter* module is a generic, re-usable module allowing access a peer's curl binary, if permissioned by the peer, and exposes the *curl_request* function. Any modules requiring curl access may use the curl_adapter modules via [FFI linking](https://doc.rust-lang.org/nomicon/ffi.html) with the *curl_request* function.
+fRPC Substrate comes with one *service* comprised of two Wasm modules, which you can find in the [wasm-modules]("./wasm-modules/") directory. The service is called 'eth_rpc' and the included modules are a [curl_adapater]("./../wasm-modules/curl-adapter") and [eth_rpc]("./../wasm-modules/eth-rpc"). The *curl_adapter* module is a generic, re-usable module allowing access a peer's curl binary, if permissioned by the peer, and exposes the *curl_request* function. Any modules requiring curl access may use the curl_adapter modules via [FFI linking](https://doc.rust-lang.org/nomicon/ffi.html) with the *curl_request* function.
 
 The *eth_rpc* module manages the json-rpc requests and responses initiated and consumed by Aqua scripts as he result of some frontend event, .e.g. our dAPP or curl request. Once available on peers of the Fluence p2p network, the *eth-rpc* services, aka RPC endpoint adapter, allows us to call one or more RPC endpoints using Aqua for choreography and composition of services.
 
@@ -507,7 +507,7 @@ With a service, in this case the *eth-rpc* service, ready for deployment, we sim
 
 ```bash
 fluence deal deploy
-Connecting to: /dns4/kras-00.fluence.dev/tcp/19990/wss/p2p/12D3KooWSD5PToNiLQwKDXsu8JSysCwUt8BVUJEqCHcDe7P5h45e
+Connecting to: /dns4/stage.fluence.dev/tcp/19004/wss/p2p/12D3KooWJ4bTHirdTFNZpCS72TAzwtdmavTBkkEXtzo6wHL25CtE
 
 # 1 if Deal is already in place update or create new Deal?
 ? Do you want to redeploy worker defaultWorker Yes
@@ -515,15 +515,8 @@ Connecting to: /dns4/kras-00.fluence.dev/tcp/19990/wss/p2p/12D3KooWSD5PToNiLQwKD
 
 # 2 upload packaged assets
 ipfs: did pin QmTvNwBeDop1yD9dLNjgrzfBMsgtrBmD859ahqQS1EWhbj to /dns4/ipfs.fluence.dev/tcp/5001
-ipfs: file QmTvNwBeDop1yD9dLNjgrzfBMsgtrBmD859ahqQS1EWhbj pinned to /dns4/ipfs.fluence.dev/tcp/5001
-ipfs: did pin QmWjbt6biEhsNEeDgspgHtwjwo7yS2asm7R7JjxnwMsupm to /dns4/ipfs.fluence.dev/tcp/5001
-ipfs: file QmWjbt6biEhsNEeDgspgHtwjwo7yS2asm7R7JjxnwMsupm pinned to /dns4/ipfs.fluence.dev/tcp/5001
-ipfs: did pin Qmb5ZTnkSBfzYdCfcVYUn7oBDTiVeoUX3oZvM7bRUhMPXZ to /dns4/ipfs.fluence.dev/tcp/5001
-ipfs: file Qmb5ZTnkSBfzYdCfcVYUn7oBDTiVeoUX3oZvM7bRUhMPXZ pinned to /dns4/ipfs.fluence.dev/tcp/5001
-ipfs: did pin QmP5nxY7nFdYw3PxUUbHe2yfHui9t2sGPpSeiSs1QNwFwK to /dns4/ipfs.fluence.dev/tcp/5001
-ipfs: file QmP5nxY7nFdYw3PxUUbHe2yfHui9t2sGPpSeiSs1QNwFwK pinned to /dns4/ipfs.fluence.dev/tcp/5001
-ipfs: did pin QmVsTtmsUF66raAdmCdbdvJXWZW69QoqJ2iMffvxaXHgAQ to /dns4/ipfs.fluence.dev/tcp/5001
-ipfs: file QmVsTtmsUF66raAdmCdbdvJXWZW69QoqJ2iMffvxaXHgAQ pinned to /dns4/ipfs.fluence.dev/tcp/5001
+<...>
+ipfs: file bafkreichjd77xy3bz4whsuyo2rmtgtwfjh4mqcwlzb74mvpgn5xfrjm72a pinned to /dns4/ipfs.fluence.dev/tcp/5001
 
 # 3 process upload responses for local updates in workers.yaml
 Updating deal for worker defaultWorker
@@ -533,11 +526,11 @@ Updating deal for worker defaultWorker
 # Connecting to wallet......
 To approve transactions to your wallet using metamask, open the following url:
 
-https://cli-connector.fluence.dev/?wc=09bb4a3...d%402&relay-protocol=irn&symKey=d62...7c
+https://cli-connector.fluence.dev/?wc=d5494d58588812c1ca148268c5a236daa127092d1a8a7a1db50c2ffdb1aa40be%402&relay-protocol=irn&symKey=d1a4b5954b6e46c1fd70174f0de7a5a78b14346d9d59963baf003d41c90e1284
 
 or go to https://cli-connector.fluence.dev and enter the following connection string there:
 
-wc:09bb4a39...43d@2?relay-protocol=irn&symKey=d62...e7c
+wc:d5494d58588812c1ca148268c5a236daa127092d1a8a7a1db50c2ffdb1aa40be@2?relay-protocol=irn&symKey=d1a4b5954b6e46c1fd70174f0de7a5a78b14346d9d59963baf003d41c90e1284
 
 Confirm transaction in your wallet...
 # Waiting for transaction to be mined......
@@ -545,11 +538,12 @@ Confirm transaction in your wallet...
 # 5 if escrow payment is processed, deal deployment is finalized
 Success!
 
-updated deals:
+Success!
+
+created deals:
   defaultWorker:
-    deal: https://mumbai.polygonscan.com/address/0xF8B17fbC...89e87a154a
-    old worker definition: QmRtPPAJP...RwgGZuAs
-    new worker definition: bafkreigy...lzgxi
+    deal: https://explorer.testnet.aurora.dev/address/0x258223B18962d804Fca4784245c3a5e0E3Bd8548
+    worker definition: bafkreichjd77xy3bz4whsuyo2rmtgtwfjh4mqcwlzb74mvpgn5xfrjm72a
 ```
 
 One little command is doing quite a bit so you don't have to. Let's work through the process:
@@ -559,11 +553,11 @@ One little command is doing quite a bit so you don't have to. Let's work through
 * the wasm modules and config are uploaded to IPFS node where deal-participating peer's workers can fetch the package by CID (2)
 * get back CID and update local file(s) (3)
 * if a deal is already in place, which was so you could run the Quickstart demo *quickly*, either update the existing deal or create a new one: **create a new one!** (4)
-* now you have to get involved! you are presented with the uri to get metamask to ask you to sign your escrow payment to the contract (5). Copy and paste the uri to your browser and eventually, Metamask should pop-up with a signing request. The transaction displays only in hex, so double check the other request params to make sure you're signing the Fluence Mumbai testnet transaction. This is what you should see:
+* now you have to get involved! you are presented with the uri to get metamask to ask you to sign your escrow payment to the contract (5). Copy and paste the uri to your browser and eventually, Metamask should pop-up with a signing request. The transaction displays only in hex, so double check the other request params to make sure you're signing the Aurora testnet transaction. This is what you should see:
 ![Sign TX](./images/sign_tx_metamask.png)
 * once you signed the transaction and the contract was successfully updated, we are done (6) !
 
-Fluence CLI did a hole bunch of work for us behind the scenes and signing the transaction is a lot quicker than entering (virtual) credit card information. The parametric details necessary to write Aqua scripts are save in [deals.aqua](./.fluence/aqua/deals.aqua) and serves as an important dependency in your Aqua scripts, as we'll see in the next section.
+Fluence CLI did a bunch of work for us behind the scenes and signing the transaction is a lot quicker than entering (virtual) credit card information. The parametric details necessary to write Aqua scripts are save in [deals.aqua](./.fluence/aqua/deals.aqua) and serves as an important dependency in your Aqua scripts, as we'll see in the next section.
 
 Note that the deal's section in [fluence.yaml](./fluence.yaml) specifies the number of workers that should be deployed specified by *targetWorkers*. The default is three (3) and can be customized. It is important to note that this is a desire not a guarantee as the actual deployment depends on the number of peers willing to participate in the deal. Currently, *all* the testnet peers operate by Fluence will participate in your deal.  
 
