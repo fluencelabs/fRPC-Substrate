@@ -5,7 +5,7 @@ import "@fluencelabs/registry/subnetwork.aqua"
 import Registry, Record from "@fluencelabs/registry/registry-service.aqua"
 import "@fluencelabs/spell/spell_service.aqua"
 
-import "deals.aqua"
+import "workers.aqua"
 import "services.aqua"
 
 -- import App from "deployed.app.aqua"
@@ -27,7 +27,7 @@ export helloWorld, helloWorldRemote, getInfo, getInfos, getInfosInParallel, getW
 
 func getWorkers() -> u32, [][]Service:
   workersInfo <- getWorkersInfo()
-  dealId = workersInfo.defaultWorker.dealId
+  dealId = workersInfo.deals.defaultWorker.dealId
   services: *[]Service
   on HOST_PEER_ID:
     workersOp <- resolveSubnetwork(dealId)
