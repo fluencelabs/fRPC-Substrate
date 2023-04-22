@@ -4,7 +4,7 @@ data GetWorkersInfoDealsDefaultWorker:
     dealIdOriginal: string
     dealId: string
     chainNetwork: string
-    chainNetworkId: f64
+    chainNetworkId: u64
 
 data GetWorkersInfoDeals:
     defaultWorker: GetWorkersInfoDealsDefaultWorker
@@ -14,4 +14,4 @@ data GetWorkersInfo:
     hosts: ?u8
 
 func getWorkersInfo() -> GetWorkersInfo:
-    <- GetWorkersInfo(deals=GetWorkersInfoDeals(defaultWorker=GetWorkersInfoDealsDefaultWorker(definition="bafkreigy5m3hh3phuopu3ss3b5cbw5tizhi27d6vf7ckfeptahvynlzgxi",timestamp="2023-04-09T07:26:34.351Z",dealIdOriginal="0x1604975c582c6f0f1eb639312cdA368f4F017E3c",dealId="1604975c582c6f0f1eb639312cda368f4f017e3c",chainNetwork="testnet",chainNetworkId=80001.0)),hosts=nil)
+    <- GetWorkersInfo(deals=GetWorkersInfoDeals(defaultWorker=GetWorkersInfoDealsDefaultWorker(definition="bafkreichjd77xy3bz4whsuyo2rmtgtwfjh4mqcwlzb74mvpgn5xfrjm72a",timestamp="2023-04-22T21:12:35.458Z",dealIdOriginal="0x258223B18962d804Fca4784245c3a5e0E3Bd8548",dealId="258223b18962d804fca4784245c3a5e0e3bd8548",chainNetwork="testnet",chainNetworkId=1313161555)),hosts=nil)
