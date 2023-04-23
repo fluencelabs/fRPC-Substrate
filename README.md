@@ -253,15 +253,6 @@ Fluence CLI uses multiple *yaml* config files. Below find references to the most
 ```yaml
 version: 2
 aquaInputPath: src/aqua/main.aqua             # path where to look for default aqua files, you can change that
-dependencies:
-  npm:                                        # js dependencies
-    "@fluencelabs/aqua-lib": 0.6.0
-    "@fluencelabs/aqua": 0.10.3
-    "@fluencelabs/spell": 0.5.7
-    "@fluencelabs/registry": 0.8.3
-  cargo:                                      # rust dependencies
-    marine: 0.14.1
-    mrepl: 0.21.3
 workers:                                      # worker settings for deploy
   defaultWorker:
     services: [ eth_rpc ]
