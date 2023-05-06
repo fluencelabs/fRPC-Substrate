@@ -204,7 +204,7 @@ To get going, you need to install and setup a few dependencies.
 
 ### Off-chain Dependencies
 
-* [node](https://nodejs.org/en/) 16 LTS (versions 18.* and above are currently not supported)
+* [node](https://nodejs.org/en/) 16 LTS (versions 18.x.x and above are currently not supported)
 * [Fluence CLI](https://github.com/fluencelabs/fluence-cli)
 * [Rust](https://www.rust-lang.org/tools/install) (optional; Fluence CLI will install if not already in your environment)
 * For VSCode, there is a helpful [Aqua language support](https://marketplace.visualstudio.com/items?itemName=FluenceLabs.aqua) package available
