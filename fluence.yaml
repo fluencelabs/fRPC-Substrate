@@ -16,8 +16,8 @@ deals:
 hosts:
   defaultWorker:
     peerIds:
-      - 12D3KooWJ4bTHirdTFNZpCS72TAzwtdmavTBkkEXtzo6wHL25CtE
-relays: stage
+      - 12D3KooWEFFCZnar1cUJQ3rMWjvPQg6yMV2aXWs2DkJNSRbduBWn
+relays: kras
 services:
   eth_rpc:
     get: wasm-modules/
