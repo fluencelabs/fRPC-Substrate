@@ -38,7 +38,7 @@ func getWorkers() -> []Record:
   workersInfo <- getWorkersInfo()
   dealId = workersInfo.deals.defaultWorker.dealId
   on HOST_PEER_ID:
-    workersOp <- resolveSubnetwork(dealId)
+    workersOp, error <- resolveSubnetwork(dealId)
   <- workersOp!
 
 func callOnWorker(worker: Record, uri: string, method: string, jsonArgs: []string, callFunc: string, string, []string -> JsonString) -> JsonString:
