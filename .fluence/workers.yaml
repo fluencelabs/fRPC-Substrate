@@ -7,9 +7,9 @@
 version: 0
 deals:
   defaultWorker:
-    definition: bafkreiegisueqzhqz6rvkwjbyxoph6drq5cbeow2guexmvx2ep5xxufmie
-    timestamp: 2023-05-26T17:10:15.058Z
-    dealIdOriginal: "0x07b9816370aE6BF665b882F6AAe505c342fa9f01"
-    dealId: 07b9816370ae6bf665b882f6aae505c342fa9f01
+    definition: bafkreie5ttzbl66krnmvkdb7v4horo23oqj5bw335dkedfwl2rkooi4aaq
+    timestamp: 2023-06-02T01:38:51.461Z
+    dealIdOriginal: "0x8C2af3E9556f55f8719fd861Aa5633E1E1A1EA4E"
+    dealId: 8c2af3e9556f55f8719fd861aa5633e1e1a1ea4e
     chainNetwork: testnet
     chainNetworkId: 1313161555
