@@ -21,7 +21,7 @@
   "author": "Fluence Labs",
   "license": "Apache-2.0",
   "dependencies": {
-    "express": "^4.18.2",
+    "express": "4.18.2",
     "json-rpc-2.0": "1.6.0",
     "web3": "4.0.1"
   },
