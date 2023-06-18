@@ -36,7 +36,7 @@ func call(uri: string, method: string, jsonArgs: []string) -> JsonString:
 
 func getWorkers() -> []Record:
   workersInfo <- getWorkersInfo()
-  dealId = workersInfo.deals.defaultWorker.dealId
+  dealId = workersInfo.deals.defaultWorker!.dealId
   on HOST_PEER_ID:
     workersOp, error <- resolveSubnetwork(dealId)
   <- workersOp!
