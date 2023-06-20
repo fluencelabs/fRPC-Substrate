@@ -26,7 +26,7 @@
     "web3": "4.0.1"
   },
   "devDependencies": {
-    "@fluencelabs/js-client.api": "0.11.6",
+    "@fluencelabs/js-client.api": "0.11.7",
     "@fluencelabs/js-client.node": "0.6.10"
   }
 }
