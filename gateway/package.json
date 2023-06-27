@@ -23,7 +23,7 @@
   "dependencies": {
     "express": "^4.18.2",
     "json-rpc-2.0": "1.6.0",
-    "web3": "4.0.1"
+    "web3": "4.0.2"
   },
   "devDependencies": {
     "@fluencelabs/js-client.api": "0.11.6",
