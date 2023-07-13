@@ -12,7 +12,7 @@ path = "src/main.rs"
 [dependencies]
 web3 = { version = "=0.19.0", features = [], default-features = false }
 #async-std = "1.12.0" # async-std does not support wasm32-wasi
-serde_json = "=1.0.100"
+serde_json = "=1.0.102"
 serde = "=1.0.171"
 jsonrpc-core = "=18.0.0"
 tokio = { version = "=1.29.1", default-features = false, features = ["rt"] }
