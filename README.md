@@ -55,7 +55,7 @@ npm i
 If you don't have Fluence CLI installed, do:
 
 ```bash
-npm -g i @fluencelabs/cli@0.4.8
+npm -g i @fluencelabs/cli@unstable
 ```
 
 Before you proceed, you  should have, say, three RPC endpoint urls, e.g., Infura, Alchemy and QuickNode, for the same EVM-based chain you are using in your dAPP. Update the `configs/quickstart_config.json` by providing your endpoint urls and ignore the rest of the parameters for now:
