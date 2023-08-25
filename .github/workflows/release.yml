@@ -1,0 +1,35 @@
+name: "release-please"
+
+on:
+  push:
+    branches:
+      - "main"
+
+concurrency:
+  group: "${{ github.workflow }}-${{ github.ref }}"
+
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+
+    outputs:
+      release-created: ${{ steps.release.outputs['release_created'] }}
+      tag-name: ${{ steps.release.outputs['tag_name'] }}
+      version: ${{ steps.release.outputs['version'] }}
+      pr: ${{ steps.release.outputs['pr'] }}
+
+    steps:
+      - name: Run release-please
+        id: release
+        uses: google-github-actions/release-please-action@v3
+        with:
+          token: ${{ secrets.FLUENCEBOT_RELEASE_PLEASE_PAT }}
+          command: manifest
+          config-file: .github/release-please/config.json
+          manifest-file: .github/release-please/manifest.json
+
+      - name: Show output from release-please
+        if: steps.release.outputs.releases_created
+        env:
+          RELEASE_PLEASE_OUTPUT: ${{ toJSON(steps.release.outputs) }}
+        run: echo "${RELEASE_PLEASE_OUTPUT}" | jq
