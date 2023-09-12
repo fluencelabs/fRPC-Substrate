@@ -19,6 +19,7 @@ data GetWorkersInfoHostsDefaultWorker:
     installationSpells: []GetWorkersInfoHostsDefaultWorkerInstallationSpells
     relayId: string
     timestamp: string
+    dummyDealId: string
 
 data GetWorkersInfoHosts:
     defaultWorker: ?GetWorkersInfoHostsDefaultWorker

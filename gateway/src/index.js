@@ -5,8 +5,7 @@
 import express from "express";
 import bodyParser from "body-parser";
 import {JSONRPCServer} from "json-rpc-2.0";
-import {Fluence} from '@fluencelabs/js-client.api';
-import "@fluencelabs/js-client.node"
+import {Fluence} from '@fluencelabs/js-client';
 import {
     quorumEth,
     randomLoadBalancingEth,

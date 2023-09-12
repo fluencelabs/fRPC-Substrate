@@ -16,8 +16,8 @@ deals:
 hosts:
   defaultWorker:
     peerIds:
-      - 12D3KooWGzNvhSDsgFoHwpWHAyPf1kcTYCGeRBPfznL8J6qdyu2H
-relays: testnet
+      - 12D3KooWDcpWuyrMTDinqNgmXAuRdfd2mTdY9VoXZSAet2pDzh6r
+relays: stage
 services:
   eth_rpc:
     get: wasm-modules

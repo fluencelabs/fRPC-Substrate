@@ -4,7 +4,7 @@
     "https://goerli.infura.io/v3/c48f3b538f154204ad53d04aa8990544"
   ],
   "mode": "round-robin",
-  "relay": "/dns4/stage.fluence.dev/tcp/19001/wss/p2p/12D3KooWHCJbJKGDfCgHSoCuK9q4STyRnVveqLoXAPBbXHTZx9Cv",
+  "relay": "/dns4/1-stage.fluence.dev/tcp/9000/wss/p2p/12D3KooWHCJbJKGDfCgHSoCuK9q4STyRnVveqLoXAPBbXHTZx9Cv",
   "port": 3000,
   "counterServiceId": null,
   "counterPeerId": null,
