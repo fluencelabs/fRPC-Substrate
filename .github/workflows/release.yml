@@ -33,3 +33,136 @@ jobs:
         env:
           RELEASE_PLEASE_OUTPUT: ${{ toJSON(steps.release.outputs) }}
         run: echo "${RELEASE_PLEASE_OUTPUT}" | jq
+
+  bump-version:
+    if: needs.release-please.outputs.pr != null
+    runs-on: ubuntu-latest
+    needs:
+      - release-please
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ fromJson(needs.release-please.outputs.pr).headBranchName }}
+          token: ${{ secrets.FLUENCEBOT_RELEASE_PLEASE_PAT }}
+
+      - name: Get version
+        id: version
+        run: |
+          version="$(jq -r '.[]' .github/release-please/manifest.json)"
+          echo "version=${version}" >> $GITHUB_OUTPUT
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+          registry-url: "https://registry.npmjs.org"
+          cache: "npm"
+          cache-dependency-path: "gateway/package-lock.json"
+
+      - name: Set gateway version
+        run: npm version ${{ steps.version.outputs.version }}
+        working-directory: gateway
+
+      - name: Commit version bump
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "chore: Bump version to ${{ steps.version.outputs.version }}"
+          branch: ${{ fromJson(needs.release-please.outputs.pr).headBranchName }}
+          commit_user_name: fluencebot
+          commit_user_email: devops@fluence.one
+          commit_author: fluencebot <devops@fluence.one>
+
+  publish:
+    if: needs.release-please.outputs.release-created
+    runs-on: ubuntu-latest
+    needs: release-please
+
+    permissions:
+      contents: write
+      id-token: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.FLUENCEBOT_RELEASE_PLEASE_PAT }}
+
+      - name: Import secrets
+        uses: hashicorp/vault-action@v2.5.0
+        with:
+          url: https://vault.fluence.dev
+          path: jwt/github
+          role: ci
+          method: jwt
+          jwtGithubAudience: "https://github.com/fluencelabs"
+          jwtTtl: 300
+          exportToken: false
+          secrets: |
+            kv/npmjs/fluencebot token | NODE_AUTH_TOKEN
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+          registry-url: "https://registry.npmjs.org"
+          cache-dependency-path: "gateway/package-lock.json"
+          cache: "npm"
+
+      - run: npm i
+        working-directory: gateway
+
+      - name: Publish gateway to NPM registry
+        run: npm publish --access public --tag unstable
+        working-directory: gateway
+
+  slack:
+    if: always()
+    name: "Notify"
+    runs-on: ubuntu-latest
+
+    needs:
+      - release-please
+      - publish
+
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - uses: lwhiteley/dependent-jobs-result-check@v1
+        id: status
+        with:
+          statuses: failure
+          dependencies: ${{ toJSON(needs) }}
+
+      - name: Log output
+        run: |
+          echo "statuses:" "${{ steps.status.outputs.statuses }}"
+          echo "jobs:" "${{ steps.status.outputs.jobs }}"
+          echo "found any?:" "${{ steps.status.outputs.found }}"
+
+      - name: Import secrets
+        uses: hashicorp/vault-action@v2.7.3
+        with:
+          url: https://vault.fluence.dev
+          path: jwt/github
+          role: ci
+          method: jwt
+          jwtGithubAudience: "https://github.com/fluencelabs"
+          jwtTtl: 300
+          exportToken: false
+          secrets: |
+            kv/slack/release-please webhook | SLACK_WEBHOOK_URL
+
+      - uses: ravsamhq/notify-slack-action@v2
+        if: steps.status.outputs.found == 'true'
+        with:
+          status: "failure"
+          notification_title: "*{workflow}* has {status_message}"
+          message_format: "${{ steps.status.outputs.jobs }} {status_message} in <{repo_url}|{repo}>"
+          footer: "<{run_url}>"
