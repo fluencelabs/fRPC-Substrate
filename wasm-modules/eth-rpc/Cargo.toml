@@ -2,6 +2,8 @@
 name = "eth_rpc"
 version = "0.1.0"
 edition = "2021"
+authors = ["Fluence Labs"]
+publish = false
 
 [[bin]]
 name = "eth_rpc"
