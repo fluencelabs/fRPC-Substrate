@@ -137,7 +137,7 @@ Call will be to : https://frequent-sleek-river.ethereum-goerli.discover.quiknode
 
 Success! Go ahead and replace the `round-robin` mode with the `random` mode in your config file, stop and start the gateway and have a look at the different endpoint management.
 
-Congrat's, you just took a major step toward keeping you dAPP decentralized, available and performant! Now it's time to dive into the Fluence protocol and technology stack to learn how to improve upon the basic substrate and compete for hackathon bounties.
+Congrats, you just took a major step toward keeping your dAPP decentralized, available and performant! Now it's time to dive into the Fluence protocol and technology stack to learn how to improve upon the basic substrate and compete for hackathon bounties.
 
 ## Developing With Fluence
 
@@ -147,7 +147,7 @@ Fluence's decentralized serverless protocol and solution stack allows developers
 * create a [Deal](https://fluence.dev/docs/build/glossary#deal), i.e., a construct that links on-chain contract economics and off-chain resources necessary for peers to run a service, which entails escrowing stablecoin, currently limited to (testnet) USDC, to the Deal contract
 * deploy their Wasm modules plus linking instructions as a uniquely addressable *service* to p2p network storage, i.e., IPFS
 
-With a Deal in place, resource owners, i.e., owner/operators of one or more peer, make a decision whether to host the service and if so, participate in the Deal by providing a stake to the Deal contract and pulling the corresponding service assets required for hosting from IPFS. As a matter of fact, peers utilize [Workers](https://fluence.dev/docs/build/glossary#worker), omitted from Figure 2 for simplicity reasons, to implement their side of a Deal. See Figure 2.
+With a Deal in place, resource owners, i.e., owner/operators of one or more peers, make a decision whether to host the service and if so, participate in the Deal by providing a stake to the Deal contract and pulling the corresponding service assets required for hosting from IPFS. As a matter of fact, peers utilize [Workers](https://fluence.dev/docs/build/glossary#worker), omitted from Figure 2 for simplicity reasons, to implement their side of a Deal. See Figure 2.
 
 ```mermaid
 
@@ -212,7 +212,7 @@ To get going, you need to install and setup a few dependencies.
   * [Aurora faucet](https://aurora.dev/faucet)
   * [Fluence USDC testnet faucet](https://faucet.fluence.dev/)
 
-You will need  Aurora (testnet) ETH and Fluence (testnet) USDC. This is as good a time as any to head over to those faucets and get your allocations. As an experienced Web3 dev, you know it's god hygiene to set up a new account, say, fRPC-dev, for the Aurora testnet and testnet tokens.
+You will need  Aurora (testnet) ETH and Fluence (testnet) USDC. This is as good a time as any to head over to those faucets and get your allocations. As an experienced Web3 dev, you know it's good hygiene to set up a new account, say, fRPC-dev, for the Aurora testnet and testnet tokens.
 
 ### RPC Endpoints
 
@@ -316,7 +316,7 @@ keyPairs:
 defaultKeyPairName: auto-generated
 ```
 
-The default keys are available and used by all your projects unless you create a project-specific key pair with the `fluence key` command and saved in the *project-secrets.yaml* file in the project-local *.fluence* directory. Since we are in defualt mode for our current setup, *projects-secrets.yaml* is not populated.
+The default keys are available and used by all your projects unless you create a project-specific key pair with the `fluence key` command and saved in the *project-secrets.yaml* file in the project-local *.fluence* directory. Since we are in default mode for our current setup, *projects-secrets.yaml* is not populated.
 
 ```yaml
 # projects-secrets.yaml
@@ -465,13 +465,13 @@ result: {
 3>
 ```
 
-The *i* command lists all the exported interfaces from the wasm modules in Aqua instead of Rust notation. In *expoerted* functions you seee the module namespace, e.g., *curl_adapter* , and exported functions, e.g., *curl_request*. To execute a function, use `call <namespace> <function name> [<parameters>]`.
+The *i* command lists all the exported interfaces from the wasm modules in Aqua instead of Rust notation. In *exported* functions you see the module namespace, e.g., *curl_adapter*, and exported functions, e.g., *curl_request*. To execute a function, use `call <namespace> <function name> [<parameters>]`.
 
 ### Adding Modules To A Service
 
 Regardless of your customization requirements, you probably will have no reason to modify the *curl_adapter* and *eth_rpc* modules. However, you may want to add new modules, or even services, to handle your additional business logic requirements. For example, you may want to capture RPC endpoint performance data, such as response times and availability, to some Web3 storage, e.g., IPFS or Ceramic, for further analysis to, say, derive a weighting scheme for endpoint selection. 
 
-Fluence CLI allows you to quickly crate a new, or add an existing, module to your project. For example,
+Fluence CLI allows you to quickly create a new, or add an existing, module to your project. For example,
 
 ```bash
  fluence module new
@@ -550,7 +550,7 @@ One little command is doing quite a bit so you don't have to. Let's work through
 
 Fluence CLI did a bunch of work for us behind the scenes and signing the transaction is a lot quicker than entering (virtual) credit card information. The parametric details necessary to write Aqua scripts are save in [deals.aqua](./.fluence/aqua/deals.aqua) and serves as an important dependency in your Aqua scripts, as we'll see in the next section.
 
-Note that the deal's section in [fluence.yaml](./fluence.yaml) specifies the number of workers that should be deployed specified by *targetWorkers*. The default is three (3) and can be customized. It is important to note that this is a desire not a guarantee as the actual deployment depends on the number of peers willing to participate in the deal. Currently, *all* the testnet peers operate by Fluence will participate in your deal.  
+Note that the deal's section in [fluence.yaml](./fluence.yaml) specifies the number of workers that should be deployed specified by *targetWorkers*. The default is three (3) and can be customized. It is important to note that this is a desire not a guarantee as the actual deployment depends on the number of peers willing to participate in the deal. Currently, *all* the testnet peers operated by Fluence will participate in your deal.  
 
 ### fRPC Algorithms
 
@@ -652,15 +652,15 @@ func quorum(
   <- quorumResult
 ```
 
-A quorum, aka "off-chain consensus", "determines" a result by a ranked frequency distribution of the result pool and makes a selection against a quorum threshold value, e.g., 2/3 of items in the results pool must be equal for a quorum result to accepted. Moreover, additional parameters such as minimum number of items in the result pool may be added. depending on you trust of the peers processing the endpoint requests or even the peer executing the quorum algorithm, additional verification steps may have to be added. There is one more pertinent consideration when it comes to designing quorum algorithms: the differentiation betwen (on-chain) read and write operations.
+A quorum, aka "off-chain consensus", "determines" a result by a ranked frequency distribution of the result pool and makes a selection against a quorum threshold value, e.g., 2/3 of items in the results pool must be equal for a quorum result to accepted. Moreover, additional parameters such as minimum number of items in the result pool may be added. depending on your trust of the peers processing the endpoint requests or even the peer executing the quorum algorithm, additional verification steps may have to be added. There is one more pertinent consideration when it comes to designing quorum algorithms: the differentiation between (on-chain) read and write operations.
 
-In the fRPC substrate implementation, we provide a basic quorum algo that polls each endpoint in parallel (1) and captures the results in a stream variable (2) and bound the loop with a timeout condition running (3) in parallel to (1). See the [Aqua book](https://fluence.dev/docs/aqua-book/language/flow/parallel#timeout-and-race-patterns) for more details. Finally, we check the results and return the result (4). As evidenced by the code, no considerations to differentiate between rad and write operations is made, wich might prove disadvantageous when submitting, for example, a signed transaction (hint, hint to all you hackathon participants).
+In the fRPC substrate implementation, we provide a basic quorum algo that polls each endpoint in parallel (1) and captures the results in a stream variable (2) and bound the loop with a timeout condition running (3) in parallel to (1). See the [Aqua book](https://fluence.dev/docs/aqua-book/language/flow/parallel#timeout-and-race-patterns) for more details. Finally, we check the results and return the result (4). As evidenced by the code, no considerations to differentiate between read and write operations is made, which might prove disadvantageous when submitting, for example, a signed transaction (hint, hint to all you hackathon participants).
 
 ## Summary
 
 fRPC is a design pattern to efficiently mitigate risks inherent in centralized RPC providers for dApps using Fluence's decentralized serverless compute protocol. fRPC Substrate is a basic implementation of the fRPC design pattern that dApp users can use put of the box with no changes to their frontend. Moreover, Fluence is sponsoring hackathons, like EthDenver 2023, for developers to try the substrate and hack on and expand on the control algorithms provided to serve their needs and provide improvements to the community.
 
-For support, to discuss your ideas or to schedule presenntations of your solutions to the Fluence and fRPC community at large, reach out in [discord]("https://fluence.chat") or [telegram](https://t.me/fluence_project).
+For support, to discuss your ideas or to schedule presentations of your solutions to the Fluence and fRPC community at large, reach out in [discord]("https://fluence.chat") or [telegram](https://t.me/fluence_project).
 
 Happy Hacking!
 

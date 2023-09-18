@@ -1,0 +1,23 @@
+name: "Run tests with workflow_call"
+
+on:
+  workflow_call:
+    inputs:
+      ref:
+        description: "git ref to checkout to"
+        type: string
+        default: "main"
+
+jobs:
+  tests:
+    name: "Tests placeholder"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          repository: fluencelabs/frpc
+          ref: ${{ inputs.ref }}
+
+      - run: exit 0
