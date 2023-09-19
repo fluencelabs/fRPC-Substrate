@@ -28,7 +28,7 @@ pub fn get_accounts(uri: String) -> web3::error::Result<Vec<Vec<u8>>> {
     let web3 = Web3::new(CurlTransport::new(uri));
 
     let eth = web3.eth();
-    println!("Calling accounts.");
+    println!("Calling accounts...");
     let accounts: CallFuture<Vec<Address>, FutResult> = eth.accounts();
     let accounts: web3::Result<Vec<Address>> = rt.block_on(accounts);
     println!("Accounts: {:?}", accounts);

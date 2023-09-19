@@ -5,7 +5,7 @@
     "<replace with your url_3/api-key>"
   ],
   "mode": "round-robin",
-  "relay": "/dns4/1-stage.fluence.dev/tcp/9000/wss/p2p/12D3KooWHCJbJKGDfCgHSoCuK9q4STyRnVveqLoXAPBbXHTZx9Cv",
+  "relay": "/dns4/0-testnet.fluence.dev/tcp/9000/wss/p2p/12D3KooWMhVpgfQxBLkQkJed8VFNvgN4iE6MD7xCybb1ZYWW2Gtz",
   "port": 3000,
   "counterServiceId": null,
   "counterPeerId": null,

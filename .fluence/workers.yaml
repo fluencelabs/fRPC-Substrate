@@ -7,12 +7,12 @@
 version: 0
 deals:
   defaultWorker:
-    definition: bafkreica6afra7fy4mel4njirkcooiyqxdieshqllij6leyyu4dh7n2qri
-    timestamp: 2023-08-22T01:28:55.986Z
-    dealIdOriginal: "0x511f0C27e1Ba0cC8cebfb2a0711D8F49eb4BA754"
-    dealId: 511f0c27e1ba0cc8cebfb2a0711d8f49eb4ba754
+    definition: bafkreidozz74fwxdo277sppzgdv4irt6e7suw2m35tdtcz762ar4lus33i
+    timestamp: 2023-09-19T22:48:48.210Z
+    dealIdOriginal: "0x92Ff77aD8fc8a4047e4f9eC1e7Cd5491E3B74510"
+    dealId: 92ff77ad8fc8a4047e4f9ec1e7cd5491e3b74510
     chainNetwork: testnet
-    chainNetworkId: 1313161555
+    chainNetworkId: 80001
 
 # # A map of created deals
 # deals:

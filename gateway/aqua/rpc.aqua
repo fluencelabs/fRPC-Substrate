@@ -1,5 +1,5 @@
 import "@fluencelabs/aqua-lib/builtin.aqua"
-import "workers.aqua"
+import get as getDeals from "deals.aqua"
 import "services.aqua"
 import "@fluencelabs/registry/subnetwork.aqua"
 import Registry, Record from "@fluencelabs/registry/registry-service.aqua"
@@ -35,8 +35,8 @@ func call(uri: string, method: string, jsonArgs: []string) -> JsonString:
   <- res
 
 func getWorkers() -> []Record:
-  workersInfo <- getWorkersInfo()
-  dealId = workersInfo.deals.defaultWorker!.dealId
+  workersInfo <- getDeals()
+  dealId = workersInfo.defaultWorker!.dealId
   on HOST_PEER_ID:
     workersOp, error <- resolveSubnetwork(dealId)
   <- workersOp!

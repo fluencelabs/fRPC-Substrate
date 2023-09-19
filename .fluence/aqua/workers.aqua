@@ -31,14 +31,7 @@ data GetWorkersInfo:
 func getWorkersInfo() -> GetWorkersInfo:
     <- GetWorkersInfo(
         deals=GetWorkersInfoDeals(
-            defaultWorker=?[GetWorkersInfoDealsDefaultWorker(
-                definition="bafkreica6afra7fy4mel4njirkcooiyqxdieshqllij6leyyu4dh7n2qri",
-                timestamp="2023-08-22T01:28:55.986Z",
-                dealIdOriginal="0x511f0C27e1Ba0cC8cebfb2a0711D8F49eb4BA754",
-                dealId="511f0c27e1ba0cc8cebfb2a0711d8f49eb4ba754",
-                chainNetwork="testnet",
-                chainNetworkId=1313161555
-            )]
+            defaultWorker=nil
         ),
         hosts=GetWorkersInfoHosts(
             defaultWorker=nil
