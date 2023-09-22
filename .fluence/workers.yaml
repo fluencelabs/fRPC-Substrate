@@ -7,8 +7,8 @@
 version: 0
 deals:
   defaultWorker:
-    definition: bafkreidozz74fwxdo277sppzgdv4irt6e7suw2m35tdtcz762ar4lus33i
-    timestamp: 2023-09-19T22:48:48.210Z
+    definition: bafkreidz2dqx5a7altweabb7khbufvdwj7kdzbry3sdjkkh7fl4adi37aq
+    timestamp: 2023-09-22T09:12:45.139Z
     dealIdOriginal: "0x92Ff77aD8fc8a4047e4f9eC1e7Cd5491E3B74510"
     dealId: 92ff77ad8fc8a4047e4f9ec1e7cd5491e3b74510
     chainNetwork: testnet
