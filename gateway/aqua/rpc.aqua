@@ -1,8 +1,7 @@
 import "@fluencelabs/aqua-lib/builtin.aqua"
-use "deals.aqua"
+import Subnet, Worker from "@fluencelabs/aqua-lib/subnet.aqua"
 import "services.aqua"
-import Subnet, Worker from "subnet.aqua"
-import "@fluencelabs/spell/spell_service.aqua"
+use "deals.aqua"
 
 export randomLoadBalancingEth, roundRobinEth, quorumEth, Counter, Logger
 
