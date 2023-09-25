@@ -9,4 +9,5 @@ src/js/src/aqua
 aqua-compiled
 
 # recommended by Fluence Labs:
-.fluence
+/.fluence/project-secrets.yaml
+/.fluence/schemas
