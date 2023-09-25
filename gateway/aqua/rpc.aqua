@@ -1,8 +1,7 @@
 import "@fluencelabs/aqua-lib/builtin.aqua"
 import get as getDeals from "deals.aqua"
 import "services.aqua"
-import "@fluencelabs/registry/subnetwork.aqua"
-import Registry, Record from "@fluencelabs/registry/registry-service.aqua"
+import Subnet, Worker from "subnet.aqua"
 import "@fluencelabs/spell/spell_service.aqua"
 
 export randomLoadBalancingEth, roundRobinEth, quorumEth, Counter, Logger
@@ -16,7 +15,7 @@ service Logger("logger"):
   log(s: []string)
   logNum(n: u32)
   logCall(s: string)
-  logWorker(w: Record)
+  logWorker(w: Worker)
 
 service NumOp("op"):
   identity(n: u64) -> i64
@@ -34,15 +33,17 @@ func call(uri: string, method: string, jsonArgs: []string) -> JsonString:
   res <- EthRpc.eth_call(uri, method, jsonArgs)
   <- res
 
-func getWorkers() -> []Record:
+func getWorkers() -> []Worker, ?string:
   workersInfo <- getDeals()
-  dealId = workersInfo.defaultWorker!.dealId
+  dealId = workersInfo.defaultWorker!.dealIdOriginal
   on HOST_PEER_ID:
-    workersOp, error <- resolveSubnetwork(dealId)
-  <- workersOp!
+    result <- Subnet.resolve(dealId)
+    workers = result.workers
+    error = result.error
+  <- workers, error
 
-func callOnWorker(worker: Record, uri: string, method: string, jsonArgs: []string, callFunc: string, string, []string -> JsonString) -> JsonString:
-  on worker.metadata.peer_id via worker.metadata.relay_id:
+func callOnWorker(worker: Worker, uri: string, method: string, jsonArgs: []string, callFunc: string, string, []string -> JsonString) -> JsonString:
+  on worker.worker_id! via worker.host_id:
     result <- callFunc(uri, method, jsonArgs)
   <- result
 
@@ -92,7 +93,7 @@ func quorum(
   on HOST_PEER_ID:
     workers <- getWorkers()
     for worker <- workers par:
-      on worker.metadata.peer_id via worker.metadata.relay_id:
+      on worker.worker_id! via worker.host_id:
         -- choose provider randomly
         timeP <- NumOp.identity(Peer.timestamp_ms())
         providerNumber = timeP % uris.length

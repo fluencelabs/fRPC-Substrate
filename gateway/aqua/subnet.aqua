@@ -1,0 +1,15 @@
+data Worker:
+  pat_id: string
+  host_id: string
+  worker_id: ?string
+
+data SubnetResolveResult:
+  -- Was call successful or not
+  success: bool
+  -- Error message. Will be null if the call is successful
+  error: ?string
+  workers: []Worker
+
+service Subnet("subnet"):
+    -- Returns a list of workers by deal id
+    resolve(deal_id: string) -> SubnetResolveResult

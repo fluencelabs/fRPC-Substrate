@@ -53,7 +53,7 @@ registerLogger({
         console.log("Call will be to : " + s);
     },
     logWorker: s => {
-        console.log("Worker used: " + JSON.stringify(s.metadata.peer_id));
+        console.log("Worker used: " + JSON.stringify(s));
     },
     logNum: s => {
         console.log("Number: " + s);
@@ -120,7 +120,6 @@ async function methodHandler(reqRaw, method) {
     if (!config.mode || config.mode === "random") {
         result = await randomLoadBalancingEth(config.providers, method, req);
     } else if (config.mode === "round-robin") {
-        console.log("peerId: " + peerId)
         result = await roundRobinEth(config.providers, method, req, counterServiceId, counterPeerId,
             config.serviceId);
     } else if (config.mode === "quorum") {
@@ -129,12 +128,10 @@ async function methodHandler(reqRaw, method) {
         if (result.error) {
             return {error: result.error, results: result.results}
         }
-
-        console.log(result)
     }
 
 
-    return JSON.parse(result.value);
+    return JSON.parse(result.value || '{}');
 
 }
 
