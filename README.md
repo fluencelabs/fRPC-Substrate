@@ -474,8 +474,7 @@ Regardless of your customization requirements, you probably will have no reason 
 Fluence CLI allows you to quickly create a new, or add an existing, module to your project. For example,
 
 ```bash
- fluence module new --path ./wasm-modules
-? Enter module name demo-module
+fluence module new --path ./wasm-modules demo-module
 Successfully generated template for new module at demo-module
 ```
 
