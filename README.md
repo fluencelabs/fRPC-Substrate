@@ -82,8 +82,7 @@ Before you proceed, you  should have, say, three RPC endpoint urls, e.g., Infura
 Now start the gateway:
 
 ```bash
-cd ./gateway
-pnpm run run configs/quickstart_config.json
+pnpm -C gateway run run configs/quickstart_config.json
 > @fluencelabs/aqua-eth-gateway@0.0.11 run
 > fluence aqua -i aqua/ -o aqua-compiled/ --js && node src/index.js configs/my_quickstart_config.json
 
