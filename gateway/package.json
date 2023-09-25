@@ -29,8 +29,6 @@
   "devDependencies": {
     "@fluencelabs/aqua-lib": "0.7.6",
     "@fluencelabs/js-client": "0.1.7",
-    "@fluencelabs/marine-worker": "0.3.2",
-    "@fluencelabs/registry": "0.8.7",
-    "@fluencelabs/spell": "0.5.20"
+    "@fluencelabs/marine-worker": "0.3.2"
   }
 }

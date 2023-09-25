@@ -28,12 +28,6 @@ devDependencies:
   '@fluencelabs/marine-worker':
     specifier: 0.3.2
     version: 0.3.2
-  '@fluencelabs/registry':
-    specifier: 0.8.7
-    version: 0.8.7
-  '@fluencelabs/spell':
-    specifier: 0.5.20
-    version: 0.5.20
 
 packages:
 
@@ -281,10 +275,6 @@ packages:
       '@ethersproject/strings': 5.7.0
     dev: false
 
-  /@fluencelabs/aqua-lib@0.7.0:
-    resolution: {integrity: sha512-mJEaxfAQb6ogVM4l4qw7INK6kvLA2Y161ErwL7IVeVSkKXIeYq/qio2p2au35LYvhBNsKc7XP2qc0uztCmxZzA==}
-    dev: true
-
   /@fluencelabs/aqua-lib@0.7.6:
     resolution: {integrity: sha512-llSUF4ifPRpKFBwud3t/74o6j/GI0Oil4yBd44sNxLmduQhiNXDwokqYiYOdVM5bXt64ws6YFtnHMeQRPVgdVA==}
     dev: true
@@ -349,23 +339,6 @@ packages:
       threads: 1.7.0
     transitivePeerDependencies:
       - supports-color
-    dev: true
-
-  /@fluencelabs/registry@0.8.7:
-    resolution: {integrity: sha512-43bmb1v4p5ORvaiLBrUAl+hRPo3luxxBVrJgqTvipJa2OEg2wCRA/Wo9s4M7Lchnv3NoYLOyNTzNyFopQRKILA==}
-    dependencies:
-      '@fluencelabs/aqua-lib': 0.7.0
-      '@fluencelabs/trust-graph': 0.4.1
-    dev: true
-
-  /@fluencelabs/spell@0.5.20:
-    resolution: {integrity: sha512-QFbknWwALLUWMzpWkFt34McuwTz9xwQuiPP1zXqhPqVZ1J6g8F3gwHHtzgHFW5Z7WrRmwsL+IQtFJy8YZubhDw==}
-    dev: true
-
-  /@fluencelabs/trust-graph@0.4.1:
-    resolution: {integrity: sha512-V/6ts4q/Y0uKMS6orVpPyxfdd99YFMkm9wN9U2IFtlBUWNsQZG369FK9qEizwsSRCqTchMHYs8Vh4wgZ2uRfuQ==}
-    dependencies:
-      '@fluencelabs/aqua-lib': 0.7.6
     dev: true
 
   /@libp2p/crypto@2.0.3:
