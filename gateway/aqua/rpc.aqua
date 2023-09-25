@@ -1,5 +1,5 @@
 import "@fluencelabs/aqua-lib/builtin.aqua"
-import get as getDeals from "deals.aqua"
+use "deals.aqua"
 import "services.aqua"
 import Subnet, Worker from "subnet.aqua"
 import "@fluencelabs/spell/spell_service.aqua"
@@ -34,8 +34,8 @@ func call(uri: string, method: string, jsonArgs: []string) -> JsonString:
   <- res
 
 func getWorkers() -> []Worker, ?string:
-  workersInfo <- getDeals()
-  dealId = workersInfo.defaultWorker!.dealIdOriginal
+  deals <- Deals.get()
+  dealId = deals.defaultWorker!.dealIdOriginal
   on HOST_PEER_ID:
     result <- Subnet.resolve(dealId)
     workers = result.workers
