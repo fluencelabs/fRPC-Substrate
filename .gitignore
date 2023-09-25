@@ -11,3 +11,4 @@ aqua-compiled
 # recommended by Fluence Labs:
 /.fluence/project-secrets.yaml
 /.fluence/schemas
+/.fluence/tmp
