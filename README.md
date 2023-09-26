@@ -24,7 +24,7 @@ Figure 1: Stylized fRPC Workflow With dAPP
     R ->> N: Response or timeout
     alt response
       N ->> G: response to gateway
-      G ->> A: response to dApp  
+      G ->> A: response to dApp
     else timeout
       loop over endpoint urls
         N ->> R: try another request
@@ -33,7 +33,7 @@ Figure 1: Stylized fRPC Workflow With dAPP
           G ->> A: response to dApp -- break
         end
       end
-      G ->> G: timeout 
+      G ->> G: timeout
       G ->> A: no response error
     end
 ```
@@ -233,7 +233,7 @@ Figure 3: Stylized Project Creation And Deployment Workflow With Fluence CLI
 ```mermaid
 
     stateDiagram
-    
+
     [*] --> InitProject: fluence init
     InitProject --> CreateNewService: fluence service new
     InitProject --> AddExistingService: fluence service add
@@ -259,14 +259,14 @@ workers:                                      # worker settings for deploy
 deals:                                        # deal settings for deploy
   defaultWorker:
     minWorkers: 1                             # default min worker settings -- you want your service deployed ot at least 1 worker
-    targetWorkers: 3                          # default max worker settings -- you want your service deployed ot at least 3 workers 
+    targetWorkers: 3                          # default max worker settings -- you want your service deployed ot at least 3 workers
 hosts:
   defaultWorker:
     peerIds:
       - 12D3KooWJ4bTHirdTFNZpCS72TAzwtdmavTBkkEXtzo6wHL25CtE
 
 relays: stage                                 # Name of Fluence network used
-services: 
+services:
   eth_rpc:                                    # service name
     get: wasm-modules/                        # and where to get the service config
 ```
@@ -293,7 +293,7 @@ Each module includes a module.yaml file in its root, e.g., [eth_rpc](./wasm-modu
 # curl-adapter/module.yaml
 version: 0
 type: rust                    # language used to code the module
-name: curl_adapter                      
+name: curl_adapter
 mountedBinaries:              # effector module specific: what mechanism is used to access host resources
   curl: /usr/bin/curl         # host path to binary mapped to the alias used in the module's FFI link section
 ```
@@ -334,10 +334,10 @@ deals:
   defaultWorker:
     definition: Qmcvoi6tZeBEkva2yn7cXJd8GiocKmkuzuz8L9VtfNdSG2,       # CID
     timestamp: 2023-04-09T06:21:36.559Z,
-    dealIdOriginal: "0x0CC9E494CaFDea602b09013a8743012Ce720def2",     #  Original deal id 
-    dealId: 0cc9e494cafdea602b09013a8743012ce720def2,                 # current deal id which may change after deal update 
+    dealIdOriginal: "0x0CC9E494CaFDea602b09013a8743012Ce720def2",     # Original deal id
+    dealId: 0cc9e494cafdea602b09013a8743012ce720def2,                 # current deal id which may change after deal update
     chainNetwork: testnet,                                            # Fluence on-chain network alias
-    chainNetworkId: 80001                                             # Fluence on-chain chain id 
+    chainNetworkId: 80001                                             # Fluence on-chain chain id
 ```
 
 See [FLuence CLI](https://github.com/fluencelabs/fluence-cli) for more details. For implementing your business logic with Rust and compiling it to wasm32-wasi, aka Wasm, module(s), see the [Marine book](https://fluence.dev/docs/marine-book/introduction). To learn more about distributed choreography and composition of services, see the [Aqua book](https://fluence.dev/docs/aqua-book/introduction).
@@ -354,12 +354,12 @@ Figure 4: Stylized fRPC Use With dAPPs
 
 ```mermaid
     sequenceDiagram
-    
+
     participant D as dApp
     participant G as Gateway
     participant N as Fluence p2p network
     participant R as Centralized RPC providers
-    
+
     G ->> G: Configure and start Gateway
     D ->> D: Use gateway Address:port in web3 sdk setup
     D ->> G: Make Web3 request
@@ -469,7 +469,7 @@ The *i* command lists all the exported interfaces from the wasm modules in Aqua 
 
 ### Adding Modules To A Service
 
-Regardless of your customization requirements, you probably will have no reason to modify the *curl_adapter* and *eth_rpc* modules. However, you may want to add new modules, or even services, to handle your additional business logic requirements. For example, you may want to capture RPC endpoint performance data, such as response times and availability, to some Web3 storage, e.g., IPFS or Ceramic, for further analysis to, say, derive a weighting scheme for endpoint selection. 
+Regardless of your customization requirements, you probably will have no reason to modify the *curl_adapter* and *eth_rpc* modules. However, you may want to add new modules, or even services, to handle your additional business logic requirements. For example, you may want to capture RPC endpoint performance data, such as response times and availability, to some Web3 storage, e.g., IPFS or Ceramic, for further analysis to, say, derive a weighting scheme for endpoint selection.
 
 Fluence CLI allows you to quickly create a new, or add an existing, module to your project. For example,
 
@@ -549,7 +549,7 @@ One little command is doing quite a bit so you don't have to. Let's work through
 
 Fluence CLI did a bunch of work for us behind the scenes and signing the transaction is a lot quicker than entering (virtual) credit card information. The parametric details necessary to write Aqua scripts are save in [deals.aqua](./.fluence/aqua/deals.aqua) and serves as an important dependency in your Aqua scripts, as we'll see in the next section.
 
-Note that the deal's section in [fluence.yaml](./fluence.yaml) specifies the number of workers that should be deployed specified by *targetWorkers*. The default is three (3) and can be customized. It is important to note that this is a desire not a guarantee as the actual deployment depends on the number of peers willing to participate in the deal. Currently, *all* the testnet peers operated by Fluence will participate in your deal.  
+Note that the deal's section in [fluence.yaml](./fluence.yaml) specifies the number of workers that should be deployed specified by *targetWorkers*. The default is three (3) and can be customized. It is important to note that this is a desire not a guarantee as the actual deployment depends on the number of peers willing to participate in the deal. Currently, *all* the testnet peers operated by Fluence will participate in your deal.
 
 ### fRPC Algorithms
 
@@ -586,7 +586,7 @@ func randomLoadBalancing(uris: []string, method: string, jsonArgs: []string, cal
     -- choose worker randomly
     timeW <- NumOp.identity(Peer.timestamp_sec())
     workerNumber = timeW % workers.length                                           --< 3
-    worker = workers[workerNumber] 
+    worker = workers[workerNumber]
     -- choose provider randomly
     timeP <- NumOp.identity(Peer.timestamp_sec())
     providerNumber = timeP % uris.length                                            --< 5
