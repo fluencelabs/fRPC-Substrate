@@ -334,7 +334,7 @@ deals:
   defaultWorker:
     definition: Qmcvoi6tZeBEkva2yn7cXJd8GiocKmkuzuz8L9VtfNdSG2,       # CID
     timestamp: 2023-04-09T06:21:36.559Z,
-    dealIdOriginal: "0x0CC9E494CaFDea602b09013a8743012Ce720def2",     # Original deal id
+    dealIdOriginal: "0x0CC9E494CaFDea602b09013a8743012Ce720def2",     #  Original deal id
     dealId: 0cc9e494cafdea602b09013a8743012ce720def2,                 # current deal id which may change after deal update
     chainNetwork: testnet,                                            # Fluence on-chain network alias
     chainNetworkId: 80001                                             # Fluence on-chain chain id
