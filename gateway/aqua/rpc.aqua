@@ -71,15 +71,21 @@ func roundRobin(uris: []string, method: string, jsonArgs: []string, counterServi
     Counter counterServiceId
     requestNumber <- Counter.incrementAndReturn()
   on HOST_PEER_ID:
-    workers <- getWorkers()
-    workerNumber = requestNumber % workers.length
-    worker = workers[workerNumber]
-    providerNumber = requestNumber % uris.length
-    provider = uris[providerNumber]
-    result <- callOnWorker(worker, provider, method, jsonArgs, callFunc)
-  Logger.logWorker(worker)
-  Logger.logCall(uris[providerNumber])
-  <- result
+    workers, error <- getWorkers()
+    result: *JsonString
+    if error == nil:
+      workerNumber = requestNumber % workers.length
+      worker = workers[workerNumber]
+      providerNumber = requestNumber % uris.length
+      provider = uris[providerNumber]
+      result <<- callOnWorker(worker, provider, method, jsonArgs, callFunc)
+      on INIT_PEER_ID:
+        Logger.logWorker(worker)
+        Logger.logCall(uris[providerNumber])
+    else:
+      result <<- JsonString(value = "", success = false, error = error!)
+
+  <- result!
 
 func roundRobinEth(uris: []string, method: string, jsonArgs: []string, counterServiceId: string, counterPeerId: string) -> JsonString:
   <- roundRobin(uris, method, jsonArgs, counterServiceId, counterPeerId, call)
