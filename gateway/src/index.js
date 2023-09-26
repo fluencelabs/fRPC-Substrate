@@ -130,9 +130,11 @@ async function methodHandler(reqRaw, method) {
         }
     }
 
+    if (!result.success) {
+        throw new Error(result.error);
+    }
 
     return JSON.parse(result.value || '{}');
-
 }
 
 function addMethod(op) {
