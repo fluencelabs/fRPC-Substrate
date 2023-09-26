@@ -10,7 +10,7 @@ on:
 
 jobs:
   tests:
-    name: "Tests placeholder"
+    name: "Aqua compilation"
     runs-on: ubuntu-latest
 
     steps:
@@ -20,4 +20,11 @@ jobs:
           repository: fluencelabs/frpc
           ref: ${{ inputs.ref }}
 
-      - run: exit 0
+      - name: Install fluence-cli@unstable
+        run: npm i -g @fluencelabs/cli@unstable
+
+      - name: Check if main.aqua compiles
+        run: fluence aqua --dry
+
+      - name: Check if services builds
+        run: fluence build
