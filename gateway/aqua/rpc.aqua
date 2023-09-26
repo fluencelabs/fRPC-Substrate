@@ -1,9 +1,7 @@
 import "@fluencelabs/aqua-lib/builtin.aqua"
-import "workers.aqua"
+import Subnet, Worker from "@fluencelabs/aqua-lib/subnet.aqua"
 import "services.aqua"
-import "@fluencelabs/registry/subnetwork.aqua"
-import Registry, Record from "@fluencelabs/registry/registry-service.aqua"
-import "@fluencelabs/spell/spell_service.aqua"
+use "deals.aqua"
 
 export randomLoadBalancingEth, roundRobinEth, quorumEth, Counter, Logger
 
@@ -16,7 +14,7 @@ service Logger("logger"):
   log(s: []string)
   logNum(n: u32)
   logCall(s: string)
-  logWorker(w: Record)
+  logWorker(w: Worker)
 
 service NumOp("op"):
   identity(n: u64) -> i64
@@ -34,15 +32,17 @@ func call(uri: string, method: string, jsonArgs: []string) -> JsonString:
   res <- EthRpc.eth_call(uri, method, jsonArgs)
   <- res
 
-func getWorkers() -> []Record:
-  workersInfo <- getWorkersInfo()
-  dealId = workersInfo.deals.defaultWorker!.dealId
+func getWorkers() -> []Worker, ?string:
+  deals <- Deals.get()
+  dealId = deals.defaultWorker!.dealIdOriginal
   on HOST_PEER_ID:
-    workersOp, error <- resolveSubnetwork(dealId)
-  <- workersOp!
+    result <- Subnet.resolve(dealId)
+    workers = result.workers
+    error = result.error
+  <- workers, error
 
-func callOnWorker(worker: Record, uri: string, method: string, jsonArgs: []string, callFunc: string, string, []string -> JsonString) -> JsonString:
-  on worker.metadata.peer_id via worker.metadata.relay_id:
+func callOnWorker(worker: Worker, uri: string, method: string, jsonArgs: []string, callFunc: string, string, []string -> JsonString) -> JsonString:
+  on worker.worker_id! via worker.host_id:
     result <- callFunc(uri, method, jsonArgs)
   <- result
 
@@ -71,15 +71,21 @@ func roundRobin(uris: []string, method: string, jsonArgs: []string, counterServi
     Counter counterServiceId
     requestNumber <- Counter.incrementAndReturn()
   on HOST_PEER_ID:
-    workers <- getWorkers()
-    workerNumber = requestNumber % workers.length
-    worker = workers[workerNumber]
-    providerNumber = requestNumber % uris.length
-    provider = uris[providerNumber]
-    result <- callOnWorker(worker, provider, method, jsonArgs, callFunc)
-  Logger.logWorker(worker)
-  Logger.logCall(uris[providerNumber])
-  <- result
+    workers, error <- getWorkers()
+    result: *JsonString
+    if error == nil:
+      workerNumber = requestNumber % workers.length
+      worker = workers[workerNumber]
+      providerNumber = requestNumber % uris.length
+      provider = uris[providerNumber]
+      result <<- callOnWorker(worker, provider, method, jsonArgs, callFunc)
+      on INIT_PEER_ID:
+        Logger.logWorker(worker)
+        Logger.logCall(uris[providerNumber])
+    else:
+      result <<- JsonString(value = "", success = false, error = error!)
+
+  <- result!
 
 func roundRobinEth(uris: []string, method: string, jsonArgs: []string, counterServiceId: string, counterPeerId: string) -> JsonString:
   <- roundRobin(uris, method, jsonArgs, counterServiceId, counterPeerId, call)
@@ -92,7 +98,7 @@ func quorum(
   on HOST_PEER_ID:
     workers <- getWorkers()
     for worker <- workers par:
-      on worker.metadata.peer_id via worker.metadata.relay_id:
+      on worker.worker_id! via worker.host_id:
         -- choose provider randomly
         timeP <- NumOp.identity(Peer.timestamp_ms())
         providerNumber = timeP % uris.length

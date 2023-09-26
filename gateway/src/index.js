@@ -5,8 +5,7 @@
 import express from "express";
 import bodyParser from "body-parser";
 import {JSONRPCServer} from "json-rpc-2.0";
-import {Fluence} from '@fluencelabs/js-client.api';
-import "@fluencelabs/js-client.node"
+import {Fluence} from '@fluencelabs/js-client';
 import {
     quorumEth,
     randomLoadBalancingEth,
@@ -54,7 +53,7 @@ registerLogger({
         console.log("Call will be to : " + s);
     },
     logWorker: s => {
-        console.log("Worker used: " + JSON.stringify(s.metadata.peer_id));
+        console.log("Worker used: " + JSON.stringify(s));
     },
     logNum: s => {
         console.log("Number: " + s);
@@ -121,7 +120,6 @@ async function methodHandler(reqRaw, method) {
     if (!config.mode || config.mode === "random") {
         result = await randomLoadBalancingEth(config.providers, method, req);
     } else if (config.mode === "round-robin") {
-        console.log("peerId: " + peerId)
         result = await roundRobinEth(config.providers, method, req, counterServiceId, counterPeerId,
             config.serviceId);
     } else if (config.mode === "quorum") {
@@ -130,13 +128,13 @@ async function methodHandler(reqRaw, method) {
         if (result.error) {
             return {error: result.error, results: result.results}
         }
-
-        console.log(result)
     }
 
+    if (!result.success) {
+        throw new Error(result.error);
+    }
 
-    return JSON.parse(result.value);
-
+    return JSON.parse(result.value || '{}');
 }
 
 function addMethod(op) {

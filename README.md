@@ -55,7 +55,7 @@ npm i
 If you don't have Fluence CLI installed, do:
 
 ```bash
-npm -g i @fluencelabs/cli@0.4.8
+npm -g i @fluencelabs/cli@unstable
 ```
 
 Before you proceed, you  should have, say, three RPC endpoint urls, e.g., Infura, Alchemy and QuickNode, for the same EVM-based chain you are using in your dAPP. Update the `configs/quickstart_config.json` by providing your endpoint urls and ignore the rest of the parameters for now:
@@ -82,7 +82,7 @@ Before you proceed, you  should have, say, three RPC endpoint urls, e.g., Infura
 Now start the gateway:
 
 ```bash
-npm run run configs/quickstart_config.json
+npm -C gateway run run configs/quickstart_config.json
 > @fluencelabs/aqua-eth-gateway@0.0.11 run
 > fluence aqua -i aqua/ -o aqua-compiled/ --js && node src/index.js configs/my_quickstart_config.json
 
@@ -188,13 +188,13 @@ sequenceDiagram
 
 While this sounds, and is, elaborate, *Fluence CLI*, see below, takes care of most of the scaffolding and workflow management for you.
 
-**Note:** At this point, the marketplace for Fluence's decentralized serverless isn't quite finished. The supply side has not been enabled and on the demand side, parameters are fixed for the testnet. That is, developers are not able to provide custom Deal parameters, such as willingness to pay for service execution. Instead, these parameters, i.e. price of execution per epoch and epoch duration, are hard-coded and used by Fluence CLI to create the corresponding Deal contract and transaction for you to sign. Moreover, economics are limited to the testnet using testnet tokens and throughout the EthDenver hackathon, resource owners may not claim their periodic share of revenue from the Deal's escrow.
+> At this point, the marketplace for Fluence's decentralized serverless isn't quite finished. The supply side has not been enabled and on the demand side, parameters are fixed for the testnet. That is, developers are not able to provide custom Deal parameters, such as willingness to pay for service execution. Instead, these parameters, i.e. price of execution per epoch and epoch duration, are hard-coded and used by Fluence CLI to create the corresponding Deal contract and transaction for you to sign. Moreover, economics are limited to the testnet using testnet tokens and throughout the EthDenver hackathon, resource owners may not claim their periodic share of revenue from the Deal's escrow.
 
 ## Setting Up For Developing With Fluence
 
 To get going, you need to install and setup a few dependencies.
 
-> Note: Fluence tooling works on most *nix systems including OSX and Windows Linux Subsystem. At this time, Windows is not supported.
+> Fluence tooling works on most *nix systems including OSX and Windows Linux Subsystem. At this time, Windows is not supported.
 
 ### Off-chain Dependencies
 
@@ -203,16 +203,16 @@ To get going, you need to install and setup a few dependencies.
 * [Rust](https://www.rust-lang.org/tools/install) (optional; Fluence CLI will install if not already in your environment)
 * For VSCode, there is a helpful [Aqua language support](https://marketplace.visualstudio.com/items?itemName=FluenceLabs.aqua) package available
 
-**Note** that Fluence CLI installs missing dependencies as needed ("lazy install"). If you want all your dependencies installed at once, use the `fluence dependencies i` command.
+> This Fluence CLI install missing dependencies as needed ("lazy install"). If you want all your dependencies installed at once, use the `fluence dependencies i` command.
 
 ### On-chain Dependencies
 
 * Wallectconnect compatible wallet, e.g., MetaMask, setup for and funded with:
-  * [Aurora testnet](https://chainlist.org/chain/1313161555) parameters
-  * [Aurora faucet](https://aurora.dev/faucet)
+  * [Mumbai testnet](https://chainlist.org/chain/80001) parameters
+  * [Mumbai faucet](https://mumbaifaucet.com/)
   * [Fluence USDC testnet faucet](https://faucet.fluence.dev/)
 
-You will need  Aurora (testnet) ETH and Fluence (testnet) USDC. This is as good a time as any to head over to those faucets and get your allocations. As an experienced Web3 dev, you know it's good hygiene to set up a new account, say, fRPC-dev, for the Aurora testnet and testnet tokens.
+You will need Mumbai MATIC and Fluence (testnet) USDC. This is as good a time as any to head over to those faucets and get your allocations. As an experienced Web3 dev, you know it's good hygiene to set up a new account, say, fRPC-dev, for the Mumbai testnet and testnet tokens.
 
 ### RPC Endpoints
 
@@ -474,9 +474,8 @@ Regardless of your customization requirements, you probably will have no reason 
 Fluence CLI allows you to quickly create a new, or add an existing, module to your project. For example,
 
 ```bash
- fluence module new
-? Enter module path wasm-modules/demo-module
-Successfully generated template for new module at wasm-modules/demo-module
+fluence module new --path ./wasm-modules demo-module
+Successfully generated template for new module at demo-module
 ```
 
 Which created a Rust project in the *wasm-module/demo-module* directory ready for you to customize. When you're done, you add the new module to your service config, service.yaml:
@@ -544,7 +543,7 @@ One little command is doing quite a bit so you don't have to. Let's work through
 * the wasm modules and config are uploaded to IPFS node where deal-participating peer's workers can fetch the package by CID (2)
 * get back CID and update local file(s) (3)
 * if a deal is already in place, which was so you could run the Quickstart demo *quickly*, either update the existing deal or create a new one: **create a new one!** (4)
-* now you have to get involved! you are presented with the uri to get metamask to ask you to sign your escrow payment to the contract (5). Copy and paste the uri to your browser and eventually, Metamask should pop-up with a signing request. The transaction displays only in hex, so double check the other request params to make sure you're signing the Aurora testnet transaction. This is what you should see:
+* now you have to get involved! you are presented with the uri to get metamask to ask you to sign your escrow payment to the contract (5). Copy and paste the uri to your browser and eventually, Metamask should pop-up with a signing request. The transaction displays only in hex, so double check the other request params to make sure you're signing the Mumbai transaction. This is what you should see:
 ![Sign TX](./images/sign_tx_metamask.png)
 * once you signed the transaction and the contract was successfully updated, we are done (6) !
 

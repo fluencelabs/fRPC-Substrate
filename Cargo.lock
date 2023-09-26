@@ -482,7 +482,7 @@ name = "curl_adapter"
 version = "0.1.0"
 dependencies = [
  "log",
- "marine-rs-sdk 0.9.0",
+ "marine-rs-sdk 0.10.0",
 ]
 
 [[package]]
@@ -630,7 +630,7 @@ version = "0.1.0"
 dependencies = [
  "eyre",
  "jsonrpc-core",
- "marine-rs-sdk 0.9.0",
+ "marine-rs-sdk 0.10.0",
  "marine-rs-sdk-test",
  "serde",
  "serde_json",
@@ -1330,6 +1330,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "marine-call-parameters"
+version = "0.10.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "f9ca0439e5b2a812d8bc5c3b7d71e3691fb260a1f0384a7e842eec1b59f13069"
+dependencies = [
+ "marine-macro 0.10.0",
+ "marine-rs-sdk-main 0.10.0",
+ "serde",
+]
+
+[[package]]
 name = "marine-core"
 version = "0.23.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1416,12 +1427,12 @@ dependencies = [
 
 [[package]]
 name = "marine-macro"
-version = "0.9.0"
+version = "0.10.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "fd5d4c95570c141d4a92e8c08d6253788154315a66bb3c89d266f0825e9b49db"
+checksum = "0088fc9cb6a970dc17a510c3cb28fe459c368d566e8cb7f8354e06ef3395c883"
 dependencies = [
- "marine-macro-impl 0.9.0",
- "marine-rs-sdk-main 0.9.0",
+ "marine-macro-impl 0.10.0",
+ "marine-rs-sdk-main 0.10.0",
 ]
 
 [[package]]
@@ -1452,9 +1463,9 @@ dependencies = [
 
 [[package]]
 name = "marine-macro-impl"
-version = "0.9.0"
+version = "0.10.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f91ed66c39016565a422807dd3fe3fbc3c36ee88d2f0b69c2e6345168b7d9320"
+checksum = "e457b58c826679139896f04e6cfa38c5d23870a88e957e8e0a6f646e7c3f0ac4"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -1521,13 +1532,14 @@ dependencies = [
 
 [[package]]
 name = "marine-rs-sdk"
-version = "0.9.0"
+version = "0.10.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "647206070db6f592f6a9783b1326c1b6a535c739d5238e478a9fa8529234ad70"
+checksum = "c6ecd45528096514b4db8d23523eadaf9e5d5a7d3fce637e4bb684afccc0e9a3"
 dependencies = [
- "marine-macro 0.9.0",
- "marine-rs-sdk-main 0.9.0",
- "marine-timestamp-macro 0.9.0",
+ "marine-call-parameters",
+ "marine-macro 0.10.0",
+ "marine-rs-sdk-main 0.10.0",
+ "marine-timestamp-macro 0.10.0",
  "serde",
 ]
 
@@ -1543,9 +1555,9 @@ dependencies = [
 
 [[package]]
 name = "marine-rs-sdk-main"
-version = "0.9.0"
+version = "0.10.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a69e17cc63a434d19ca9c312a29a1e06847758041f8429f333d3a91469f62594"
+checksum = "11eabbc74c69ad11874fb6cf686604833d084633293324524a40ec581663f978"
 dependencies = [
  "log",
  "serde",
@@ -1637,9 +1649,9 @@ dependencies = [
 
 [[package]]
 name = "marine-timestamp-macro"
-version = "0.9.0"
+version = "0.10.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c33b9d6dd721e2d55e3737a4ba5374887cef56caa80b0a49849a06b0f2e46a4e"
+checksum = "acf956d174fdbf940b474089d5388aa35b4fc73fedbfade2a92dc198084b9afa"
 dependencies = [
  "chrono",
  "quote",
