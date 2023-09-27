@@ -125,7 +125,8 @@ async function methodHandler(reqRaw, method) {
         const quorumResult = await quorumEth(config.providers, quorumNumber, 10000, method, req, quorumServiceId, quorumPeerId, { ttl: 20000 });
 
         if (quorumResult.error) {
-            result = { success: false, error: { error: quorumResult.error, results: quorumResult.results } }
+            console.error(`quorum failed: ${quorumResult.error}\n${JSON.stringify(quorumResult.results)}`);
+            result = { success: false, error: quorumResult.error };
         } else {
             result = { success: true, error: quorumResult.error, value: quorumResult.value };
         }

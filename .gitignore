@@ -14,4 +14,4 @@ aqua-compiled
 /.fluence/tmp
 
 # to avoid accidental publish of RPC URLs
-quickstart_config.json
+gateway/configs/quickstart_config.json
