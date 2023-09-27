@@ -4,8 +4,8 @@
 
 import express from "express";
 import bodyParser from "body-parser";
-import {JSONRPCServer} from "json-rpc-2.0";
-import {Fluence} from '@fluencelabs/js-client';
+import { JSONRPCServer } from "json-rpc-2.0";
+import { Fluence } from '@fluencelabs/js-client';
 import {
     quorumEth,
     randomLoadBalancingEth,
@@ -14,9 +14,9 @@ import {
     registerQuorumChecker,
     roundRobinEth
 } from "../aqua-compiled/rpc.js";
-import {readArguments} from "./arguments.js";
-import {readConfig} from "./config.js";
-import {methods} from "./methods.js";
+import { readArguments } from "./arguments.js";
+import { readConfig } from "./config.js";
+import { methods } from "./methods.js";
 
 const args = readArguments(process.argv.slice(2));
 
@@ -26,7 +26,7 @@ if (args.errors.length > 0) {
     process.exit(1);
 }
 
-const {config, errors, help} = readConfig(args.configPath);
+const { config, errors, help } = readConfig(args.configPath);
 
 if (errors.length > 0) {
     errors.forEach((err) => console.log(err));
@@ -70,7 +70,7 @@ registerCounter("counter", {
 })
 
 function findSameResults(results, minNum) {
-    const resultCounts = results.filter((obj) => obj.success).map((obj) => obj.value).reduce(function(i, v) {
+    const resultCounts = results.filter((obj) => obj.success).map((obj) => obj.value).reduce(function (i, v) {
         if (i[v] === undefined) {
             i[v] = 1
         } else {
@@ -107,9 +107,9 @@ registerQuorumChecker("quorum",
     }
 )
 
-const counterServiceId = config.counterServiceId  || 'counter'
+const counterServiceId = config.counterServiceId || 'counter'
 const counterPeerId = config.counterPeerId || peerId
-const quorumServiceId = config.quorumServiceId  || 'quorum'
+const quorumServiceId = config.quorumServiceId || 'quorum'
 const quorumPeerId = config.quorumPeerId || peerId
 const quorumNumber = config.quorumNumber || 2
 
@@ -120,13 +120,15 @@ async function methodHandler(reqRaw, method) {
     if (!config.mode || config.mode === "random") {
         result = await randomLoadBalancingEth(config.providers, method, req);
     } else if (config.mode === "round-robin") {
-        result = await roundRobinEth(config.providers, method, req, counterServiceId, counterPeerId,
-            config.serviceId);
+        result = await roundRobinEth(config.providers, method, req, counterServiceId, counterPeerId, config.serviceId);
     } else if (config.mode === "quorum") {
-        result = await quorumEth(config.providers, quorumNumber, 10000, method, req, quorumServiceId, quorumPeerId, {ttl: 20000});
+        const quorumResult = await quorumEth(config.providers, quorumNumber, 10000, method, req, quorumServiceId, quorumPeerId, { ttl: 20000 });
 
-        if (result.error) {
-            return {error: result.error, results: result.results}
+        if (quorumResult.error) {
+            console.error(`quorum failed: ${quorumResult.error}\n${JSON.stringify(quorumResult.results)}`);
+            result = { success: false, error: quorumResult.error };
+        } else {
+            result = { success: true, error: quorumResult.error, value: quorumResult.value };
         }
     }
 

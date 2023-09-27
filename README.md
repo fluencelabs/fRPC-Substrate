@@ -123,7 +123,7 @@ curl http://127.0.0.1:3000  \
     -H "Content-Type: application/json" \
     -d '{"jsonrpc":"2.0","method":"eth_blockNumber","params": [],"id":100}'
 
-{"jsonrpc":"2.0","id":100,"result":"0x82b956"
+{"jsonrpc":"2.0","id":100,"result":"0x82b956"}
 
 # with the corresponding gateway log output
 
