@@ -12,3 +12,6 @@ aqua-compiled
 /.fluence/project-secrets.yaml
 /.fluence/schemas
 /.fluence/tmp
+
+# to avoid accidental publish of RPC URLs
+quickstart_config.json
