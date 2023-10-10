@@ -4,17 +4,19 @@ const web3 = new Web3("http://localhost:3000");
 
 async function main() {
     try {
-        const bn = await web3.eth.getBlockNumber()
+        console.log("Trying to fetch the block number...");
+        const bn = await web3.eth.getBlockNumber();
         console.log("Block number is: ", bn);
     } catch (e) {
         console.error("Error requesting block number\n", e);
     }
 
     try {
-        const resp = await web3.eth.getTransaction("0x8bad403edde37642e4dab6c91eeca77b979fce1c979c14ca8755f5c3573eaeb4")
+        console.log("Trying to fetch the transaction information...");
+        const resp = await web3.eth.getTransaction("0x7bfa7c9812c67af61872c66f3af13bb65ad0f81b7a44bcf4a11c11900be16409");
         console.log("Transaction is", resp);
     } catch (e) {
-        console.log("Erro requesting transaction info\n", e)
+        console.log("Error requesting transaction info!\n", e)
     }
 }
 
