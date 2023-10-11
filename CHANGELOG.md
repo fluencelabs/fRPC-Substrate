@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.0.13](https://github.com/fluencelabs/fRPC-Substrate/compare/v0.0.12...v0.0.13) (2023-10-11)
+
+
+### Bug Fixes
+
+* **deps:** update rust crate tokio to v1.33.0 ([#103](https://github.com/fluencelabs/fRPC-Substrate/issues/103)) ([bb41bb4](https://github.com/fluencelabs/fRPC-Substrate/commit/bb41bb4b49c987bd2bc94af015c16e35b13477ce))
+* **readme:** Fix RPC links ([#108](https://github.com/fluencelabs/fRPC-Substrate/issues/108)) ([cf9f338](https://github.com/fluencelabs/fRPC-Substrate/commit/cf9f3384c6f07fcbc5253e120bfa5c149a4de30e))
+* **readme:** Fix spelling ([#109](https://github.com/fluencelabs/fRPC-Substrate/issues/109)) ([110dc59](https://github.com/fluencelabs/fRPC-Substrate/commit/110dc595cd99af142ac50cbc537662c4d995a346))
+
 ## [0.0.12](https://github.com/fluencelabs/fRPC-Substrate/compare/v0.0.11...v0.0.12) (2023-10-09)
 
 
