@@ -246,7 +246,7 @@ Figure 3: Stylized Project Creation And Deployment Workflow With Fluence CLI
     DeployedService --> RunService: fluence run
 ```
 
-Fluence CLI uses multiple *yaml* config files. Below find references to the most important one populated with parameters from our fRPC-Substrate project. You can find the schemas in the [schemas](./.fluence/schemas) directory. Note that Fluence CLI creates config files lazily, i.e., as needed.
+Fluence CLI uses multiple *yaml* config files. Below find references to the most important ones populated with parameters from our fRPC-Substrate project. You can find the schemas in the [schemas](./.fluence/schemas) directory. Note that Fluence CLI creates config files lazily, i.e., as needed.
 
 #### fluence.yaml -- the root project config file that manages version, dependencies, and more:
 
@@ -287,7 +287,7 @@ modules:                      # modules included
 
 #### module.yaml -- the module config file
 
-Each module includes a module.yaml file in its root, e.g., [eth_rpc](./wasm-modules/eth-rpc/module.yaml)  and [curl-adapter](./wasm-modules/curl-adapter/module.yaml).
+Each module includes a module.yaml file in its root, e.g., [eth_rpc](./wasm-modules/eth-rpc/module.yaml) and [curl-adapter](./wasm-modules/curl-adapter/module.yaml).
 
 ```yaml
 # curl-adapter/module.yaml
@@ -384,7 +384,7 @@ In order to use the fRPC substrate out-of-the-box or after customization, you ne
 
 fRPC Substrate comes with one *service* comprised of two Wasm modules, which you can find in the [wasm-modules]("./wasm-modules/") directory. The service is called 'eth_rpc' and the included modules are a [curl_adapater]("./../wasm-modules/curl-adapter") and [eth_rpc]("./../wasm-modules/eth-rpc"). The *curl_adapter* module is a generic, re-usable module allowing access a peer's curl binary, if permissioned by the peer, and exposes the *curl_request* function. Any modules requiring curl access may use the curl_adapter modules via [FFI linking](https://doc.rust-lang.org/nomicon/ffi.html) with the *curl_request* function.
 
-The *eth_rpc* module manages the json-rpc requests and responses initiated and consumed by Aqua scripts as he result of some frontend event, .e.g. our dAPP or curl request. Once available on peers of the Fluence p2p network, the *eth-rpc* services, aka RPC endpoint adapter, allows us to call one or more RPC endpoints using Aqua for choreography and composition of services.
+The *eth_rpc* module manages the json-rpc requests and responses initiated and consumed by Aqua scripts as he result of some frontend event, e.g. our dAPP or curl request. Once available on peers of the Fluence p2p network, the *eth-rpc* services, aka RPC endpoint adapter, allows us to call one or more RPC endpoints using Aqua for choreography and composition of services.
 
 Before you can deploy your service, use `fluence build` in the root dir to compile each module's Rust code to wasm32-wasi output:
 
@@ -545,7 +545,7 @@ One little command is doing quite a bit so you don't have to. Let's work through
 * if a deal is already in place, which was so you could run the Quickstart demo *quickly*, either update the existing deal or create a new one: **create a new one!** (4)
 * now you have to get involved! you are presented with the uri to get metamask to ask you to sign your escrow payment to the contract (5). Copy and paste the uri to your browser and eventually, Metamask should pop-up with a signing request. The transaction displays only in hex, so double check the other request params to make sure you're signing the Mumbai transaction. This is what you should see:
 ![Sign TX](./images/sign_tx_metamask.png)
-* once you signed the transaction and the contract was successfully updated, we are done (6) !
+* once you signed the transaction and the contract was successfully updated, we are done! (6)
 
 Fluence CLI did a bunch of work for us behind the scenes and signing the transaction is a lot quicker than entering (virtual) credit card information. The parametric details necessary to write Aqua scripts are save in [deals.aqua](./.fluence/aqua/deals.aqua) and serves as an important dependency in your Aqua scripts, as we'll see in the next section.
 
@@ -553,7 +553,7 @@ Note that the deal's section in [fluence.yaml](./fluence.yaml) specifies the num
 
 ### fRPC Algorithms
 
-Now that we got our services deployed and ready for action, it's time to look at Aqua, which is utilized by the Gateway to bridge HTTP to/fro libp2p. The fRPC substrate comes with basic implementations of several algorithms useful in mitigating failure as the result of availability and lack of trustlessness with respect to RPC endpoints and possibly peers. Before we dive into the algorithms, let's have a look at the Aqua code and structure.
+Now that we got our services deployed and ready for action, it's time to look at Aqua, which is utilized by the Gateway to bridge HTTP to/from libp2p. The fRPC substrate comes with basic implementations of several algorithms useful in mitigating failure as the result of availability and lack of trustlessness with respect to RPC endpoints and possibly peers. Before we dive into the algorithms, let's have a look at the Aqua code and structure.
 
 [rpc.aqua]("./../gateway/aqua/rpc.aqua") contains the necessary dependencies and algorithms.
 
