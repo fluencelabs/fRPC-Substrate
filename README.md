@@ -218,9 +218,9 @@ You will need Mumbai MATIC and Fluence (testnet) USDC. This is as good a time as
 
 Since fRPC works with existing centralized or self-hosted RPC providers, you want at least three provider urls with appended API keys to *the* chain of your choice. Multi-chain support is currently not supported by fRPC Substrate (hint, hint to all you hackathoners). For Ethereum's Goerli testnet, for example:
 
-* Infura: https://goerli.infura.io/v3/<your key>
-* Alchemy: https://eth-goerli.g.alchemy.com/v2/<your key>
-* QuickNode: https://frequent-sleek-river.ethereum-goerli.discover.quiknode.pro/<your key>/
+* Infura: https://goerli.infura.io/v3/\<your key>
+* Alchemy: https://eth-goerli.g.alchemy.com/v2/\<your key>
+* QuickNode: https://frequent-sleek-river.ethereum-goerli.discover.quiknode.pro/\<your key>/
 
 Each of the listed providers has a free account option and supports the API key in the url style, rather than the header, which is the current gateway implementation choice; a choice you should feel free to override and customize to your needs.
 
