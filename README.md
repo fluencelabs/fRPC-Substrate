@@ -130,6 +130,8 @@ Call will be to : https://eth-goerli.g.alchemy.com/v2/<your api key>
 
 Since we have specified *round-robin* in our config file and have more than one endpoint url in play, re-running the json-rpc call should result in a different endpoint selection:
 
+**Command**:
+
 ```bash
 curl http://127.0.0.1:3000  \
     -X POST \
