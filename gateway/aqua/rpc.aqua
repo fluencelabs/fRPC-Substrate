@@ -79,6 +79,7 @@ func roundRobin(uris: []string, method: string, jsonArgs: []string, counterServi
       providerNumber = requestNumber % uris.length
       provider = uris[providerNumber]
       result <<- callOnWorker(worker, provider, method, jsonArgs, callFunc)
+      Op.noop() -- dirty hack
       on INIT_PEER_ID:
         Logger.logWorker(worker)
         Logger.logCall(uris[providerNumber])
