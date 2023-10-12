@@ -58,7 +58,7 @@ If you don't have Fluence CLI installed, do:
 npm -g i @fluencelabs/cli@unstable
 ```
 
-Before you proceed, you  should have, say, three RPC endpoint urls, e.g., Infura, Alchemy and QuickNode, for the same EVM-based chain you are using in your dAPP. Update the `configs/quickstart_config.json` by providing your endpoint urls and ignore the rest of the parameters for now:
+Before you proceed, you should have, say, three RPC endpoint urls, e.g., Infura, Alchemy and QuickNode, for the same EVM-based chain you are using in your dAPP. Update the `configs/quickstart_config.json` by providing your endpoint urls and ignore the rest of the parameters for now:
 
 ```json
 {
@@ -81,8 +81,15 @@ Before you proceed, you  should have, say, three RPC endpoint urls, e.g., Infura
 
 Now start the gateway:
 
-```bash
+**Command**:
+
+```
 npm -C gateway run run configs/quickstart_config.json
+```
+
+**Output**:
+
+```bash
 > @fluencelabs/aqua-eth-gateway@0.0.11 run
 > fluence aqua -i aqua/ -o aqua-compiled/ --js && node src/index.js configs/my_quickstart_config.json
 
@@ -99,13 +106,19 @@ Server was started on port 3000
 
 With the gateway ready for action, all you have to do is change your dApps HTTP transport url to `http://127.0.0.1:3000` and keep using your dApp as usual. In the absence of a dAPP, we can interact with the gateway from the command line:
 
+**Command**:
+
 ```bash
 curl http://127.0.0.1:3000  \
     -X POST \
     -H "Content-Type: application/json" \
     -d '{"jsonrpc":"2.0","method":"eth_blockNumber","params": [],"id":100}'
+```
 
-{"jsonrpc":"2.0","id":100,"result":"0x82b950"
+**Output**:
+
+```bash
+{"jsonrpc":"2.0","id":100,"result":"0x82b950"}
 
 # with the corresponding gateway log output
 Receiving request 'eth_blockNumber'
@@ -122,7 +135,11 @@ curl http://127.0.0.1:3000  \
     -X POST \
     -H "Content-Type: application/json" \
     -d '{"jsonrpc":"2.0","method":"eth_blockNumber","params": [],"id":100}'
+```
 
+**Output**:
+
+```bash
 {"jsonrpc":"2.0","id":100,"result":"0x82b956"}
 
 # with the corresponding gateway log output
@@ -132,7 +149,6 @@ peerId: 12D3KooWKDnWpCLPJrycSevracdEgGznfDPwG1g5CWbt8uccdL79
 Counter: 2
 Worker used: "12D3KooWKPcNwR6EMq3sqm4sKtUKmZbMhPQ2dk1zr8YNgjdu9Xqn"
 Call will be to : https://frequent-sleek-river.ethereum-goerli.discover.quiknode.pro/<your api key>/
-
 ```
 
 Success! Go ahead and replace the `round-robin` mode with the `random` mode in your config file, stop and start the gateway and have a look at the different endpoint management.
@@ -194,7 +210,7 @@ While this sounds, and is, elaborate, *Fluence CLI*, see below, takes care of mo
 
 To get going, you need to install and setup a few dependencies.
 
-> Fluence tooling works on most *nix systems including OSX and Windows Linux Subsystem. At this time, Windows is not supported.
+> Fluence tooling works on most \*nix systems including OSX and Windows Linux Subsystem. At this time, Windows is not supported.
 
 ### Off-chain Dependencies
 
@@ -300,7 +316,6 @@ mountedBinaries:              # effector module specific: what mechanism is used
 
 The minimum key for a module file are: version, type and name. Effector modules, however, may need additional information such as [MountedBinaries](https://fluence.dev/docs/marine-book/marine-runtime/mounted-binaries). Such information needs to be manually added.
 
-
 #### project-secrets.yaml, user-secrets.yaml -- the cryptographic key file
 
 Fluence uses cryptographic keys in a variety of contexts including end-to-end encryption, client peer id determination and securing services. By default, Fluence CLI creates a keypair in *user-secrets.yaml*, which is placed in the global *.fluence* directory in your home directory.
@@ -388,8 +403,15 @@ The *eth_rpc* module manages the json-rpc requests and responses initiated and c
 
 Before you can deploy your service, use `fluence build` in the root dir to compile each module's Rust code to wasm32-wasi output:
 
+**Command**:
+
 ```bash
 fluence build
+```
+
+**Output**:
+
+```bash
 # Making sure all services are downloaded...
 # Making sure all services are built...
     Finished release [optimized] target(s) in 0.61s
@@ -399,8 +421,15 @@ See [target dir]("./target/wasm32-wasi/release") for *curl_adapter.wasm* and *et
 
 `fluence service repl`
 
+**Command**:
+
 ```bash
 fluence service repl
+```
+
+**Output**:
+
+```bash
 ? Enter service name from fluence.yaml, path to a service or url to .tar.gz archive wasm-modules
 # Making sure service and modules are downloaded and built...
     Finished release [optimized] target(s) in 0.18s
@@ -473,30 +502,51 @@ Regardless of your customization requirements, you probably will have no reason 
 
 Fluence CLI allows you to quickly create a new, or add an existing, module to your project. For example,
 
+**Command**:
+
 ```bash
 fluence module new --path ./wasm-modules demo-module
+```
+
+**Output**:
+
+```bash
 Successfully generated template for new module at demo-module
 ```
 
 Which created a Rust project in the *wasm-module/demo-module* directory ready for you to customize. When you're done, you add the new module to your service config, service.yaml:
 
+**Command**:
+
 ```bash
 fluence module add
+```
+
+**Output**:
+
+```bash
 ? Enter path to a module or url to .tar.gz archive wasm-modules/demo
 ? Enter service name from fluence.yaml or path to the service directory wasm-modules
 Added demo to ~/localdev/fRPC-Substrate/wasm-modules/service.yaml
 ```
 
-The demo module is now part of the service and  `fluence build`, for example, now compiles the *demo* module as part of the project build. You can create a new service with the `fluence service new` command. Note that the implication of creating a new service, possibly in a new project directory, is that you intend to deploy that service separately from the *eth-rpc* service. Of course, you will need to write Aqua code to be able to interact with your new module.
+The demo module is now part of the service and `fluence build`, for example, now compiles the *demo* module as part of the project build. You can create a new service with the `fluence service new` command. Note that the implication of creating a new service, possibly in a new project directory, is that you intend to deploy that service separately from the *eth-rpc* service. Of course, you will need to write Aqua code to be able to interact with your new module.
 
 To get rid of the demo project for now, use `fluence module remove` to unlink the module from the *fluence.yaml* and *service.yaml* files; the old *rm -r <path/demo>* gets rid of the code template.
 
 ### Deploying A Service
 
-With a service, in this case the *eth-rpc* service, ready for deployment, we simply use the `fluence deal deploy` command:
+With a service, in this case the *eth-rpc* service, ready for deployment, we simply use the `fluence deal deploy`:
+
+**Command**:
 
 ```bash
 fluence deal deploy
+```
+
+**Output**:
+
+```bash
 Connecting to: /dns4/stage.fluence.dev/tcp/19004/wss/p2p/12D3KooWJ4bTHirdTFNZpCS72TAzwtdmavTBkkEXtzo6wHL25CtE
 
 # 1 if Deal is already in place update or create new Deal?
