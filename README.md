@@ -536,6 +536,13 @@ To get rid of the demo project for now, use `fluence module remove` to unlink th
 
 ### Deploying A Service
 
+> :warning: **Warning**: For quickstart, services are already deployed for you. But if you want to deploy services in this repository yourself, you should remove old deployment information first:
+> ```bash
+> rm -rf .fluence
+> ```
+> `fluence deal deploy` is capable of redeploying services, so you don't have to do it every time. But one can't redeploy a service he doesn't not own, so you will get a error without this step for this repository.
+
+
 With a service, in this case the *eth-rpc* service, ready for deployment, we simply use the `fluence deal deploy`:
 
 **Command**:
@@ -547,55 +554,54 @@ fluence deal deploy
 **Output**:
 
 ```bash
-Connecting to: /dns4/stage.fluence.dev/tcp/19004/wss/p2p/12D3KooWJ4bTHirdTFNZpCS72TAzwtdmavTBkkEXtzo6wHL25CtE
+Using kras environment to sign contracts
+    Finished release [optimized] target(s) in 0.05s # (1)
+Connecting to kras relay: /dns4/7-kras.fluence.dev/tcp/9000/wss/p2p/12D3KooWDUszU2NeWyUVjCXhGEt1MoZrhvdmaQQwtZUriuGN1jTr
+Connected
 
-# 1 if Deal is already in place update or create new Deal?
-? Do you want to redeploy worker defaultWorker Yes
-    Finished release [optimized] target(s) in 0.22s
+Creating deal for worker defaultWorker # (2)
 
-# 2 upload packaged assets
-ipfs: did pin QmTvNwBeDop1yD9dLNjgrzfBMsgtrBmD859ahqQS1EWhbj to /dns4/ipfs.fluence.dev/tcp/5001
-<...>
-ipfs: file bafkreichjd77xy3bz4whsuyo2rmtgtwfjh4mqcwlzb74mvpgn5xfrjm72a pinned to /dns4/ipfs.fluence.dev/tcp/5001
+To approve transactions to your wallet using metamask, open the following url: # (3)
 
-# 3 process upload responses for local updates in workers.yaml
-Updating deal for worker defaultWorker
-
-# 4 request signing of escrow payment transaction
-
-# Connecting to wallet......
-To approve transactions to your wallet using metamask, open the following url:
-
-https://cli-connector.fluence.dev/?wc=d5494d58588812c1ca148268c5a236daa127092d1a8a7a1db50c2ffdb1aa40be%402&relay-protocol=irn&symKey=d1a4b5954b6e46c1fd70174f0de7a5a78b14346d9d59963baf003d41c90e1284
+https://cli-connector.fluence.dev/?wc=3df74b36a4459be644172d82e114297a65330ada4e77bc8afba67688064f033e%402&relay-protocol=irn&symKey=5b9b1773203cfe98c86bb8d611ff7945173430f5fb056fcd95f79919adbb0bae
 
 or go to https://cli-connector.fluence.dev and enter the following connection string there:
 
-wc:d5494d58588812c1ca148268c5a236daa127092d1a8a7a1db50c2ffdb1aa40be@2?relay-protocol=irn&symKey=d1a4b5954b6e46c1fd70174f0de7a5a78b14346d9d59963baf003d41c90e1284
+wc:3df74b36a4459be644172d82e114297a65330ada4e77bc8afba67688064f033e@2?relay-protocol=irn&symKey=5b9b1773203cfe98c86bb8d611ff7945173430f5fb056fcd95f79919adbb0bae
 
 Confirm transaction in your wallet...
 # Waiting for transaction to be mined......
+To approve transactions to your wallet using metamask, open the following url: # (4)
 
-# 5 if escrow payment is processed, deal deployment is finalized
+https://cli-connector.fluence.dev/?wc=4c6084bf73667a0f02795048002dfdaff8e6b1be22495f989e6d04995ad2e8ba%402&relay-protocol=irn&symKey=8b19aba8c445bd37819f60ef0bafe2e4098424dc5d570a8dfeaf4b57cc1e794d
+
+or go to https://cli-connector.fluence.dev and enter the following connection string there:
+
+wc:4c6084bf73667a0f02795048002dfdaff8e6b1be22495f989e6d04995ad2e8ba@2?relay-protocol=irn&symKey=8b19aba8c445bd37819f60ef0bafe2e4098424dc5d570a8dfeaf4b57cc1e794d
+
+Confirm transaction in your wallet...
+# Waiting for transaction to be mined......
+3 workers joined the deal 0x06AAe83F938890c47FA7C667392e01D9E3052961 # (5)
+
+
 Success!
 
-Success!
-
-created deals:
+created deals: # (6)
   defaultWorker:
-    deal: https://explorer.testnet.aurora.dev/address/0x258223B18962d804Fca4784245c3a5e0E3Bd8548
-    worker definition: bafkreichjd77xy3bz4whsuyo2rmtgtwfjh4mqcwlzb74mvpgn5xfrjm72a
+    deal: https://mumbai.polygonscan.com/address/0x06AAe83F938890c47FA7C667392e01D9E3052961
+    worker definition: bafkreigzfyfis2pmfr425dwpeql4hsrat5d7hpdthlxwzhefd23kw7gtey
+    timestamp: 2023-10-12T14:39:21.570Z
 ```
 
 One little command is doing quite a bit so you don't have to. Let's work through the process:
 
-* once we launch `fluence deal deploy` we create a (new) Deal with both on-chain and off-chain activities
 * for an up-to-date look, all service assets, i.e., modules, are (re-) compiled (1)
-* the wasm modules and config are uploaded to IPFS node where deal-participating peer's workers can fetch the package by CID (2)
-* get back CID and update local file(s) (3)
-* if a deal is already in place, which was so you could run the Quickstart demo *quickly*, either update the existing deal or create a new one: **create a new one!** (4)
-* now you have to get involved! you are presented with the uri to get metamask to ask you to sign your escrow payment to the contract (5). Copy and paste the uri to your browser and eventually, Metamask should pop-up with a signing request. The transaction displays only in hex, so double check the other request params to make sure you're signing the Mumbai transaction. This is what you should see:
+* a (new) Deal with both on-chain and off-chain activities is created (2)
+  * the wasm modules and config are uploaded to IPFS node where deal-participating peer's workers can fetch the package by CID
+* now you have to get involved! you are presented with the uri to get metamask to ask you to sign your escrow payment to the contract (3) (4). Copy and paste the uris to your browser and eventually, Metamask should pop-up with a signing request. A transaction is displayed only in hex, so double check the other request params to make sure you're signing the Mumbai transaction. This is what you should see:
 ![Sign TX](./images/sign_tx_metamask.png)
-* once you signed the transaction and the contract was successfully updated, we are done! (6)
+* once you sign transactions, the deal is created and the workers join the deal, deploying your services (5)
+* finally, deployment information is saved for future use in Aqua scripts (6)
 
 Fluence CLI did a bunch of work for us behind the scenes and signing the transaction is a lot quicker than entering (virtual) credit card information. The parametric details necessary to write Aqua scripts are save in [deals.aqua](./.fluence/aqua/deals.aqua) and serves as an important dependency in your Aqua scripts, as we'll see in the next section.
 
