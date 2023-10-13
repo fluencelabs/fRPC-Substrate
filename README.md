@@ -83,7 +83,7 @@ Now start the gateway:
 
 **Command**:
 
-```
+```bash
 npm -C gateway run run configs/quickstart_config.json
 ```
 
