@@ -1,20 +1,19 @@
+aqua RPC
+
 import "@fluencelabs/aqua-lib/builtin.aqua"
 import Subnet, Worker from "@fluencelabs/aqua-lib/subnet.aqua"
+
 import "services.aqua"
 use "deals.aqua"
 
-export randomLoadBalancingEth, roundRobinEth, quorumEth, Counter, Logger
+import Logger, initPeerLogger from "logger.aqua"
+
+export randomLoadBalancingEth, roundRobinEth, quorumEth, Counter, QuorumChecker
 
 data QuorumResult:
   value: string
   results: []JsonString
   error: string
-
-service Logger("logger"):
-  log(s: []string)
-  logNum(n: u32)
-  logCall(s: string)
-  logWorker(w: Worker)
 
 service NumOp("op"):
   identity(n: u64) -> i64
@@ -46,7 +45,7 @@ func callOnWorker(worker: Worker, uri: string, method: string, jsonArgs: []strin
     result <- callFunc(uri, method, jsonArgs)
   <- result
 
-func randomLoadBalancing(uris: []string, method: string, jsonArgs: []string, callFunc: string, string, []string -> JsonString) -> JsonString:
+func randomLoadBalancing{Logger}(uris: []string, method: string, jsonArgs: []string, callFunc: string, string, []string -> JsonString) -> JsonString:
   on HOST_PEER_ID:
     workers <- getWorkers()
     workersNum = workers.length
@@ -58,15 +57,18 @@ func randomLoadBalancing(uris: []string, method: string, jsonArgs: []string, cal
     timeP <- NumOp.identity(Peer.timestamp_sec())
     providerNumber = timeP % uris.length
     provider = uris[providerNumber]
+    Logger.logWorker(worker)
+    Logger.logCall(uris[providerNumber])
+    Op.noop() -- dirty hack    
     result <- callOnWorker(worker, provider, method, jsonArgs, callFunc)
-  Logger.logWorker(worker)
-  Logger.logCall(uris[providerNumber])
+    Op.noop() -- dirty hack    
   <- result
 
 func randomLoadBalancingEth(uris: []string, method: string, jsonArgs: []string) -> JsonString:
-  <- randomLoadBalancing(uris, method, jsonArgs, call)
+  log <- initPeerLogger()
+  <- randomLoadBalancing{log}(uris, method, jsonArgs, call)
 
-func roundRobin(uris: []string, method: string, jsonArgs: []string, counterServiceId: string, counterPeerId: string, callFunc: string, string, []string -> JsonString) -> JsonString:
+func roundRobin{Logger}(uris: []string, method: string, jsonArgs: []string, counterServiceId: string, counterPeerId: string, callFunc: string, string, []string -> JsonString) -> JsonString:
   on counterPeerId:
     Counter counterServiceId
     requestNumber <- Counter.incrementAndReturn()
@@ -78,18 +80,19 @@ func roundRobin(uris: []string, method: string, jsonArgs: []string, counterServi
       worker = workers[workerNumber]
       providerNumber = requestNumber % uris.length
       provider = uris[providerNumber]
+      Logger.logWorker(worker)
+      Logger.logCall(uris[providerNumber])
+      Op.noop() -- dirty hack    
       result <<- callOnWorker(worker, provider, method, jsonArgs, callFunc)
-      Op.noop() -- dirty hack
-      on INIT_PEER_ID:
-        Logger.logWorker(worker)
-        Logger.logCall(uris[providerNumber])
+      Op.noop() -- dirty hack       
     else:
       result <<- JsonString(value = "", success = false, error = error!)
 
   <- result!
 
 func roundRobinEth(uris: []string, method: string, jsonArgs: []string, counterServiceId: string, counterPeerId: string) -> JsonString:
-  <- roundRobin(uris, method, jsonArgs, counterServiceId, counterPeerId, call)
+  log <- initPeerLogger()
+  <- roundRobin{log}(uris, method, jsonArgs, counterServiceId, counterPeerId, call)
 
 func quorum(
   uris: []string, quorumNumber: u32, timeout: u32, method: string, jsonArgs: []string, quorumServiceId: string, quorumPeerId: string,
