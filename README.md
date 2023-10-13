@@ -540,9 +540,9 @@ To get rid of the demo project for now, use `fluence module remove` to unlink th
 
 > :warning: **Warning**: For quickstart, services are already deployed for you. But if you want to deploy services in this repository yourself, you should remove old deployment information first:
 > ```bash
-> rm -rf .fluence
+> mv .fluence/workers.yaml .fluence/workers.yaml.backup
 > ```
-> `fluence deal deploy` is capable of redeploying services, so you don't have to do it every time. But one can't redeploy a deal he doesn't own, so you will get a error without this step for this repository.
+> `fluence deal deploy` is capable of redeploying services, so you don't have to do this manual management every time you want to (re)deploy deal. But one can't redeploy a deal he doesn't own, so you will get a error without this step for this repository.
 
 
 With a service, in this case the *eth-rpc* service, ready for deployment, we simply use the `fluence deal deploy`:
