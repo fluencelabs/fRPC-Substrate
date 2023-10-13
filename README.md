@@ -600,9 +600,11 @@ One little command is doing quite a bit so you don't have to. Let's work through
 * for an up-to-date look, all service assets, i.e., modules, are (re-) compiled (1)
 * a (new) Deal with both on-chain and off-chain activities is created (2)
   * the wasm modules and config are uploaded to IPFS node where deal-participating peer's workers can fetch the package by CID
-* now you have to get involved! you are presented with uris to get metamask to ask you to sign your escrow payment to the contract (3) (4). Copy and paste the uris to your browser and eventually, Metamask should pop up with a signing request. A transaction is displayed only in hex, so double-check the other request parameters to make sure you're signing the Mumbai transaction. This is what you should see:
+* now you have to get involved! You are presented with two transactions, one after the other, for you to sign. To sign a transaction, copy and paste the uri to your browser and Metamask should pop up with a signing request eventually. A transaction is displayed only in hex, so double-check the other request parameters to make sure you're signing the Mumbai transaction. This is what you should see:
 ![Sign TX](./images/sign_tx_metamask.png)
-* once you sign transactions, the deal is created and the workers join the deal, deploying your services (5)
+  * first transaction is for the Deal on-chain creation (3)
+  * second transaction is for the Deal's on-chain matching (4)
+* once you sign the transactions, the deal is created and workers join the deal, deploying your services (5)
 * finally, deployment information is saved for future use in Aqua scripts (6)
 
 Fluence CLI did a bunch of work for us behind the scenes and signing the transaction is a lot quicker than entering (virtual) credit card information. The parametric details necessary to write Aqua scripts are saved in [deals.aqua](./.fluence/aqua/deals.aqua) and serve as an important dependency in your Aqua scripts, as we'll see in the next section.
