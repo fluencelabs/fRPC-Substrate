@@ -609,7 +609,7 @@ One little command is doing quite a bit so you don't have to. Let's work through
 
 Fluence CLI did a bunch of work for us behind the scenes and signing the transaction is a lot quicker than entering (virtual) credit card information. Fluence CLI organized a set of parameters needed by our Aqua scripts in [deals.aqua](./.fluence/aqua/deals.aqua) for easy importing.
 
-Note that the deal's section in [fluence.yaml](./fluence.yaml) specifies the number of workers that should be deployed specified by *targetWorkers*. The default is three (3) and can be customized. It is important to note that this is a desire not a guarantee as the actual deployment depends on the number of peers willing to participate in the deal. Currently, *all* the testnet peers operated by Fluence will participate in your deal.
+Note that the deal's section in [fluence.yaml](./fluence.yaml) specifies the minimum and maximum workers that should be deployed under the *defaultWorker* namespace. Fluence CLI currently provides default values for min and max workers of one (1) and three (3), respectively. In the near future, you will be able to provide your spot price for service execution, hosting targets in the form of named capacity providers and more. Stay tuned!
 
 ### fRPC Algorithms
 
