@@ -115,14 +115,17 @@ const counterPeerId = config.counterPeerId || peerId;
 const quorumServiceId = config.quorumServiceId || "quorum";
 const quorumPeerId = config.quorumPeerId || peerId;
 const quorumNumber = config.quorumNumber || 2;
+const mode = config.mode || "random";
+
+console.log(`Using mode '${mode}'`);
 
 async function methodHandler(reqRaw, method) {
   const req = reqRaw.map((s) => JSON.stringify(s));
   console.log(`Receiving request '${method}'`);
   let result;
-  if (!config.mode || config.mode === "random") {
+  if (mode === "random") {
     result = await randomLoadBalancingEth(config.providers, method, req);
-  } else if (config.mode === "round-robin") {
+  } else if (mode === "round-robin") {
     result = await roundRobinEth(
       config.providers,
       method,
@@ -131,7 +134,7 @@ async function methodHandler(reqRaw, method) {
       counterPeerId,
       config.serviceId
     );
-  } else if (config.mode === "quorum") {
+  } else if (mode === "quorum") {
     const quorumResult = await quorumEth(
       config.providers,
       quorumNumber,
