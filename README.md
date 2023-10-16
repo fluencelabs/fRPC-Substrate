@@ -607,7 +607,7 @@ One little command is doing quite a bit so you don't have to. Let's work through
 * once you sign the transactions, the deal is created and workers join the deal, deploying your services (5)
 * finally, deployment information is saved for future use in Aqua scripts (6)
 
-Fluence CLI did a bunch of work for us behind the scenes and signing the transaction is a lot quicker than entering (virtual) credit card information. The parametric details necessary to write Aqua scripts are saved in [deals.aqua](./.fluence/aqua/deals.aqua) and serve as an important dependency in your Aqua scripts, as we'll see in the next section.
+Fluence CLI did a bunch of work for us behind the scenes and signing the transaction is a lot quicker than entering (virtual) credit card information. Fluence CLI organized a set of parameters needed by our Aqua scripts in [deals.aqua](./.fluence/aqua/deals.aqua) for easy importing.
 
 Note that the deal's section in [fluence.yaml](./fluence.yaml) specifies the number of workers that should be deployed specified by *targetWorkers*. The default is three (3) and can be customized. It is important to note that this is a desire not a guarantee as the actual deployment depends on the number of peers willing to participate in the deal. Currently, *all* the testnet peers operated by Fluence will participate in your deal.
 
