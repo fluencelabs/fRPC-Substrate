@@ -293,15 +293,6 @@ Figure 4: Stylized fRPC Use With dApps
     D ->> D: dApp does its thing
 ```
 
-In order to use the fRPC substrate out-of-the-box or after customization, you need to:
-
-* have three or more centralized RPC endpoints ready, where each provider url needs to contain the API key, e.g.,
-* deploy a deal
-* deploy the service
-* update the gateway configuration
-* run the gateway
-* use the gateway url in your web3 sdk's HTTP transport config
-
 ### fRPC Wasm Components
 
 fRPC Substrate comes with one *service* comprised of two Wasm modules, which you can find in the [wasm-modules]("./wasm-modules/") directory. The service is called 'eth_rpc' and the included modules are a [curl_adapater]("./../wasm-modules/curl-adapter") and [eth_rpc]("./../wasm-modules/eth-rpc"). The *curl_adapter* module is a generic, re-usable module allowing access to a peer's curl binary, if permissioned by the peer, and exposes the *curl_request* function. Any modules requiring curl access may use the curl_adapter modules via [FFI linking](https://doc.rust-lang.org/nomicon/ffi.html) with the *curl_request* function.
