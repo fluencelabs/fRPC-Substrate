@@ -54,7 +54,7 @@ If you don't have Fluence CLI installed, do:
 npm -g i @fluencelabs/cli@unstable
 ```
 
-Before you proceed, you should have, say, three RPC endpoint urls, e.g., Infura, Alchemy and QuickNode, for the same EVM-based chain you are using in your dApp. Update the `configs/quickstart_config.json` by providing your endpoint urls and ignore the rest of the parameters for now:
+Before you proceed, you should have, say, three RPC endpoint urls, e.g., Infura, Alchemy and Ankr, for the same EVM-based chain you are using in your dApp. Update the `configs/quickstart_config.json` by providing your endpoint urls and ignore the rest of the parameters for now:
 
 ```json
 {
@@ -234,7 +234,7 @@ Since fRPC works with existing centralized or self-hosted RPC providers, you wan
 
 * Infura: https://goerli.infura.io/v3/\<your key>/
 * Alchemy: https://eth-goerli.g.alchemy.com/v2/\<your key>/
-* QuickNode: https://frequent-sleek-river.ethereum-goerli.discover.quiknode.pro/\<your key>/
+* Ankr: https://rpc.ankr.com/polygon_mumbai/\<your key>
 
 Each of the listed providers has a free account option and supports the API key in the url style, rather than the header, which is the current gateway implementation choice; a choice you should feel free to override and customize to your needs.
 
@@ -266,7 +266,7 @@ See [FLuence CLI](https://github.com/fluencelabs/fluence-cli) for more details. 
 
 ## Hacking On fRPC Substrate
 
-Fluence's *fRPC Substrate* is a starter kit that includes all the components you need to quickly enable your dApp with decentralized RPC using existing centralized RPC providers, e.g., Infura, Alchemy, QuickNode, etc., without touching your existing frontend Web3 code. fRPC substrate consists of the following code components, see Figure 4:
+Fluence's *fRPC Substrate* is a starter kit that includes all the components you need to quickly enable your dApp with decentralized RPC using existing centralized RPC providers, e.g., Infura, Alchemy, Ankr, etc., without touching your existing frontend Web3 code. fRPC substrate consists of the following code components, see Figure 4:
 
 * RPC API "adapter" code written in Rust and compiled to wasm32-wasi modules that are deployable to any peer in the Fluence p2p network
 * Aqua code for distributed algorithms, such as Random and Round Robin selection, using the distributed Wasm connectors for request-response handling over libp2p
