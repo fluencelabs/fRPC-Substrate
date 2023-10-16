@@ -717,7 +717,7 @@ In the fRPC substrate implementation, we provide a basic quorum algo that polls 
 
 ## Summary
 
-fRPC is a design pattern to efficiently mitigate risks inherent in centralized RPC providers for dApps using Fluence's decentralized serverless compute protocol. fRPC Substrate is a basic implementation of the fRPC design pattern that dApp users can use out of the box with no changes to their frontend. Moreover, Fluence is sponsoring hackathons, like EthDenver 2023, for developers to try the substrate and hack on and expand on the control algorithms provided to serve their needs and provide improvements to the community.
+fRPC is a design pattern to efficiently mitigate risks inherent in centralized RPC providers for dApps using Fluence's decentralized serverless compute protocol. fRPC Substrate is a basic implementation of the fRPC design pattern that dApp users can use out of the box with no changes to their frontend. Once you tried fRPC, feel free to experiment with the code and let us know about your journey in the [Fluence Discord](https://fluence.chat) developer channel.
 
 For support, to discuss your ideas or to schedule presentations of your solutions to the Fluence and fRPC community at large, reach out in [discord]("https://fluence.chat") or [telegram](https://t.me/fluence_project).
 
