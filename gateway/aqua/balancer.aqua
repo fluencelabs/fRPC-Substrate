@@ -1,13 +1,10 @@
-module Balancer declares Balancer, randomBalancer, cycleBalancer
+module Balancer declares Balancer, ProviderBalancer, WorkersBalancer, randomBalancer, cycleBalancer
 
 import Worker from "@fluencelabs/aqua-lib/subnet.aqua"
 
 import Counter from "counter.aqua"
 import Random from "random.aqua"
 import Provider from "provider.aqua"
-
-ability RequestHandler:
-    request()
 
 ability WorkersBalancer:
     nextWorker() -> Worker

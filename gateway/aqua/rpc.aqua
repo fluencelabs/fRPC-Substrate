@@ -7,22 +7,18 @@ import "services.aqua"
 use "deals.aqua"
 
 import Logger, initPeerLogger from "logger.aqua"
-import Balancer, randomBalancer, cycleBalancer from "balancer.aqua"
+import Balancer, ProviderBalancer, randomBalancer, cycleBalancer from "balancer.aqua"
 import onPeerCounter from "counter.aqua"
+import QuorumChecker, QuorumResult, onPeerQuorumChecker from "quorum.aqua"
 import timeRandom from "random.aqua"
 import RPCEth, fromWorkerProvider from "eth_rpc.aqua"
 
 import NumOp from "utils.aqua"
 
-export randomLoadBalancingEth, roundRobinEth, quorumEth, QuorumChecker
+export randomLoadBalancingEth, roundRobinEth, quorumEth
 
-data QuorumResult:
-  value: string
-  results: []JsonString
-  error: string
-
-service QuorumChecker("quorum"):
-  check(results: []JsonString, minResults: u32) -> QuorumResult
+func errorQuorumResult(msg: string) -> QuorumResult:
+  <- QuorumResult(value = "", results = [], error = msg)
 
 func errorJsonString(msg: string) -> JsonString:
   <- JsonString(value = "", success = false, error = msg)
@@ -76,27 +72,30 @@ func roundRobinEth(uris: []string, method: string, jsonArgs: []string, counterSe
   
   <- result!
 
-func quorum(
-  uris: []string, quorumNumber: u32, timeout: u32, method: string, jsonArgs: []string, quorumServiceId: string, quorumPeerId: string
-) -> QuorumResult:
+func quorum{ProviderBalancer, QuorumChecker}(workers: []Worker, quorumNumber: u32, timeout: u32, method: string, jsonArgs: []string) -> QuorumResult:
   results: *JsonString
-  on HOST_PEER_ID:
-    workers <- getWorkers()
+  on HOST_PEER_ID:  
     for worker <- workers par:
-      on worker.worker_id! via worker.host_id:
-        -- choose provider randomly
-        timeP <- NumOp.identity(Peer.timestamp_ms())
-        providerNumber = timeP % uris.length
-        provider = uris[providerNumber]
-        rpc <- fromWorkerProvider(worker, provider)
-        results <- rpcCall{rpc}(method, jsonArgs)
-    -- wait all results from all workers with timeout
-    join results[workers.length - 1]
-    par Peer.timeout(timeout, "")
-  on quorumPeerId via HOST_PEER_ID:
-    -- check all results that we got
-    quorumResult <- QuorumChecker.check(results, quorumNumber)
-  <- quorumResult
+      provider <- ProviderBalancer.nextProvider()
+      rpc <- fromWorkerProvider(worker, provider)
+      results <- rpcCall{rpc}(method, jsonArgs)
+
+  -- wait all results from all workers with timeout
+  join results[workers.length - 1]
+  par Peer.timeout(timeout, "Workers timeout")
+
+  <- QuorumChecker.check(results, quorumNumber)
 
 func quorumEth(uris: []string, quorumNumber: u32, timeout: u32, method: string, jsonArgs: []string, quorumServiceId: string, quorumPeerId: string) -> QuorumResult:
-  <- quorum(uris, quorumNumber, timeout, method, jsonArgs, quorumServiceId, quorumPeerId)
+  result: *QuorumResult
+
+  workers, error <- getWorkers()
+  if error != nil:
+    result <- errorQuorumResult(error!)
+  else:
+    random <- timeRandom()
+    balancer <- randomBalancer{random}(workers, uris)
+    quorumChecker <- onPeerQuorumChecker(quorumPeerId, quorumServiceId)
+    result <- quorum{balancer, quorumChecker}(workers, quorumNumber, timeout, method, jsonArgs)
+
+  <- result!

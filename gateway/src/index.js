@@ -9,11 +9,11 @@ import { Fluence } from "@fluencelabs/js-client";
 import {
   quorumEth,
   randomLoadBalancingEth,
-  registerQuorumChecker,
   roundRobinEth,
 } from "../aqua-compiled/rpc.js";
 import { registerLoggerSrv } from "../aqua-compiled/logger.js";
 import { registerCounterSrv } from "../aqua-compiled/counter.js";
+import { registerQuorumCheckerSrv } from "../aqua-compiled/quorum.js";
 import { readArguments } from "./arguments.js";
 import { readConfig } from "./config.js";
 import { methods } from "./methods.js";
@@ -102,7 +102,7 @@ function findSameResults(results, minNum) {
   }
 }
 
-registerQuorumChecker("quorum", {
+registerQuorumCheckerSrv("quorum", {
   check: (ethResults, minQuorum) => {
     console.log("Check quorum for:");
     console.log(ethResults);
