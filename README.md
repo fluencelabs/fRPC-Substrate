@@ -151,7 +151,7 @@ Call will be to : https://frequent-sleek-river.ethereum-goerli.discover.quiknode
 
 Success! Go ahead and replace the `round-robin` mode with the `random` mode in your config file, stop and start the gateway and have a look at the different endpoint management.
 
-Congrats, you just took a major step toward keeping your dApp decentralized, available and performant! Now it's time to dive into the Fluence protocol and technology stack to learn how to improve upon the basic substrate and compete for hackathon bounties.
+Congrats, you just took a major step toward keeping your dApp decentralized, available and performant! Now it's time to dive into the Fluence protocol and technology stack to learn how to improve upon the basic substrate.
 
 ## Developing With Fluence
 
@@ -230,7 +230,7 @@ You will need Mumbai MATIC and Fluence (testnet) USDC. This is as good a time as
 
 ### RPC Endpoints
 
-Since fRPC works with existing centralized or self-hosted RPC providers, you want at least three provider urls with appended API keys to *the* chain of your choice. Multi-chain support is currently not supported by fRPC Substrate (hint, hint to all you hackathoners). For Ethereum's Goerli testnet, for example:
+Since fRPC works with existing centralized or self-hosted RPC providers, you want at least three provider urls with appended API keys to *the* chain of your choice. Multi-chain support is currently not supported by fRPC Substrate. For Ethereum's Goerli testnet, for example:
 
 * Infura: https://goerli.infura.io/v3/\<your key>/
 * Alchemy: https://eth-goerli.g.alchemy.com/v2/\<your key>/
