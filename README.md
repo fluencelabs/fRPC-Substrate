@@ -432,7 +432,7 @@ The demo module is now part of the service and `fluence build`, for example, now
 
 To get rid of the demo project for now, use `fluence module remove` to unlink the module from the *fluence.yaml* and *service.yaml* files; the old *rm -r <path/demo>* gets rid of the code template.
 
-### Deploying A Service
+### Deploying Services With A Deal
 
 > :warning: **Warning**: For quickstart, services are already deployed for you. But if you want to deploy services in this repository yourself, you should remove old deployment information first:
 > ```bash
