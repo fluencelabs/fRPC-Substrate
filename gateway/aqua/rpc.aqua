@@ -23,6 +23,7 @@ func errorQuorumResult(msg: string) -> QuorumResult:
 func errorJsonString(msg: string) -> JsonString:
   <- JsonString(value = "", success = false, error = msg)
 
+-- Get workers participating in deal
 func getWorkers() -> []Worker, ?string:
   on INIT_PEER_ID via HOST_PEER_ID:
     deals <- Deals.get()
@@ -31,19 +32,22 @@ func getWorkers() -> []Worker, ?string:
     result <- Subnet.resolve(dealId)
   <- result.workers, result.error
 
+-- Call RPC method through ability
 func rpcCall{RPCEth}(method: string, jsonArgs: []string) -> JsonString:
   <- RPCEth.call(method, jsonArgs)
 
+-- Call RPC method with load balancing
 func balancedEthCall{Logger, Balancer}(method: string, jsonArgs: []string) -> JsonString:
   on HOST_PEER_ID:
     worker, provider <- Balancer.next()
     Logger.logWorker(worker)
     Logger.logCall(provider)
-    Op.noop() -- dirty hack
+    Op.noop() -- dirty hack for topology to converge
     rpc <- fromWorkerProvider(worker, provider)
     result <- rpcCall{rpc}(method, jsonArgs)
   <- result
 
+-- Call RPC method with random load balancing
 func randomLoadBalancingEth(uris: []string, method: string, jsonArgs: []string) -> JsonString:
   result: *JsonString
 
@@ -58,6 +62,7 @@ func randomLoadBalancingEth(uris: []string, method: string, jsonArgs: []string) 
   
   <- result!
 
+-- Call RPC method with round-robin load balancing
 func roundRobinEth(uris: []string, method: string, jsonArgs: []string, counterServiceId: string, counterPeerId: string) -> JsonString:
   result: *JsonString
 
@@ -72,6 +77,7 @@ func roundRobinEth(uris: []string, method: string, jsonArgs: []string, counterSe
   
   <- result!
 
+-- Call RPC method with workers quorum and provider load balancing
 func quorum{ProviderBalancer, QuorumChecker}(workers: []Worker, quorumNumber: u32, timeout: u32, method: string, jsonArgs: []string) -> QuorumResult:
   results: *JsonString
   on HOST_PEER_ID:  
@@ -86,6 +92,7 @@ func quorum{ProviderBalancer, QuorumChecker}(workers: []Worker, quorumNumber: u3
 
   <- QuorumChecker.check(results, quorumNumber)
 
+-- Call RPC method with workers quorum and provider load balancing
 func quorumEth(uris: []string, quorumNumber: u32, timeout: u32, method: string, jsonArgs: []string, quorumServiceId: string, quorumPeerId: string) -> QuorumResult:
   result: *QuorumResult
 

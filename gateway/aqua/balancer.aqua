@@ -17,7 +17,10 @@ ability Balancer:
     nextProvider() -> Provider
     next() -> Worker, Provider
 
+-- Create balancer that returns 
+-- workers and providers in random order
 func randomBalancer{Random}(workers: []Worker, providers: []Provider) -> Balancer:
+    -- closures do not capture topology here
     nextWorker = func () -> Worker:
         rand <- Random.next()
         idx = rand % workers.length
@@ -33,6 +36,8 @@ func randomBalancer{Random}(workers: []Worker, providers: []Provider) -> Balance
 
     <- Balancer(next=next, nextWorker=nextWorker, nextProvider=nextProvider)
 
+-- Create balancer that returns
+-- workers and providers in cycle order
 func cycleBalancer{Counter}(workers: []Worker, providers: []Provider) -> Balancer:
     next = func () -> Worker, Provider:
         n <- Counter.incrementAndReturn()
