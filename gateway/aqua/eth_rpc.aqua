@@ -1,0 +1,18 @@
+module RPCEth declares RPCEth, fromWorkerProvider
+
+import Worker from "@fluencelabs/aqua-lib/subnet.aqua"
+
+import "services.aqua"
+
+import Provider from "provider.aqua"
+
+ability RPCEth:
+    call(method: string, jsonArgs: []string) -> JsonString
+
+func fromWorkerProvider(worker: Worker, provider: Provider) -> RPCEth:
+    call = func (method: string, jsonArgs: []string) -> JsonString:
+        on worker.worker_id! via worker.host_id:
+            res <- EthRpc.eth_call(provider, method, jsonArgs)
+        <- res
+
+    <- RPCEth(call = call)

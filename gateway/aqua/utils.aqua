@@ -1,0 +1,4 @@
+module Utils declares NumOp
+
+service NumOp("op"):
+  identity(n: u64) -> i64

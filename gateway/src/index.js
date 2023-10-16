@@ -9,11 +9,11 @@ import { Fluence } from "@fluencelabs/js-client";
 import {
   quorumEth,
   randomLoadBalancingEth,
-  registerCounter,
   registerQuorumChecker,
   roundRobinEth,
 } from "../aqua-compiled/rpc.js";
 import { registerLoggerSrv } from "../aqua-compiled/logger.js";
+import { registerCounterSrv } from "../aqua-compiled/counter.js";
 import { readArguments } from "./arguments.js";
 import { readConfig } from "./config.js";
 import { methods } from "./methods.js";
@@ -61,7 +61,7 @@ registerLoggerSrv({
 });
 
 let counter = 0;
-registerCounter("counter", {
+registerCounterSrv("counter", {
   incrementAndReturn: () => {
     counter++;
     console.log("Counter: " + counter);
