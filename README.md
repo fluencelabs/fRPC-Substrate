@@ -234,7 +234,7 @@ Since fRPC works with existing centralized or self-hosted RPC providers, you wan
 
 * Infura: https://goerli.infura.io/v3/\<your key>/
 * Alchemy: https://eth-goerli.g.alchemy.com/v2/\<your key>/
-* Ankr: https://rpc.ankr.com/polygon_mumbai/\<your key>
+* Ankr: https://rpc.ankr.com/eth_goerli/\<your key>
 
 Each of the listed providers has a free account option and supports the API key in the url style, rather than the header, which is the current gateway implementation choice; a choice you should feel free to override and customize to your needs.
 
