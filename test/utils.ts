@@ -16,16 +16,14 @@
 
 import { execFile } from "child_process";
 
-export async function fluence(...args: string[]): Promise<string> {
+export async function fluence(...args: string[]): Promise<[string, string]> {
   return new Promise((resolve, reject) => {
     execFile("fluence", args, (error, stdout, stderr) => {
       if (error) {
         reject(error);
       }
-      if (stderr) {
-        reject(stderr);
-      }
-      resolve(stdout);
+
+      resolve([stdout, stderr]);
     });
   });
 }

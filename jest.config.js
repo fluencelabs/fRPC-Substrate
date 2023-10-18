@@ -19,6 +19,9 @@ export default {
   testEnvironment: "node",
   testTimeout: 1000 * 60 * 10, // 10 minutes in milliseconds
   testPathIgnorePatterns: ["^dist"],
+  moduleNameMapper: {
+    "^(\\.{1,2}/.*)\\.js$": "$1",
+  },
   extensionsToTreatAsEsm: [".ts"],
   transform: {
     "^.+\\.tsx?$": [
