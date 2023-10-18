@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { fluence } from "./utils.js";
+import { fluence } from "./utils";
 
 describe("integration tests", () => {
   it("should run integration tests", async () => {
