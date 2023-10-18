@@ -18,4 +18,14 @@
 export default {
   testEnvironment: "node",
   testTimeout: 1000 * 60 * 10, // 10 minutes in milliseconds
+  extensionsToTreatAsEsm: [".ts"],
+  transform: {
+    "^.+\\.tsx?$": [
+      "ts-jest",
+      {
+        useESM: true,
+        tsconfig: "test/tsconfig.json",
+      },
+    ],
+  },
 };

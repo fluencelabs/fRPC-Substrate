@@ -14,8 +14,11 @@
  * limitations under the License.
  */
 
+import Build from "@fluencelabs/cli/dist/commands/build.js";
+
 describe("integration tests", () => {
-  it("should run integration tests", () => {
+  it("should run integration tests", async () => {
+    await Build.run();
     expect(true).toBeTruthy();
   });
 });
