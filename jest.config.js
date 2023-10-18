@@ -18,6 +18,7 @@
 export default {
   testEnvironment: "node",
   testTimeout: 1000 * 60 * 10, // 10 minutes in milliseconds
+  testPathIgnorePatterns: ["^dist"],
   extensionsToTreatAsEsm: [".ts"],
   transform: {
     "^.+\\.tsx?$": [
