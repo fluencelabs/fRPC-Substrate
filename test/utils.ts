@@ -14,11 +14,17 @@
  * limitations under the License.
  */
 
-import { execFile } from "child_process";
+import { relative } from "path";
+import { execFile, ChildProcess } from "child_process";
 
-export async function fluence(...args: string[]): Promise<[string, string]> {
+import { CONFIG_PATH, readConfig } from "./config";
+
+export async function execute(
+  cmd: string,
+  ...args: string[]
+): Promise<[string, string]> {
   return new Promise((resolve, reject) => {
-    execFile("fluence", args, (error, stdout, stderr) => {
+    execFile(cmd, args, (error, stdout, stderr) => {
       if (error) {
         reject(error);
       }
@@ -26,4 +32,63 @@ export async function fluence(...args: string[]): Promise<[string, string]> {
       resolve([stdout, stderr]);
     });
   });
+}
+
+export async function fluence(...args: string[]): Promise<[string, string]> {
+  return execute("fluence", ...args);
+}
+
+export class Gateway {
+  constructor(
+    private readonly gateway: ChildProcess,
+    private readonly port: number
+  ) {}
+
+  public stop(): boolean {
+    if (this.gateway.stdin) {
+      this.gateway.stdin.end();
+    }
+    if (this.gateway.stdout) {
+      this.gateway.stdout.destroy();
+    }
+    if (this.gateway.stderr) {
+      this.gateway.stderr.destroy();
+    }
+    if (this.gateway.pid) {
+      process.kill(this.gateway.pid);
+    }
+    return this.gateway.kill();
+  }
+
+  public async request(json: any): Promise<any> {
+    const response = await fetch(`http://localhost:${this.port}`, {
+      method: "POST",
+      body: JSON.stringify(json),
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    });
+
+    return await response.json();
+  }
+}
+
+export async function startGateway(): Promise<Gateway> {
+  const GATEWAY_DIR = "./gateway";
+  const configPath = relative(GATEWAY_DIR, CONFIG_PATH);
+
+  const config = await readConfig();
+  const gateway = execFile("npm", [
+    "-C",
+    GATEWAY_DIR,
+    "run",
+    "run",
+    configPath,
+  ]);
+
+  // Hack: wait till gateway is ready
+  await new Promise((resolve) => setTimeout(resolve, 5000));
+
+  return new Gateway(gateway, config.port);
 }

@@ -14,12 +14,31 @@
  * limitations under the License.
  */
 
-import { fluence } from "./utils";
+import { startGateway } from "./utils";
 
 describe("integration tests", () => {
-  it("should run integration tests", async () => {
-    const output = await fluence("build");
-    console.log(output);
-    expect(true).toBeTruthy();
+  it("should run quickstart", async () => {
+    const gateway = await startGateway();
+    try {
+      const request = {
+        jsonrpc: "2.0",
+        method: "eth_blockNumber",
+        params: [],
+        id: 100,
+      };
+      const response = await gateway.request(request);
+      expect(response).toMatchObject({
+        jsonrpc: "2.0",
+        id: 100,
+        result: expect.any(String),
+      });
+    } finally {
+      expect(gateway.stop()).toBeTruthy();
+    }
+
+    // @ts-ignore
+    console.log(process._getActiveHandles());
+    // @ts-ignore
+    console.log(process._getActiveRequests());
   });
 });
