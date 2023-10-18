@@ -14,12 +14,18 @@
  * limitations under the License.
  */
 
-import { fluence } from "./utils.js";
+import { execFile } from "child_process";
 
-describe("integration tests", () => {
-  it("should run integration tests", async () => {
-    const output = await fluence("build");
-    console.log(output);
-    expect(true).toBeTruthy();
+export async function fluence(...args: string[]): Promise<string> {
+  return new Promise((resolve, reject) => {
+    execFile("fluence", args, (error, stdout, stderr) => {
+      if (error) {
+        reject(error);
+      }
+      if (stderr) {
+        reject(stderr);
+      }
+      resolve(stdout);
+    });
   });
-});
+}
