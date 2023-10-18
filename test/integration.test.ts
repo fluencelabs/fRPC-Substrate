@@ -35,10 +35,5 @@ describe("integration tests", () => {
     } finally {
       expect(gateway.stop()).toBeTruthy();
     }
-
-    // @ts-ignore
-    console.log(process._getActiveHandles());
-    // @ts-ignore
-    console.log(process._getActiveRequests());
   });
 });

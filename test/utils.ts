@@ -17,6 +17,8 @@
 import { relative } from "path";
 import { execFile, ChildProcess } from "child_process";
 
+import treeKill from "tree-kill";
+
 import { CONFIG_PATH, readConfig } from "./config";
 
 export async function execute(
@@ -41,10 +43,11 @@ export async function fluence(...args: string[]): Promise<[string, string]> {
 export class Gateway {
   constructor(
     private readonly gateway: ChildProcess,
-    private readonly port: number
+    private readonly port: number,
   ) {}
 
-  public stop(): boolean {
+  public async stop(): Promise<boolean> {
+    console.log(this.gateway.pid);
     if (this.gateway.stdin) {
       this.gateway.stdin.end();
     }
@@ -55,7 +58,16 @@ export class Gateway {
       this.gateway.stderr.destroy();
     }
     if (this.gateway.pid) {
-      process.kill(this.gateway.pid);
+      const pid = this.gateway.pid;
+      await new Promise<void>((resolve, reject) =>
+        treeKill(pid, (err) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve();
+          }
+        }),
+      );
     }
     return this.gateway.kill();
   }
