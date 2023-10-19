@@ -19,7 +19,7 @@ import { execFile, ChildProcess } from "child_process";
 
 import treeKill from "tree-kill";
 
-import { CONFIG_PATH, readConfig } from "./config";
+import { CONFIG_PATH, readConfig, updateConfig } from "./config";
 
 export async function execute(
   cmd: string,
@@ -47,7 +47,6 @@ export class Gateway {
   ) {}
 
   public async stop(): Promise<boolean> {
-    console.log(this.gateway.pid);
     if (this.gateway.stdin) {
       this.gateway.stdin.end();
     }
@@ -86,11 +85,11 @@ export class Gateway {
   }
 }
 
-export async function startGateway(): Promise<Gateway> {
+export async function startGateway(mode?: string): Promise<Gateway> {
   const GATEWAY_DIR = "./gateway";
   const configPath = relative(GATEWAY_DIR, CONFIG_PATH);
 
-  const config = await readConfig();
+  const config = await (mode ? updateConfig({ mode }) : readConfig());
   const gateway = execFile("npm", [
     "-C",
     GATEWAY_DIR,

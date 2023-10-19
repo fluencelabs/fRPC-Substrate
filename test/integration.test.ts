@@ -17,8 +17,8 @@
 import { startGateway } from "./utils";
 
 describe("integration tests", () => {
-  it("should run quickstart", async () => {
-    const gateway = await startGateway();
+  async function testQuickstart(mode?: string) {
+    const gateway = await startGateway(mode);
     try {
       const request = {
         jsonrpc: "2.0",
@@ -35,5 +35,11 @@ describe("integration tests", () => {
     } finally {
       expect(gateway.stop()).toBeTruthy();
     }
+  }
+
+  [undefined, "random", "round-robin", "quorum"].forEach((arg) => {
+    it(`should run quickstart ${arg ? `(mode: ${arg})` : ""}`, async () => {
+      await testQuickstart(arg);
+    });
   });
 });

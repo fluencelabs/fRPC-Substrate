@@ -33,9 +33,10 @@ export async function readConfig(): Promise<GatewayConfig> {
 }
 
 export async function updateConfig(
-  update: Partial<GatewayConfig>
-): Promise<void> {
+  update: Partial<GatewayConfig>,
+): Promise<GatewayConfig> {
   const current = await readConfig();
   const newConfig = { ...current, ...update };
   await fs.writeFile(CONFIG_PATH, JSON.stringify(newConfig, null, 2));
+  return newConfig;
 }
