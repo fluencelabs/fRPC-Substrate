@@ -41,10 +41,16 @@ export async function fluence(...args: string[]): Promise<[string, string]> {
 }
 
 export class Gateway {
+  private stdout: string = "";
+
   constructor(
     private readonly gateway: ChildProcess,
     private readonly port: number,
-  ) {}
+  ) {
+    gateway.stdout?.on("data", (data: any) => {
+      this.stdout += data;
+    });
+  }
 
   public async stop(): Promise<boolean> {
     if (this.gateway.stdin) {
@@ -58,6 +64,10 @@ export class Gateway {
     }
     if (this.gateway.pid) {
       const pid = this.gateway.pid;
+      /**
+       * For some reason JS is not able
+       * to properly kill subprocess tree
+       */
       await new Promise<void>((resolve, reject) =>
         treeKill(pid, (err) => {
           if (err) {
@@ -83,6 +93,10 @@ export class Gateway {
 
     return await response.json();
   }
+
+  public getStdout(): string {
+    return this.stdout;
+  }
 }
 
 export async function startGateway(mode?: string): Promise<Gateway> {
@@ -98,8 +112,27 @@ export async function startGateway(mode?: string): Promise<Gateway> {
     configPath,
   ]);
 
-  // Hack: wait till gateway is ready
-  await new Promise((resolve) => setTimeout(resolve, 5000));
+  const wrapper = new Gateway(gateway, config.port);
 
-  return new Gateway(gateway, config.port);
+  await new Promise<void>((resolve, reject) => {
+    const timeout = setTimeout(() => {
+      gateway.stdout?.removeListener("data", onData);
+      wrapper.stop();
+      reject(new Error(`Gateway failed to start in 10 seconds:\n${stdout}`));
+    }, 10000);
+
+    let stdout = "";
+    const onData = (data: string) => {
+      stdout += data;
+      if (stdout.includes("Server was started")) {
+        gateway.stdout?.removeListener("data", onData);
+        clearTimeout(timeout);
+        resolve();
+      }
+    };
+
+    gateway.stdout?.on("data", onData);
+  });
+
+  return wrapper;
 }

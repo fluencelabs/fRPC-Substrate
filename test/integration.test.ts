@@ -16,29 +16,33 @@
 
 import { startGateway } from "./utils";
 
-describe("integration tests", () => {
+describe("quickstart", () => {
   async function testQuickstart(mode?: string) {
     const gateway = await startGateway(mode);
     try {
-      const request = {
-        jsonrpc: "2.0",
-        method: "eth_blockNumber",
-        params: [],
-        id: 100,
-      };
-      const response = await gateway.request(request);
-      expect(response).toMatchObject({
-        jsonrpc: "2.0",
-        id: 100,
-        result: expect.any(String),
-      });
+      for (let i = 0; i < 6; ++i) {
+        const id = 100 + i;
+        const request = {
+          jsonrpc: "2.0",
+          method: "eth_blockNumber",
+          params: [],
+          id,
+        };
+        const response = await gateway.request(request);
+        expect(response).toMatchObject({
+          jsonrpc: "2.0",
+          id,
+          result: expect.any(String),
+        });
+      }
     } finally {
+      console.log(gateway.getStdout());
       expect(gateway.stop()).toBeTruthy();
     }
   }
 
   [undefined, "random", "round-robin", "quorum"].forEach((arg) => {
-    it(`should run quickstart ${arg ? `(mode: ${arg})` : ""}`, async () => {
+    it(`should run ${arg ? `(mode: ${arg})` : ""}`, async () => {
       await testQuickstart(arg);
     });
   });
