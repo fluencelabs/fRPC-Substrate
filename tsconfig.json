@@ -8,6 +8,7 @@
     "lib": ["es2023"]
   },
   "exclude": ["gateway/**/*"],
+  "include": ["test/**/*"],
   "ts-node": {
     "esm": true
   },

@@ -36,7 +36,6 @@ describe("quickstart", () => {
         });
       }
     } finally {
-      console.log(gateway.getStdout());
       expect(gateway.stop()).toBeTruthy();
     }
   }
