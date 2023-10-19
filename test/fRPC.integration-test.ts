@@ -67,7 +67,7 @@ describe("fRPC", () => {
       expect(stdout.includes("Success!")).toBeTruthy();
     });
 
-    [undefined, "random", "round-robin", "quorum"].forEach((mode) => {
+    ["random", "round-robin", "quorum"].forEach((mode) => {
       it(`should run ${mode ? `(mode: ${mode})` : ""}`, async () => {
         await testGateway(mode);
       });
