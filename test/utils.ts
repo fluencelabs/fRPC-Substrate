@@ -52,6 +52,7 @@ export async function fluence(...args: string[]): Promise<[string, string]> {
 interface Worker {
   host_id: string;
   worker_id: string | undefined;
+  services: string[] | undefined;
 }
 
 /**

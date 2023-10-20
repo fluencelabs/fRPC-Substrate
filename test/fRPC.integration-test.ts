@@ -47,7 +47,6 @@ async function testGateway(mode?: string, times = 6) {
         id,
       };
       const response = await gateway.request(request);
-      console.log(response);
       expect(response).toMatchObject({
         jsonrpc: "2.0",
         id,
@@ -179,7 +178,9 @@ describe("fRPC", () => {
       const deadline = Date.now() + DEPLOY_TIMEOUT;
       for (;;) {
         const workers = await subnet(FLUENCE_ENV);
-        const deployed = workers.filter((w) => w.worker_id !== undefined);
+        const deployed = workers.filter(
+          (w) => w.worker_id !== undefined && w.services?.includes("eth_rpc"),
+        );
         if (deployed.length === workersNum) {
           break;
         }
