@@ -15,11 +15,20 @@
  */
 
 import { relative } from "path";
+import { promises as fs } from "fs";
 import { execFile, ChildProcess } from "child_process";
 
 import treeKill from "tree-kill";
 
 import { CONFIG_PATH, readConfig, updateConfig } from "./config";
+
+export async function backupFile(path: string): Promise<void> {
+  await fs.rename(path, `${path}.back`).catch((err) => {
+    if (err.code !== "ENOENT") {
+      throw err;
+    }
+  });
+}
 
 export async function execute(
   cmd: string,
@@ -37,7 +46,7 @@ export async function execute(
 }
 
 export async function fluence(...args: string[]): Promise<[string, string]> {
-  return execute("fluence", ...args);
+  return execute("fluence", ...args, "--no-input");
 }
 
 export class Gateway {

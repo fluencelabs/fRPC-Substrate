@@ -16,3 +16,11 @@
 
 export const CHAIN_PRIVATE_KEY =
   "0x3cc23e0227bd17ea5d6ea9d42b5eaa53ad41b1974de4755c79fe236d361a6fd5";
+
+export const LOCAL_PEER_IDS = [
+  "12D3KooWBM3SdXWqGaawQDGQ6JprtwswEg3FWGvGhmgmMez1vRbR",
+  "12D3KooWQdpukY3p2DhDfUfDgphAqsGu5ZUrmQ4mcHSGrRag6gQK",
+  "12D3KooWRT8V5awYdEZm6aAV9HWweCEbhWd7df4wehqHZXAB7yMZ",
+];
+
+export const FLUENCE_ENV = "local";
