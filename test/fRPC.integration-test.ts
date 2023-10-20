@@ -17,10 +17,15 @@
 import { startGateway, fluence, backupFile } from "./utils";
 import { CHAIN_PRIVATE_KEY, LOCAL_PEER_IDS, FLUENCE_ENV } from "./consts";
 
-async function testGateway(mode?: string) {
+/**
+ * Start gateway and test requests to it
+ * @param mode mode to start gateway in
+ * @param times how many times to send request
+ */
+async function testGateway(mode?: string, times = 6) {
   const gateway = await startGateway(mode);
   try {
-    for (let i = 0; i < 6; ++i) {
+    for (let i = 0; i < times; ++i) {
       const id = 100 + i;
       const request = {
         jsonrpc: "2.0",
@@ -40,6 +45,9 @@ async function testGateway(mode?: string) {
   }
 }
 
+/**
+ * Run fluence CLI with env and private key
+ */
 async function fluenceKeyEnv(...args: string[]) {
   return fluence(
     ...args,
@@ -50,6 +58,10 @@ async function fluenceKeyEnv(...args: string[]) {
   );
 }
 
+/**
+ * WARNING: This tests are not isolated
+ *          They modify fs state
+ */
 describe("fRPC", () => {
   describe("quickstart", () => {
     [undefined, "random", "round-robin", "quorum"].forEach((mode) => {
@@ -59,8 +71,17 @@ describe("fRPC", () => {
     });
   });
 
+  /**
+   * WARNING: This tests should be run in order
+   *          As gateway tests need to have deal deployed
+   */
   describe.only("deploy", () => {
+    /**
+     * Register provider and add peers only for local env
+     */
     beforeAll(async () => {
+      if (FLUENCE_ENV !== "local") return;
+
       const [register, stderrReg] = await fluenceKeyEnv("provider", "register");
 
       // Here CLI writes success to stdout
@@ -88,6 +109,7 @@ describe("fRPC", () => {
     });
 
     it("should deploy the deal", async () => {
+      // Remove previous deployment info
       await backupFile(".fluence/workers.yaml");
 
       const [stdout, _] = await fluenceKeyEnv("deal", "deploy");
@@ -96,7 +118,7 @@ describe("fRPC", () => {
 
       // Wait until workers are deployed
       // TODO: Make this gracefully,
-      // call aqua subnet resolution
+      //       call aqua subnet resolution
       await new Promise((resolve) => setTimeout(resolve, 10000));
     });
 
