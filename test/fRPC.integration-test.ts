@@ -85,7 +85,7 @@ describe("fRPC", () => {
     });
   });
 
-  describe.skip("quickstart", () => {
+  describe("quickstart", () => {
     [undefined, "random", "round-robin", "quorum"].forEach((mode) => {
       it(`should run ${mode ? `(mode: ${mode})` : ""}`, async () => {
         await testGateway(mode);
