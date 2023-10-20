@@ -18,6 +18,7 @@
 export default {
   testEnvironment: "node",
   testTimeout: 1000 * 60 * 10, // 10 minutes in milliseconds
+  bail: true,
   projects: [
     {
       // Uses the serial runner for integration test files

@@ -17,7 +17,13 @@
 import { multiaddr } from "@multiformats/multiaddr";
 
 import { FLUENCE_CHAIN_PRIVATE_KEY, FLUENCE_ENV, RPC_PROVIDERS } from "./env";
-import { startGateway, fluence, backupFile, randomElement } from "./utils";
+import {
+  startGateway,
+  fluence,
+  subnet,
+  backupFile,
+  randomElement,
+} from "./utils";
 import { updateConfig } from "./config";
 
 function throwError(msg: string): never {
@@ -41,6 +47,7 @@ async function testGateway(mode?: string, times = 6) {
         id,
       };
       const response = await gateway.request(request);
+      console.log(response);
       expect(response).toMatchObject({
         jsonrpc: "2.0",
         id,
@@ -154,14 +161,34 @@ describe("fRPC", () => {
       // Remove previous deployment info
       await backupFile(".fluence/workers.yaml");
 
-      const [stdout, _] = await fluenceKeyEnv("deal", "deploy");
+      const [stdout, stderr] = await fluenceKeyEnv("deal", "deploy");
 
       expect(stdout.includes("Success!")).toBeTruthy();
 
-      // Wait until workers are deployed
-      // TODO: Make this gracefully,
-      //       call aqua subnet resolution
-      await new Promise((resolve) => setTimeout(resolve, 10000));
+      const workersMatch = stderr.match(/(\d+)\s*workers/);
+      const workers =
+        workersMatch?.[1] ?? throwError("Failed to parse workers");
+      const workersNum = parseInt(workers);
+
+      expect(workersNum).toBeGreaterThanOrEqual(3);
+
+      /**
+       * Wait for workers to deploy
+       */
+      const DEPLOY_TIMEOUT = 60_000;
+      const deadline = Date.now() + DEPLOY_TIMEOUT;
+      for (;;) {
+        const workers = await subnet(FLUENCE_ENV);
+        const deployed = workers.filter((w) => w.worker_id !== undefined);
+        if (deployed.length === workersNum) {
+          break;
+        }
+        if (Date.now() > deadline) {
+          throw new Error(
+            `Deployment timeout: ${workersNum} workers expected, ${deployed.length} deployed`,
+          );
+        }
+      }
     });
 
     ["random", "round-robin", "quorum"].forEach((mode) => {

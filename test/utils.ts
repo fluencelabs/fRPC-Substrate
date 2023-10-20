@@ -49,6 +49,30 @@ export async function fluence(...args: string[]): Promise<[string, string]> {
   return execute("fluence", ...args, "--no-input");
 }
 
+interface Worker {
+  host_id: string;
+  worker_id: string | undefined;
+}
+
+/**
+ * Run `showSubnet` function and return workers
+ * @param env Fluence environment
+ * @returns Subnet workers
+ */
+export async function subnet(env: string): Promise<Worker[]> {
+  const [stdout, _] = await fluence(
+    "run",
+    "-f",
+    "showSubnet()",
+    "-i",
+    "src/aqua/main.aqua",
+    "--env",
+    env,
+  );
+
+  return JSON.parse(stdout);
+}
+
 export class Gateway {
   private stdout: string = "";
 
