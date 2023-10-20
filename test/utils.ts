@@ -148,3 +148,7 @@ export async function startGateway(mode?: string): Promise<Gateway> {
 
   return wrapper;
 }
+
+export function randomElement<T>(arr: T[]): T | undefined {
+  return arr[Math.floor(Math.random() * arr.length)];
+}

@@ -14,13 +14,15 @@
  * limitations under the License.
  */
 
-export const CHAIN_PRIVATE_KEY =
-  "0x3cc23e0227bd17ea5d6ea9d42b5eaa53ad41b1974de4755c79fe236d361a6fd5";
+function getOrFail(envVar: string): string {
+  const value = process.env[envVar];
+  if (value === undefined) {
+    throw new Error(`${envVar} is not set`);
+  }
 
-export const LOCAL_PEER_IDS = [
-  "12D3KooWBM3SdXWqGaawQDGQ6JprtwswEg3FWGvGhmgmMez1vRbR",
-  "12D3KooWQdpukY3p2DhDfUfDgphAqsGu5ZUrmQ4mcHSGrRag6gQK",
-  "12D3KooWRT8V5awYdEZm6aAV9HWweCEbhWd7df4wehqHZXAB7yMZ",
-];
+  return value;
+}
 
-export const FLUENCE_ENV = "local";
+export const FLUENCE_ENV = getOrFail("FLUENCE_ENV");
+export const FLUENCE_CHAIN_PRIVATE_KEY = getOrFail("FLUENCE_CHAIN_PRIVATE_KEY");
+export const RPC_PROVIDERS = getOrFail("RPC_PROVIDERS").split(",");

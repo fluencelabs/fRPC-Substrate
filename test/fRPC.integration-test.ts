@@ -14,8 +14,15 @@
  * limitations under the License.
  */
 
-import { startGateway, fluence, backupFile } from "./utils";
-import { CHAIN_PRIVATE_KEY, LOCAL_PEER_IDS, FLUENCE_ENV } from "./consts";
+import { multiaddr } from "@multiformats/multiaddr";
+
+import { FLUENCE_CHAIN_PRIVATE_KEY, FLUENCE_ENV, RPC_PROVIDERS } from "./env";
+import { startGateway, fluence, backupFile, randomElement } from "./utils";
+import { updateConfig } from "./config";
+
+function throwError(msg: string): never {
+  throw new Error(msg);
+}
 
 /**
  * Start gateway and test requests to it
@@ -54,7 +61,7 @@ async function fluenceKeyEnv(...args: string[]) {
     "--env",
     FLUENCE_ENV,
     "--priv-key",
-    CHAIN_PRIVATE_KEY,
+    FLUENCE_CHAIN_PRIVATE_KEY,
   );
 }
 
@@ -63,7 +70,16 @@ async function fluenceKeyEnv(...args: string[]) {
  *          They modify fs state
  */
 describe("fRPC", () => {
-  describe("quickstart", () => {
+  /**
+   * - Setup RPC providers
+   */
+  beforeAll(async () => {
+    await updateConfig({
+      providers: RPC_PROVIDERS,
+    });
+  });
+
+  describe.skip("quickstart", () => {
     [undefined, "random", "round-robin", "quorum"].forEach((mode) => {
       it(`should run ${mode ? `(mode: ${mode})` : ""}`, async () => {
         await testGateway(mode);
@@ -75,11 +91,33 @@ describe("fRPC", () => {
    * WARNING: This tests should be run in order
    *          As gateway tests need to have deal deployed
    */
-  describe.only("deploy", () => {
+  describe("deploy", () => {
     /**
-     * Register provider and add peers only for local env
+     * - Setup relay
+     * - Register provider and add peers only for local env
      */
     beforeAll(async () => {
+      const [getPeers, stderrPeers] = await fluence(
+        "default",
+        "peers",
+        FLUENCE_ENV,
+      );
+
+      const peers = getPeers
+        .split("\n")
+        .map((p) => p.trim())
+        .filter((p) => p.length > 0);
+
+      if (peers.length === 0) {
+        throw new Error(`Failed to get default peers:
+        stdout: ${getPeers}
+        stderr: ${stderrPeers}`);
+      }
+
+      const relay = randomElement(peers) ?? throwError("Empty peers");
+
+      await updateConfig({ relay });
+
       if (FLUENCE_ENV !== "local") return;
 
       const [register, stderrReg] = await fluenceKeyEnv("provider", "register");
@@ -91,10 +129,14 @@ describe("fRPC", () => {
         stderr: ${stderrReg}`);
       }
 
+      const providerPeers = peers
+        .slice(0, RPC_PROVIDERS.length)
+        .map((p) => multiaddr(p).getPeerId() ?? throwError("Empty peer id"));
+
       const [stdoutAdd, addPeers] = await fluenceKeyEnv(
         "provider",
         "add-peer",
-        ...LOCAL_PEER_IDS.flatMap((id) => ["--peer-id", id]),
+        ...providerPeers.flatMap((id) => ["--peer-id", id]),
         "--units",
         "1",
       );

@@ -23,6 +23,7 @@ export const CONFIG_PATH = "./gateway/configs/quickstart_config.json";
  */
 export interface GatewayConfig {
   providers: string[];
+  relay: string;
   port: number;
   mode: string;
 }
