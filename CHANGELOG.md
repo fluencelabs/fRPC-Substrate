@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.18](https://github.com/fluencelabs/fRPC-Substrate/compare/v0.0.17...v0.0.18) (2023-10-14)
+
+
+### Bug Fixes
+
+* **deps:** update rust crate serde to v1.0.189 ([#114](https://github.com/fluencelabs/fRPC-Substrate/issues/114)) ([32b8972](https://github.com/fluencelabs/fRPC-Substrate/commit/32b8972a8f1137f742657e47871f82842e0db12c))
+
 ## [0.0.17](https://github.com/fluencelabs/fRPC-Substrate/compare/v0.0.16...v0.0.17) (2023-10-11)
 
 
