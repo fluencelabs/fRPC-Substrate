@@ -21,7 +21,7 @@ jobs:
           ref: ${{ inputs.ref }}
 
       - name: Install fluence-cli@unstable
-        run: npm i -g @fluencelabs/cli@unstable
+        run: npm i -g @fluencelabs/cli@0.11.1
 
       - name: Check if main.aqua compiles
         run: fluence aqua --dry
