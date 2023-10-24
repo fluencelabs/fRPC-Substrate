@@ -49,7 +49,7 @@ func balancedEthCall{Logger, Balancer}(method: string, jsonArgs: []string) -> Js
 
 -- Call RPC method with random load balancing
 func randomLoadBalancingEth(uris: []string, method: string, jsonArgs: []string) -> JsonString:
-  result: *JsonString
+  result: ?JsonString
 
   workers, error <- getWorkers()
   if error != nil:
@@ -64,7 +64,7 @@ func randomLoadBalancingEth(uris: []string, method: string, jsonArgs: []string) 
 
 -- Call RPC method with round-robin load balancing
 func roundRobinEth(uris: []string, method: string, jsonArgs: []string, counterServiceId: string, counterPeerId: string) -> JsonString:
-  result: *JsonString
+  result: ?JsonString
 
   workers, error <- getWorkers()
   if error != nil:
