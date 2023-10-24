@@ -41,7 +41,7 @@ const route = "/";
 const server = new JSONRPCServer();
 
 // initialize fluence client
-await Fluence.connect(config.relay);
+await Fluence.connect(config.relay, {});
 const peerId = (await Fluence.getClient()).getPeerId();
 
 // handler for logger
