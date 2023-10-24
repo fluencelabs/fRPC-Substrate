@@ -1,0 +1,5 @@
+module Utils declares NumOp
+
+-- Used to coerce types
+service NumOp("op"):
+  identity(n: u64) -> i64

@@ -1,0 +1,29 @@
+module Quorum declares QuorumChecker, QuorumResult, onPeerQuorumChecker
+
+import JsonString from "services.aqua"
+
+export QuorumCheckerSrv
+
+data QuorumResult:
+  value: string
+  results: []JsonString
+  error: string
+
+-- Ability to check if a quorum on results is reached
+ability QuorumChecker:
+  check(results: []JsonString, minResults: u32) -> QuorumResult
+
+service QuorumCheckerSrv("quorum"):
+  check(results: []JsonString, minResults: u32) -> QuorumResult
+
+-- Create a QuorumChecker ability
+-- that checks quorum on peer through QuorumCheckerSrv(id)
+func onPeerQuorumChecker(peer: string, id: string) -> QuorumChecker:
+  -- closure does not capture topology here
+  check = func (results: []JsonString, minResults: u32) -> QuorumResult:
+    on peer:
+        QuorumCheckerSrv id
+        res <- QuorumCheckerSrv.check(results, minResults)
+    <- res
+
+  <- QuorumChecker(check = check)

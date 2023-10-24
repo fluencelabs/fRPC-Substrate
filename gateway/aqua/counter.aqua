@@ -1,0 +1,22 @@
+module Counter declares Counter, onPeerCounter
+
+export CounterSrv
+
+ability Counter:
+  incrementAndReturn() -> u32
+
+service CounterSrv("counter"):
+  incrementAndReturn() -> u32
+
+-- Create Counter ability that 
+-- counts on peer through CounterSrv(id)
+func onPeerCounter(peer: string, id: string) -> Counter:
+    -- closure does not capture topology here
+    incAndReturn = func () -> u32:
+        on peer:
+            CounterSrv id
+            res <- CounterSrv.incrementAndReturn()
+        <- res
+    
+    <- Counter(incrementAndReturn = incAndReturn)
+
