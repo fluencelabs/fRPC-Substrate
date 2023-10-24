@@ -593,6 +593,8 @@ The *randomLoadBalancingEth* function is build upon *balancedEthCall*:
 * (2) Logger and random balancer are initialized.
 * (3) *balancedEthCall* is called with logger and balancer.
 
+Note that time service is used to generate random numbers. This is not a good idea for production, but it's good enough for demonstration.
+
 #### Round robin
 
 **Use: Set `mode` to "round-robin" in your gateway config file**
@@ -662,7 +664,7 @@ Let's examine the code line by line:
   * (5) RPC ability is created from worker and provider with a helper function *fromWorkerProvider*.
   * (6) RPC ability is passed to *rpcCall* function to make the actual call. Result is saved in *results* stream variable.
 * (7) Results from all workers are waited for with a timeout. For more information, see [Timeout and race patterns](https://fluence.dev/docs/aqua-book/language/flow/parallel#timeout-and-race-patterns).
-* (8) Results are checked by *QuorumChecker*.
+* (8) Final result is determined by *QuorumChecker* based on all results gathered at this point.
 
 As evidenced by the code, no considerations to differentiate between read and write operations are made, which might prove disadvantageous when submitting, for example, a signed transaction.
 
