@@ -1,0 +1,18 @@
+module Random declares Random, timeRandom
+
+import Peer from "@fluencelabs/aqua-lib/builtin.aqua"
+
+import NumOp from "utils.aqua"
+
+ability Random:
+    next() -> i64
+
+-- Create random from timestamp
+func timeRandom() -> Random:
+    -- closure does not capture topology here
+    next = func () -> i64:
+        t <- Peer.timestamp_sec()
+        n <- NumOp.identity(t)
+        <- n
+
+    <- Random(next = next)

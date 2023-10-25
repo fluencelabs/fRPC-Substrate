@@ -1,0 +1,22 @@
+module RPCEth declares RPCEth, fromWorkerProvider
+
+import Worker from "@fluencelabs/aqua-lib/subnet.aqua"
+
+import "services.aqua"
+
+import Provider from "provider.aqua"
+
+-- Ability to call Ethereum JSON RPC methods
+ability RPCEth:
+    call(method: string, jsonArgs: []string) -> JsonString
+
+-- Create RPCEth ability from Worker and Provider
+func fromWorkerProvider(worker: Worker, provider: Provider) -> RPCEth:
+    -- closure does not capture topology here
+    call = func (method: string, jsonArgs: []string) -> JsonString:
+        -- TODO: Handle worker_id == nil?
+        on worker.worker_id! via worker.host_id:
+            res <- EthRpc.eth_call(provider, method, jsonArgs)
+        <- res
+
+    <- RPCEth(call = call)

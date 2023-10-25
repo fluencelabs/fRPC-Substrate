@@ -1,0 +1,55 @@
+module Balancer declares Balancer, ProviderBalancer, WorkersBalancer, randomBalancer, cycleBalancer
+
+import Worker from "@fluencelabs/aqua-lib/subnet.aqua"
+
+import Counter from "counter.aqua"
+import Random from "random.aqua"
+import Provider from "provider.aqua"
+
+ability WorkersBalancer:
+    nextWorker() -> Worker
+
+ability ProviderBalancer:
+    nextProvider() -> Provider
+
+ability Balancer:
+    nextWorker() -> Worker
+    nextProvider() -> Provider
+    next() -> Worker, Provider
+
+-- Create balancer that returns 
+-- workers and providers in random order
+func randomBalancer{Random}(workers: []Worker, providers: []Provider) -> Balancer:
+    -- closures do not capture topology here
+    nextWorker = func () -> Worker:
+        rand <- Random.next()
+        idx = rand % workers.length
+        <- workers[idx]
+
+    nextProvider = func () -> Provider:
+        rand <- Random.next()
+        idx = rand % providers.length
+        <- providers[idx]
+
+    next = func () -> Worker, Provider:
+        <- nextWorker(), nextProvider()
+
+    <- Balancer(next=next, nextWorker=nextWorker, nextProvider=nextProvider)
+
+-- Create balancer that returns
+-- workers and providers in cycle order
+func cycleBalancer{Counter}(workers: []Worker, providers: []Provider) -> Balancer:
+    next = func () -> Worker, Provider:
+        n <- Counter.incrementAndReturn()
+        idx = n % workers.length
+        <- workers[idx], providers[idx]
+
+    nextWorker = func () -> Worker:
+        w, p <- next()
+        <- w
+
+    nextProvider = func () -> Provider:
+        w, p <- next()
+        <- p
+
+    <- Balancer(next=next, nextWorker=nextWorker, nextProvider=nextProvider)

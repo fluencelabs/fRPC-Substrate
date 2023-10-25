@@ -9,11 +9,11 @@ import { Fluence } from "@fluencelabs/js-client";
 import {
   quorumEth,
   randomLoadBalancingEth,
-  registerCounter,
-  registerLogger,
-  registerQuorumChecker,
   roundRobinEth,
 } from "../aqua-compiled/rpc.js";
+import { registerLoggerSrv } from "../aqua-compiled/logger.js";
+import { registerCounterSrv } from "../aqua-compiled/counter.js";
+import { registerQuorumCheckerSrv } from "../aqua-compiled/quorum.js";
 import { readArguments } from "./arguments.js";
 import { readConfig } from "./config.js";
 import { methods } from "./methods.js";
@@ -45,7 +45,7 @@ await Fluence.connect(config.relay, {});
 const peerId = (await Fluence.getClient()).getPeerId();
 
 // handler for logger
-registerLogger({
+registerLoggerSrv({
   log: (s) => {
     console.log("log: " + s);
   },
@@ -61,7 +61,7 @@ registerLogger({
 });
 
 let counter = 0;
-registerCounter("counter", {
+registerCounterSrv("counter", {
   incrementAndReturn: () => {
     counter++;
     console.log("Counter: " + counter);
@@ -102,7 +102,7 @@ function findSameResults(results, minNum) {
   }
 }
 
-registerQuorumChecker("quorum", {
+registerQuorumCheckerSrv("quorum", {
   check: (ethResults, minQuorum) => {
     console.log("Check quorum for:");
     console.log(ethResults);
@@ -115,14 +115,17 @@ const counterPeerId = config.counterPeerId || peerId;
 const quorumServiceId = config.quorumServiceId || "quorum";
 const quorumPeerId = config.quorumPeerId || peerId;
 const quorumNumber = config.quorumNumber || 2;
+const mode = config.mode || "random";
+
+console.log(`Using mode '${mode}'`);
 
 async function methodHandler(reqRaw, method) {
   const req = reqRaw.map((s) => JSON.stringify(s));
   console.log(`Receiving request '${method}'`);
   let result;
-  if (!config.mode || config.mode === "random") {
+  if (mode === "random") {
     result = await randomLoadBalancingEth(config.providers, method, req);
-  } else if (config.mode === "round-robin") {
+  } else if (mode === "round-robin") {
     result = await roundRobinEth(
       config.providers,
       method,
@@ -131,7 +134,7 @@ async function methodHandler(reqRaw, method) {
       counterPeerId,
       config.serviceId,
     );
-  } else if (config.mode === "quorum") {
+  } else if (mode === "quorum") {
     const quorumResult = await quorumEth(
       config.providers,
       quorumNumber,
