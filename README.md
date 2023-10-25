@@ -507,6 +507,55 @@ Fluence CLI did a bunch of work for us behind the scenes and signing the transac
 
 Note that the deal's section in [fluence.yaml](./fluence.yaml) specifies the minimum and maximum workers that should be deployed under the *defaultWorker* namespace. Fluence CLI currently provides default values for min and max workers of one (1) and three (3), respectively. In the near future, you will be able to provide your spot price for service execution, hosting targets in the form of named capacity providers and more.
 
+After successful deal deployment it is possible to retrieve logs for the deployed deal.
+
+**Command**:
+
+```bash
+fluence deal logs
+```
+
+**Output**:
+
+```bash                                                                     
+Connecting to random stage relay: /dns4/0-stage.fluence.dev/tcp/9000/wss/p2p/12D3KooWDcpWuyrMTDinqNgmXAuRdfd2mTdY9VoXZSAet2pDzh6r
+Connected
+defaultWorker (host_id: 12D3KooWMMGdfVEJ1rWe1nH1nehYDzNEHhg5ogdfiGk88AupCMnf, worker_id: 12D3KooWGctQEUKcgWBetu9aiR3owMZcBGNcpDC5ZE3H6dL16uSP, spell_id: 679acf1c-57e2-4dd7-aa78-bb181df7a00a): 
+
+2023-10-25 14:41:48 Installing worker for deal 0x02ab47b7b2737e16a516421c1b8ad36475e0f7ce
+2023-10-25 14:41:48 parsed worker definition bafkreifp4gbp3emepswptldwlpbhpybt47uy2c3ksm3y7rut6cmcdnljwa {
+  "services": [
+    {
+      "modules": [
+        {
+          "config": "bafkreia2wftbxfd4blycnvlxw2yl7ibhan2g7vauexv7fspibodlu34que",
+          "wasm": "bafkreiarl3nin4jtauc52k76h4ze7yekvc5d2uno5fkgpotmcekwm7cnqa"
+        },
+        {
+          "config": "bafkreiaclbxbmtydpwdcpoh2yggcd6uimicmbb6rxzab7bgp342w5vcz2m",
+          "wasm": "bafybeieeemeldllgokrkgybbrrjqeehyin3blv5cgehhdp3nlrfyj4eqoa"
+        }
+      ],
+      "name": "eth_rpc"
+    }
+  ],
+  "spells": []
+}
+2023-10-25 14:41:50 Created service eth_rpc 2b5967ae-e5f9-4929-8668-d2039593af28
+2023-10-25 14:41:50 Installation finished
+2023-10-25 14:41:50 Worker installation finished with status {
+  "message": "",
+  "state": "INSTALLATION_SUCCESSFUL",
+  "timestamp": 1698244910
+}
+
+defaultWorker (host_id: 12D3KooWJ4bTHirdTFNZpCS72TAzwtdmavTBkkEXtzo6wHL25CtE, worker_id: unknown, spell_id: unknown): Worker is not installed yet
+
+defaultWorker (host_id: 12D3KooWAKNos2KogexTXhrkMZzFYpLHuWJ4PgoAhurSAv7o5CWA, worker_id: unknown, spell_id: unknown): Worker is not installed yet
+```
+
+In the example output above, we see that the worker for the *defaultWorker* namespace was installed successfully. The worker is now ready to receive requests from the gateway. The other two workers are not installed yet. It should happen in a while and one can check the logs again to see the progress.
+
 ### fRPC Aqua Code
 
 Now that we have our services deployed and ready for action, it's time to look at Aqua, which is utilized by the Gateway to bridge HTTP to/from libp2p. Let's have a look at the Aqua code and structure.
