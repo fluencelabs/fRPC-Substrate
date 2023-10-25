@@ -5,9 +5,8 @@
   "main": "src/index.js",
   "type": "module",
   "scripts": {
-    "run:example": "fluence aqua -i aqua/ -o aqua-compiled/ --js && node src/index.js \"config.json\"",
-    "run": "fluence aqua -i aqua/ -o aqua-compiled/ --js && node src/index.js",
-    "compile": "fluence aqua -i aqua/ -o aqua-compiled/ --js",
+    "run": "npm run compile && node src/index.js",
+    "compile": "fluence aqua -i aqua/ -o aqua-compiled/ --js --no-input",
     "req": "node web3run.js"
   },
   "bin": {
