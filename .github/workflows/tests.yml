@@ -23,7 +23,7 @@ jobs:
       - name: Setup fcli
         uses: fluencelabs/setup-fluence@v1
         with:
-          version: stage
+          version: unstable
 
       - name: Check if main.aqua compiles
         run: fluence aqua --dry
