@@ -31,6 +31,8 @@ jobs:
 
     env:
       FLUENCE_USER_DIR: "${{ github.workspace }}/tmp/.fluence"
+      CI: true
+      FORCE_COLOR: true
 
     permissions:
       contents: read
@@ -97,6 +99,9 @@ jobs:
       - name: Run npm i in gateway
         working-directory: gateway
         run: npm i
+
+      - name: Run npm run build
+        run: npm run build
 
       - name: Set js-client version
         if: inputs.js-client-version != 'null'
