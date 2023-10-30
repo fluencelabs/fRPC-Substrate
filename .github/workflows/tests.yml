@@ -55,7 +55,9 @@ jobs:
           secrets: |
             kv/docker-registry/basicauth/ci username | DOCKER_USERNAME ;
             kv/docker-registry/basicauth/ci password | DOCKER_PASSWORD ;
-            kv/npm-registry/basicauth/ci token | NODE_AUTH_TOKEN;
+            kv/npm-registry/basicauth/ci token | NODE_AUTH_TOKEN ;
+            kv/ci/frpc chain_urls | RPC_PROVIDERS ;
+            kv/ci/frpc private_key | FLUENCE_CHAIN_PRIVATE_KEY
 
       - name: Login to DockerHub
         uses: docker/login-action@v2
@@ -80,9 +82,6 @@ jobs:
           sed -i'' -e '/nox-/!b;n;s|image: fluencelabs/nox:.*$|image: ${{ inputs.nox-image }}|' docker-compose.yaml
 
       - name: Run local env
-        env:
-          FLUENCE_CHAIN_PRIVATE_KEY: ${{ secrets.FLUENCE_CHAIN_PRIVATE_KEY }}
-          RPC_PROVIDERS: ${{ secrets.RPC_PROVIDERS }}
         run: fluence local up
 
       - name: Setup node with self-hosted registry
