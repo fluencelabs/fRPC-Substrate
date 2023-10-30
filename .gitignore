@@ -9,9 +9,7 @@ src/js/src/aqua
 aqua-compiled
 
 # recommended by Fluence Labs:
-/.fluence/project-secrets.yaml
-/.fluence/schemas
-/.fluence/tmp
+.fluence/**
 
 # to avoid accidental publish of RPC URLs
 gateway/configs/quickstart_config.json

@@ -4,16 +4,19 @@
 
 # Documentation: https://github.com/fluencelabs/fluence-cli/tree/main/docs/configs/fluence.md
 
-version: 2
+version: 4
+
 aquaInputPath: src/aqua/main.aqua
+
 workers:
   defaultWorker:
     services: [ eth_rpc ]
+
 deals:
   defaultWorker:
     minWorkers: 3
     targetWorkers: 3
-relays: stage
+
 services:
   eth_rpc:
     get: wasm-modules
