@@ -47,9 +47,6 @@ async function testGateway(mode?: string, times = 6) {
         id,
       };
       const response = await gateway.request(request);
-      console.log(request);
-      console.log(gateway.getStdout());
-      console.log(gateway.getStderr());
       expect(response).toMatchObject({
         jsonrpc: "2.0",
         id,
@@ -169,7 +166,7 @@ describe("fRPC", () => {
 
       const workersMatch = stderr.match(/(\d+)\s*workers/);
       const workers =
-        workersMatch?.[1] ?? throwError("Failed to parse workers");
+        workersMatch?.[1] ?? throwError(`Failed to parse workers. stdout: ${stdout}, stderr: ${stderr}`);
       const workersNum = parseInt(workers);
 
       expect(workersNum).toBeGreaterThanOrEqual(3);
