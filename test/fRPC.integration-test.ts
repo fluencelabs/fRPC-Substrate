@@ -166,7 +166,7 @@ describe("fRPC", () => {
 
       const workersMatch = stderr.match(/(\d+)\s*workers/);
       const workers =
-        workersMatch?.[1] ?? throwError(`Failed to parse workers. stdout: ${stdout}, stderr: ${stderr}`);
+        workersMatch?.[1] ?? throwError(`Failed to parse workers.`);
       const workersNum = parseInt(workers);
 
       expect(workersNum).toBeGreaterThanOrEqual(3);
