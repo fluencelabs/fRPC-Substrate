@@ -186,7 +186,10 @@ describe("fRPC", () => {
         }
         if (Date.now() > deadline) {
           throw new Error(
-            `Deployment timeout: ${workersNum} workers expected, ${deployed.length} deployed`,
+            `Deployment timeout: ${workersNum} workers expected, 
+            ${deployed.length} deployed.
+            workers: ${JSON.stringify(workers)}
+            `,
           );
         }
       }
