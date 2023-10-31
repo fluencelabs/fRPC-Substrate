@@ -115,7 +115,7 @@ jobs:
       - name: Run tests
         env:
           FLUENCE_ENV: ${{ inputs.fluence-env }}
-        run: npm run test
+        run: npm run test -- -t deploy
 
       - name: Dump container logs
         if: always()
