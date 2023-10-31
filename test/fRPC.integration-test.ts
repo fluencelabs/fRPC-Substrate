@@ -47,6 +47,7 @@ async function testGateway(mode?: string, times = 6) {
         id,
       };
       const response = await gateway.request(request);
+      console.log(request);
       expect(response).toMatchObject({
         jsonrpc: "2.0",
         id,
