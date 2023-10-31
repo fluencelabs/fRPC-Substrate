@@ -143,7 +143,7 @@ describe("fRPC", () => {
         "provider",
         "add-peer",
         ...providerPeers.flatMap((id) => ["--peer-id", id]),
-        "--units",
+        "--compute-units",
         "1",
       );
 
