@@ -63,7 +63,7 @@ jobs:
             kv/ci/frpc private_key | FLUENCE_CHAIN_PRIVATE_KEY
 
       - name: Login to DockerHub
-        uses: docker/login-action@v2
+        uses: docker/login-action@v3
         with:
           registry: docker.fluence.dev
           username: ${{ env.DOCKER_USERNAME }}
