@@ -32,8 +32,8 @@ jobs:
 
     env:
       FLUENCE_USER_DIR: "${{ github.workspace }}/tmp/.fluence"
-      # CI: true
-      # FORCE_COLOR: true
+      CI: true
+      FORCE_COLOR: true
 
     permissions:
       contents: read
@@ -68,6 +68,9 @@ jobs:
           registry: docker.fluence.dev
           username: ${{ env.DOCKER_USERNAME }}
           password: ${{ env.DOCKER_PASSWORD }}
+
+      - name: Setup Rust toolchain
+        uses: dsherret/rust-toolchain-file@v1
 
       - name: Setup fcli
         uses: fluencelabs/setup-fluence@v1
