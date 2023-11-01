@@ -86,7 +86,7 @@ function findSameResults(results, minNum) {
   if (getMaxRepeated >= minNum) {
     console.log(resultCounts);
     const max = Object.entries(resultCounts).find(
-      (kv) => kv[1] === getMaxRepeated
+      (kv) => kv[1] === getMaxRepeated,
     );
     return {
       value: max[0],
@@ -132,7 +132,7 @@ async function methodHandler(reqRaw, method) {
       req,
       counterServiceId,
       counterPeerId,
-      config.serviceId
+      config.serviceId,
     );
   } else if (mode === "quorum") {
     const quorumResult = await quorumEth(
@@ -143,14 +143,14 @@ async function methodHandler(reqRaw, method) {
       req,
       quorumServiceId,
       quorumPeerId,
-      { ttl: 20000 }
+      { ttl: 20000 },
     );
 
     if (quorumResult.error) {
       console.error(
         `quorum failed: ${quorumResult.error}\n${JSON.stringify(
-          quorumResult.results
-        )}`
+          quorumResult.results,
+        )}`,
       );
       result = { success: false, error: quorumResult.error };
     } else {

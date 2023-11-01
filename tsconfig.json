@@ -1,0 +1,16 @@
+{
+  "extends": "@tsconfig/node18-strictest-esm/tsconfig.json",
+  "compilerOptions": {
+    "declaration": true,
+    "outDir": "dist",
+    "importsNotUsedAsValues": "remove",
+    "verbatimModuleSyntax": true,
+    "lib": ["es2023"]
+  },
+  "exclude": ["gateway/**/*"],
+  "include": ["test/**/*"],
+  "ts-node": {
+    "esm": true
+  },
+  "types": ["node", "jest"]
+}
