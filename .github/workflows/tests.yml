@@ -32,7 +32,7 @@ jobs:
 
     env:
       FLUENCE_USER_DIR: "${{ github.workspace }}/tmp/.fluence"
-      CI: true
+      # CI: true
       # FORCE_COLOR: true
 
     permissions:
