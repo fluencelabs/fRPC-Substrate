@@ -32,8 +32,8 @@ jobs:
 
     env:
       FLUENCE_USER_DIR: "${{ github.workspace }}/tmp/.fluence"
-      CI: true
-      FORCE_COLOR: true
+      # CI: true
+      # FORCE_COLOR: true
 
     permissions:
       contents: read
@@ -112,14 +112,14 @@ jobs:
       - name: Run npm run build
         run: npm run build
 
-      # - name: Setup tmate session
-      #   if: always()
-      #   uses: mxschmitt/action-tmate@v3
-
       - name: Run tests
         env:
           FLUENCE_ENV: ${{ inputs.fluence-env }}
         run: npm run test -- -t deploy
+
+      - name: Setup tmate session
+        if: failure()
+        uses: mxschmitt/action-tmate@v3
 
       - name: Dump container logs
         if: always()
