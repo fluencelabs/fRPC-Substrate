@@ -28,12 +28,12 @@ on:
 jobs:
   tests:
     name: "Run tests"
-    runs-on: ubuntu-latest
+    runs-on: builder
 
     env:
       FLUENCE_USER_DIR: "${{ github.workspace }}/tmp/.fluence"
-      # CI: true
-      # FORCE_COLOR: true
+      CI: true
+      FORCE_COLOR: true
 
     permissions:
       contents: read
@@ -112,9 +112,9 @@ jobs:
       - name: Run npm run build
         run: npm run build
 
-      - name: Setup tmate session
-        if: always()
-        uses: mxschmitt/action-tmate@v3
+      # - name: Setup tmate session
+      #   if: always()
+      #   uses: mxschmitt/action-tmate@v3
 
       - name: Run tests
         env:
