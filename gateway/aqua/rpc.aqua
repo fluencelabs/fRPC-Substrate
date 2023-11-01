@@ -42,7 +42,6 @@ func balancedEthCall{Logger, Balancer}(method: string, jsonArgs: []string) -> Js
     worker, provider <- Balancer.next()
     Logger.logWorker(worker)
     Logger.logCall(provider)
-    Op.noop() -- dirty hack for topology to converge
     rpc <- fromWorkerProvider(worker, provider)
     result <- rpcCall{rpc}(method, jsonArgs)
   <- result

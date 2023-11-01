@@ -16,7 +16,7 @@
 
 import { relative } from "path";
 import { promises as fs } from "fs";
-import { execFile, ChildProcess } from "child_process";
+import { ChildProcess, execFile } from "child_process";
 
 import treeKill from "tree-kill";
 
@@ -76,6 +76,7 @@ export async function subnet(env: string): Promise<Worker[]> {
 
 export class Gateway {
   private stdout: string = "";
+  private stderr: string = "";
 
   constructor(
     private readonly gateway: ChildProcess,
@@ -83,6 +84,9 @@ export class Gateway {
   ) {
     gateway.stdout?.on("data", (data: any) => {
       this.stdout += data;
+    });
+    gateway.stderr?.on("data", (data: any) => {
+      this.stderr += data;
     });
   }
 
@@ -109,7 +113,7 @@ export class Gateway {
           } else {
             resolve();
           }
-        }),
+        })
       );
     }
     return this.gateway.kill();
@@ -130,6 +134,9 @@ export class Gateway {
 
   public getStdout(): string {
     return this.stdout;
+  }
+  public getStderr(): string {
+    return this.stderr;
   }
 }
 

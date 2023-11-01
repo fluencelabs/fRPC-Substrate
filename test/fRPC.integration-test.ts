@@ -143,7 +143,7 @@ describe("fRPC", () => {
         "provider",
         "add-peer",
         ...providerPeers.flatMap((id) => ["--peer-id", id]),
-        "--units",
+        "--compute-units",
         "1",
       );
 
@@ -166,7 +166,7 @@ describe("fRPC", () => {
 
       const workersMatch = stderr.match(/(\d+)\s*workers/);
       const workers =
-        workersMatch?.[1] ?? throwError("Failed to parse workers");
+        workersMatch?.[1] ?? throwError(`Failed to parse workers.`);
       const workersNum = parseInt(workers);
 
       expect(workersNum).toBeGreaterThanOrEqual(3);
@@ -186,7 +186,10 @@ describe("fRPC", () => {
         }
         if (Date.now() > deadline) {
           throw new Error(
-            `Deployment timeout: ${workersNum} workers expected, ${deployed.length} deployed`,
+            `Deployment timeout: ${workersNum} workers expected, 
+            ${deployed.length} deployed.
+            workers: ${JSON.stringify(workers)}
+            `,
           );
         }
       }
