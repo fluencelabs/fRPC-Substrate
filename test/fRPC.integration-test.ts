@@ -132,7 +132,7 @@ describe("fRPC", () => {
         // TODO: Those values are moved
         // to provider config in newer cli version
         "--max-collateral",
-        "1",
+        "100",
         "--price-per-epoch",
         "1",
       );
@@ -169,7 +169,22 @@ describe("fRPC", () => {
       // Remove previous deployment info
       await backupFile(".fluence/workers.yaml");
 
-      const [stdout, stderr] = await fluenceKeyEnv("deal", "deploy");
+      const [stdout, stderr] = await fluenceKeyEnv(
+        "deal",
+        "deploy",
+        // TODO: Those values are moved
+        // to deals in fluence config in newer cli version
+        "--collateral-per-worker",
+        "1",
+        "--max-workers-per-provider",
+        "3",
+        "--min-workers",
+        "3",
+        "--target-workers",
+        "3",
+        "--price-per-worker-epoch",
+        "1",
+      );
 
       expect(stdout.includes("Success!")).toBeTruthy();
 
