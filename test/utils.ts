@@ -34,7 +34,6 @@ export async function execute(
   cmd: string,
   ...args: string[]
 ): Promise<[string, string]> {
-  console.error(`Executing ${cmd} ${args.map((a) => '"' + a + '"').join(" ")}`);
   return new Promise((resolve, reject) => {
     execFile(cmd, args, (error, stdout, stderr) => {
       if (error) {
