@@ -266,18 +266,17 @@ checksum = "baf1de4339761588bc0619e3cbc0120ee582ebb74b53b4efbf79117bd2da40fd"
 
 [[package]]
 name = "chrono"
-version = "0.4.26"
+version = "0.4.31"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ec837a71355b28f6556dbd569b37b3f363091c0bd4b2e735674521b4c5fd9bc5"
+checksum = "7f2c685bad3eb3d45a01354cedb7d5faa66194d1d58ba6e267a8de788f79db38"
 dependencies = [
  "android-tzdata",
  "iana-time-zone",
  "js-sys",
  "num-traits",
  "serde",
- "time 0.1.45",
  "wasm-bindgen",
- "winapi",
+ "windows-targets 0.48.0",
 ]
 
 [[package]]
@@ -482,7 +481,7 @@ name = "curl_adapter"
 version = "0.1.0"
 dependencies = [
  "log",
- "marine-rs-sdk 0.10.0",
+ "marine-rs-sdk 0.10.1",
 ]
 
 [[package]]
@@ -630,7 +629,7 @@ version = "0.1.0"
 dependencies = [
  "eyre",
  "jsonrpc-core",
- "marine-rs-sdk 0.10.0",
+ "marine-rs-sdk 0.10.1",
  "marine-rs-sdk-test",
  "serde",
  "serde_json",
@@ -927,7 +926,7 @@ checksum = "c85e1d9ab2eadba7e5040d4e09cbd6d072b76a557ad64e797c2cb9d4da21d7e4"
 dependencies = [
  "cfg-if",
  "libc",
- "wasi 0.11.0+wasi-snapshot-preview1",
+ "wasi",
 ]
 
 [[package]]
@@ -1331,12 +1330,12 @@ dependencies = [
 
 [[package]]
 name = "marine-call-parameters"
-version = "0.10.0"
+version = "0.10.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f9ca0439e5b2a812d8bc5c3b7d71e3691fb260a1f0384a7e842eec1b59f13069"
+checksum = "979e5c52888bae300c937e36240293c20e34bb7b29d058375b15f85e713dd854"
 dependencies = [
- "marine-macro 0.10.0",
- "marine-rs-sdk-main 0.10.0",
+ "marine-macro 0.10.1",
+ "marine-rs-sdk-main 0.10.1",
  "serde",
 ]
 
@@ -1427,12 +1426,12 @@ dependencies = [
 
 [[package]]
 name = "marine-macro"
-version = "0.10.0"
+version = "0.10.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0088fc9cb6a970dc17a510c3cb28fe459c368d566e8cb7f8354e06ef3395c883"
+checksum = "93835918915610947b5ce96a4b3d89268fde2842a6d18d893c86ffe1b605c16e"
 dependencies = [
- "marine-macro-impl 0.10.0",
- "marine-rs-sdk-main 0.10.0",
+ "marine-macro-impl 0.10.1",
+ "marine-rs-sdk-main 0.10.1",
 ]
 
 [[package]]
@@ -1463,9 +1462,9 @@ dependencies = [
 
 [[package]]
 name = "marine-macro-impl"
-version = "0.10.0"
+version = "0.10.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e457b58c826679139896f04e6cfa38c5d23870a88e957e8e0a6f646e7c3f0ac4"
+checksum = "c794126e4a2f5b78b43bc7c82329dc6ffa0c2511591803f89a6d97c037feb068"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -1532,14 +1531,14 @@ dependencies = [
 
 [[package]]
 name = "marine-rs-sdk"
-version = "0.10.0"
+version = "0.10.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c6ecd45528096514b4db8d23523eadaf9e5d5a7d3fce637e4bb684afccc0e9a3"
+checksum = "85eeb2e2a1ab3f7a2ba270ff42bc2d4fa0d1a0b0f6bdb377b2db4403030a854a"
 dependencies = [
  "marine-call-parameters",
- "marine-macro 0.10.0",
- "marine-rs-sdk-main 0.10.0",
- "marine-timestamp-macro 0.10.0",
+ "marine-macro 0.10.1",
+ "marine-rs-sdk-main 0.10.1",
+ "marine-timestamp-macro 0.10.1",
  "serde",
 ]
 
@@ -1555,9 +1554,9 @@ dependencies = [
 
 [[package]]
 name = "marine-rs-sdk-main"
-version = "0.10.0"
+version = "0.10.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "11eabbc74c69ad11874fb6cf686604833d084633293324524a40ec581663f978"
+checksum = "997cdfb9fdef7066a527e9436938618d0596e00f4cceea1ab3b5bb32d20947f6"
 dependencies = [
  "log",
  "serde",
@@ -1649,9 +1648,9 @@ dependencies = [
 
 [[package]]
 name = "marine-timestamp-macro"
-version = "0.10.0"
+version = "0.10.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "acf956d174fdbf940b474089d5388aa35b4fc73fedbfade2a92dc198084b9afa"
+checksum = "55ccb7870fd62eb4cc34a86b0ae8bdca680067138c3bb10fca7fb67e03242ca4"
 dependencies = [
  "chrono",
  "quote",
@@ -1978,9 +1977,9 @@ dependencies = [
 
 [[package]]
 name = "proc-macro2"
-version = "1.0.63"
+version = "1.0.70"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7b368fba921b0dce7e60f5e04ec15e565b3303972b42bcfde1d0713b881959eb"
+checksum = "39278fbbf5fb4f646ce651690877f89d1c5811a3d4acb27700c1cb3cdb78fd3b"
 dependencies = [
  "unicode-ident",
 ]
@@ -1996,9 +1995,9 @@ dependencies = [
 
 [[package]]
 name = "quote"
-version = "1.0.28"
+version = "1.0.33"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1b9ab9c7eadfd8df19006f1cf1a4aed13540ed5cbc047010ece5826e10825488"
+checksum = "5267fca4496028628a95160fc423a33e8b2e6af8a5302579e322e4b520293cae"
 dependencies = [
  "proc-macro2",
 ]
@@ -2239,7 +2238,7 @@ dependencies = [
  "serde",
  "serde_json",
  "serde_with_macros",
- "time 0.3.21",
+ "time",
 ]
 
 [[package]]
@@ -2400,17 +2399,6 @@ dependencies = [
  "proc-macro2",
  "quote",
  "syn 2.0.28",
-]
-
-[[package]]
-name = "time"
-version = "0.1.45"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1b797afad3f312d1c66a56d11d0316f916356d11bd158fbc6ca6389ff6bf805a"
-dependencies = [
- "libc",
- "wasi 0.10.0+wasi-snapshot-preview1",
- "winapi",
 ]
 
 [[package]]
@@ -2661,12 +2649,6 @@ dependencies = [
  "quote",
  "syn 1.0.109",
 ]
-
-[[package]]
-name = "wasi"
-version = "0.10.0+wasi-snapshot-preview1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1a143597ca7c7793eff794def352d41792a93c481eb1042423ff7ff72ba2c31f"
 
 [[package]]
 name = "wasi"
