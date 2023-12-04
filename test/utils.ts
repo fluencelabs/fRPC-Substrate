@@ -113,7 +113,7 @@ export class Gateway {
           } else {
             resolve();
           }
-        })
+        }),
       );
     }
     return this.gateway.kill();
