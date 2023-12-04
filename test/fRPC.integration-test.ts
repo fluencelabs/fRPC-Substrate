@@ -126,7 +126,16 @@ describe("fRPC", () => {
 
       if (FLUENCE_ENV !== "local") return;
 
-      const [register, stderrReg] = await fluenceKeyEnv("provider", "register");
+      const [register, stderrReg] = await fluenceKeyEnv(
+        "provider",
+        "register",
+        // TODO: Those values are moved
+        // to provider config in newer cli version
+        "--max-collateral",
+        "1",
+        "--price-per-epoch",
+        "1",
+      );
 
       // Here CLI writes success to stdout
       if (!register.includes("Successfully")) {
