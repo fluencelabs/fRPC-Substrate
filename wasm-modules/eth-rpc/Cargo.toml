@@ -23,4 +23,4 @@ eyre = "=0.6.9"
 marine-rs-sdk = "=0.10.1"
 
 [dev-dependencies]
-marine-rs-sdk-test = "=0.10.2"
+marine-rs-sdk-test = "=0.11.1"
