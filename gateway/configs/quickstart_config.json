@@ -1,11 +1,9 @@
 {
   "providers": [
-    "<replace with your url_1/api-key>",
-    "<replace with your url_2/api-key>",
-    "<replace with your url_3/api-key>"
+    <your endpoint urls>,
   ],
   "mode": "round-robin",
-  "relay": "/dns4/0-stage.fluence.dev/tcp/9000/wss/p2p/12D3KooWDcpWuyrMTDinqNgmXAuRdfd2mTdY9VoXZSAet2pDzh6r",
+  "relay": "/dns4/4-kras.fluence.dev/tcp/9000/wss/p2p/12D3KooWJd3HaMJ1rpLY1kQvcjRPEvnDwcXrH8mJvk7ypcZXqXGE",
   "port": 3000,
   "counterServiceId": null,
   "counterPeerId": null,

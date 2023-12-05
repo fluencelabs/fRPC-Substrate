@@ -8,9 +8,9 @@ version: 0
 
 deals:
   defaultWorker:
-    definition: "bafkreifncwgw7vgktf7j7qectsinrkhbhxjwfdvemmrshdsgi2ydelpvs4"
-    timestamp: "2023-09-27T12:11:50.777Z"
-    dealIdOriginal: "0x8d9C53312f0A4ad1Ba280ac197D371a33627E3bE"
-    dealId: "8d9c53312f0a4ad1ba280ac197d371a33627e3be"
-    chainNetwork: "testnet"
-    chainNetworkId: 8000
+    definition: bafkreihqcu7uilen6fu4a7sprhyhtk2xvd3z6lxicqric7iscorwlz7nce
+    timestamp: 2023-12-05T00:36:14.752Z
+    dealIdOriginal: "0xC175aE3B7A475076495b2FEEeb06B5150Af727EA"
+    dealId: c175ae3b7a475076495b2feeeb06b5150af727ea
+    chainNetwork: kras
+    chainNetworkId: 80001
