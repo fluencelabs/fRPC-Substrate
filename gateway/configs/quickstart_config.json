@@ -1,6 +1,6 @@
 {
   "providers": [
-    <your endpoint urls>,
+    "<your endpoint urls>",
   ],
   "mode": "round-robin",
   "relay": "/dns4/4-kras.fluence.dev/tcp/9000/wss/p2p/12D3KooWJd3HaMJ1rpLY1kQvcjRPEvnDwcXrH8mJvk7ypcZXqXGE",
