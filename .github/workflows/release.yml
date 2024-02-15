@@ -93,7 +93,7 @@ jobs:
           token: ${{ secrets.FLUENCEBOT_RELEASE_PLEASE_PAT }}
 
       - name: Import secrets
-        uses: hashicorp/vault-action@v2.8.0
+        uses: hashicorp/vault-action@v2.8.1
         with:
           url: https://vault.fluence.dev
           path: jwt/github
@@ -147,7 +147,7 @@ jobs:
           echo "found any?:" "${{ steps.status.outputs.found }}"
 
       - name: Import secrets
-        uses: hashicorp/vault-action@v2.8.0
+        uses: hashicorp/vault-action@v2.8.1
         with:
           url: https://vault.fluence.dev
           path: jwt/github
