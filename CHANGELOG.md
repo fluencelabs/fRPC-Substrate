@@ -1,5 +1,31 @@
 # Changelog
 
+## [0.0.19](https://github.com/fluencelabs/fRPC-Substrate/compare/v0.0.18...v0.0.19) (2024-02-15)
+
+
+### Features
+
+* **gateway:** Refactor aqua ([#115](https://github.com/fluencelabs/fRPC-Substrate/issues/115)) ([d608bf8](https://github.com/fluencelabs/fRPC-Substrate/commit/d608bf8443e6b94d8c3ddc9ef520555cd782c0b9))
+* **readme:** Add `fluence deal logs` output example to README [DXJ-512] ([#126](https://github.com/fluencelabs/fRPC-Substrate/issues/126)) ([5269f45](https://github.com/fluencelabs/fRPC-Substrate/commit/5269f453a2df6091622b8ef500978475af20d8a8))
+* **tests:** Add tests ([#117](https://github.com/fluencelabs/fRPC-Substrate/issues/117)) ([bf78df6](https://github.com/fluencelabs/fRPC-Substrate/commit/bf78df6188efcc83bdb8b4ccf26c07b2348d3a2c))
+
+
+### Bug Fixes
+
+* **aqua:** Remove topology hack ([#125](https://github.com/fluencelabs/fRPC-Substrate/issues/125)) ([95ce0ad](https://github.com/fluencelabs/fRPC-Substrate/commit/95ce0adc5bab6ec1ca168778102a1515bbff4881))
+* **deps:** update dependency @fluencelabs/marine-worker to v0.5.0 ([#118](https://github.com/fluencelabs/fRPC-Substrate/issues/118)) ([b1f8b07](https://github.com/fluencelabs/fRPC-Substrate/commit/b1f8b077c43eb8f6c498de5c3d42f6b0cdc76ccd))
+* **deps:** update dependency json-rpc-2.0 to v1.7.0 ([#134](https://github.com/fluencelabs/fRPC-Substrate/issues/134)) ([b9c277a](https://github.com/fluencelabs/fRPC-Substrate/commit/b9c277ae6813e1603d7e4c6730e73c70060e63fa))
+* **deps:** update dependency web3 to v4.2.2 ([#119](https://github.com/fluencelabs/fRPC-Substrate/issues/119)) ([9f50223](https://github.com/fluencelabs/fRPC-Substrate/commit/9f502236fd0ede07faefcfb6921f5cc9c36d11ae))
+* **deps:** update dependency web3 to v4.3.0 ([#143](https://github.com/fluencelabs/fRPC-Substrate/issues/143)) ([eee3a35](https://github.com/fluencelabs/fRPC-Substrate/commit/eee3a351315293cded71a278d8187bef27321811))
+* **deps:** update rust crate eyre to v0.6.9 ([#138](https://github.com/fluencelabs/fRPC-Substrate/issues/138)) ([f8250cb](https://github.com/fluencelabs/fRPC-Substrate/commit/f8250cba386aba55f7f3c815da80e475306b99d5))
+* **deps:** update rust crate marine-rs-sdk to v0.10.1 ([#123](https://github.com/fluencelabs/fRPC-Substrate/issues/123)) ([1394659](https://github.com/fluencelabs/fRPC-Substrate/commit/1394659a4d81068ccdb915c5efb6db96c5b8a316))
+* **deps:** update rust crate serde to v1.0.193 ([#128](https://github.com/fluencelabs/fRPC-Substrate/issues/128)) ([ec026c8](https://github.com/fluencelabs/fRPC-Substrate/commit/ec026c88003b6921af012dc3c9bf038c2be6052e))
+* **deps:** update rust crate serde_json to v1.0.108 ([#131](https://github.com/fluencelabs/fRPC-Substrate/issues/131)) ([25b2b55](https://github.com/fluencelabs/fRPC-Substrate/commit/25b2b55e4772b0c75b467a17341445647de6d986))
+* **deps:** update rust crate tokio to v1.34.0 ([#140](https://github.com/fluencelabs/fRPC-Substrate/issues/140)) ([4926e4f](https://github.com/fluencelabs/fRPC-Substrate/commit/4926e4fa8b633efea8c1897f8b7451bc42ab6f91))
+* **readme:** Enhance readme ([#113](https://github.com/fluencelabs/fRPC-Substrate/issues/113)) ([bf49ebf](https://github.com/fluencelabs/fRPC-Substrate/commit/bf49ebf20d1aaf2164f2eef9e822c773394277a5))
+* **tests:** Fix integration tests ([#136](https://github.com/fluencelabs/fRPC-Substrate/issues/136)) ([405ccd3](https://github.com/fluencelabs/fRPC-Substrate/commit/405ccd38f4231ac9d670ccc3eed8e333533d606c))
+* **tests:** Use `stage` fcli version in tests by default ([#135](https://github.com/fluencelabs/fRPC-Substrate/issues/135)) ([91c4018](https://github.com/fluencelabs/fRPC-Substrate/commit/91c4018ac8e95206f1fb41b46d4a190862fc9634))
+
 ## [0.0.18](https://github.com/fluencelabs/fRPC-Substrate/compare/v0.0.17...v0.0.18) (2023-10-14)
 
 
