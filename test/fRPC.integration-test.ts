@@ -129,12 +129,6 @@ describe("fRPC", () => {
       const [register, stderrReg] = await fluenceKeyEnv(
         "provider",
         "register",
-        // TODO: Those values are moved
-        // to provider config in newer cli version
-        "--max-collateral",
-        "100",
-        "--price-per-epoch",
-        "1",
       );
 
       // Here CLI writes success to stdout
