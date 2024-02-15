@@ -1,24 +1,17 @@
 aqua Deals declares *
 
 data Deal:
-    definition: string
-    timestamp: string
-    dealIdOriginal: string
     dealId: string
     chainNetwork: string
     chainNetworkId: u64
+    dealIdOriginal: string
+    definition: string
+    timestamp: string
 
 data Deals:
     defaultWorker: ?Deal
 
 func get() -> Deals:
     <- Deals(
-        defaultWorker=?[Deal(
-            definition="bafkreifncwgw7vgktf7j7qectsinrkhbhxjwfdvemmrshdsgi2ydelpvs4",
-            timestamp="2023-09-27T12:11:50.777Z",
-            dealIdOriginal="0x8d9C53312f0A4ad1Ba280ac197D371a33627E3bE",
-            dealId="8d9c53312f0a4ad1ba280ac197d371a33627e3be",
-            chainNetwork="testnet",
-            chainNetworkId=80001
-        )]
+        defaultWorker=nil
     )
