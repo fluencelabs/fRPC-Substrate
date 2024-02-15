@@ -7,7 +7,7 @@
 version: 1
 
 deals:
-  testnet:
+  stage:
     defaultWorker:
       definition: bafkreifncwgw7vgktf7j7qectsinrkhbhxjwfdvemmrshdsgi2ydelpvs4
       timestamp: 2023-09-27T12:11:50.777Z
