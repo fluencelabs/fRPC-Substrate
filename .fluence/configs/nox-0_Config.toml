@@ -1,0 +1,20 @@
+aquavm_pool_size = 2
+tcp_port = 7_771
+websocket_port = 9_991
+http_port = 18_080
+
+[system_services]
+enable = [ "aqua-ipfs", "decider" ]
+
+  [system_services.aqua_ipfs]
+  external_api_multiaddr = "/ip4/127.0.0.1/tcp/5001"
+  local_api_multiaddr = "/dns4/ipfs/tcp/5001"
+
+  [system_services.decider]
+  decider_period_sec = 10
+  worker_ipfs_multiaddr = "/dns4/ipfs/tcp/5001"
+  network_api_endpoint = "http://chain:8545"
+  network_id = 31_337
+  start_block = "earliest"
+  matcher_address = "0x0e1F3B362E22B2Dc82C9E35d6e62998C7E8e2349"
+  wallet_key = "0x3cc23e0227bd17ea5d6ea9d42b5eaa53ad41b1974de4755c79fe236d361a6fd5"

@@ -1,0 +1,26 @@
+# yaml-language-server: $schema=.fluence/schemas/provider.json
+
+# Defines config used for provider set up
+
+# Documentation: https://github.com/fluencelabs/cli/tree/main/docs/configs/provider.md
+
+version: 0
+
+env: local
+
+computePeers:
+  nox-0:
+    computeUnits: 1
+  nox-1:
+    computeUnits: 1
+  nox-2:
+    computeUnits: 1
+
+offers:
+  offer:
+    maxCollateralPerWorker: 1
+    minPricePerWorkerEpoch: 0.1
+    computePeers:
+      - nox-0
+      - nox-1
+      - nox-2
