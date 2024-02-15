@@ -17,8 +17,6 @@ deals:
     minWorkers: 3
     targetWorkers: 3
 
-relays: stage
-
 services:
   eth_rpc:
     get: wasm-modules
