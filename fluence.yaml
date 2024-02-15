@@ -12,6 +12,8 @@ deals:
   defaultWorker:
     minWorkers: 3
     targetWorkers: 3
+    pricePerWorkerEpoch: 0.1
+    collateralPerWorker: 1
     services:
       - eth_rpc
 
