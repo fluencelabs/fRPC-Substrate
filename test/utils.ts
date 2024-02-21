@@ -34,12 +34,8 @@ export async function execute(
   cmd: string,
   ...args: string[]
 ): Promise<[string, string]> {
-  return new Promise((resolve, reject) => {
-    execFile(cmd, args, (error, stdout, stderr) => {
-      if (error) {
-        reject(error);
-      }
-
+  return new Promise((resolve, _) => {
+    execFile(cmd, args, (_, stdout, stderr) => {
       resolve([stdout, stderr]);
     });
   });
