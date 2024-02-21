@@ -86,6 +86,9 @@ jobs:
           artifact: fcli
           version: ${{ inputs.fcli-version }}
 
+      - name: Install aqua deps
+        run: fluence dep npm i # In newer versions just `dep i`
+
       - name: Init local env with fcli
         run: fluence local init --no-input
 

@@ -16,6 +16,7 @@ aqua-compiled
 .fluence/secrets
 .fluence/configs
 .fluence/tmp
+.fluence/aqua-dependencies
 
 # to avoid accidental publish of RPC URLs
 gateway/configs/quickstart_config.json
