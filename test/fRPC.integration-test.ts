@@ -129,6 +129,8 @@ describe("fRPC", () => {
       const [register, stderrReg] = await fluenceKeyEnv(
         "provider",
         "register",
+        "--offer",
+        "offer"
       );
 
       // Here CLI writes success to stdout
@@ -165,19 +167,7 @@ describe("fRPC", () => {
 
       const [stdout, stderr] = await fluenceKeyEnv(
         "deal",
-        "deploy",
-        // TODO: Those values are moved
-        // to deals in fluence config in newer cli version
-        "--collateral-per-worker",
-        "1",
-        "--max-workers-per-provider",
-        "3",
-        "--min-workers",
-        "3",
-        "--target-workers",
-        "3",
-        "--price-per-worker-epoch",
-        "1",
+        "deploy"
       );
 
       expect(stdout.includes("Success!")).toBeTruthy();
