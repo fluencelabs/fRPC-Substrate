@@ -121,22 +121,6 @@ describe("fRPC", () => {
       const relay = randomElement(peers) ?? throwError("Empty peers");
 
       await updateConfig({ relay });
-
-      if (FLUENCE_ENV !== "local") return;
-
-      const [register, stderrReg] = await fluenceKeyEnv(
-        "provider",
-        "register",
-        "--offer",
-        "offer"
-      );
-
-      // Here CLI writes success to stdout
-      if (!register.includes("Successfully")) {
-        throw new Error(`Failed to register provider:
-        stdout: ${register}
-        stderr: ${stderrReg}`);
-      }
     });
 
     it("should deploy the deal", async () => {
