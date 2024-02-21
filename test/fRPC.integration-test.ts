@@ -139,26 +139,6 @@ describe("fRPC", () => {
         stdout: ${register}
         stderr: ${stderrReg}`);
       }
-
-      const providerPeers = peers
-        .slice(0, RPC_PROVIDERS.length)
-        .map((p) => multiaddr(p).getPeerId() ?? throwError("Empty peer id"));
-
-      const [stdoutAdd, addPeers] = await fluenceKeyEnv(
-        "provider",
-        "add-peer",
-        ...providerPeers.flatMap((id) => ["--peer-id", id]),
-        "--compute-units",
-        "1",
-      );
-
-      // Here CLI writes results to stderr
-      const added = addPeers.match(/Added/g)?.length ?? 0;
-      if (added != 3) {
-        throw new Error(`Failed to add peers:
-        stdout: ${stdoutAdd}
-        stderr: ${addPeers}`);
-      }
     });
 
     it("should deploy the deal", async () => {
