@@ -61,7 +61,7 @@ interface Worker {
  * @returns Subnet workers
  */
 export async function subnet(env: string): Promise<Worker[]> {
-  const [stdout, _] = await fluence(
+  const [stdout, stderr] = await fluence(
     "run",
     "-f",
     "showSubnet()",
@@ -72,6 +72,10 @@ export async function subnet(env: string): Promise<Worker[]> {
     "--ttl",
     "20000"
   );
+
+  if (stderr.includes("expired")) {
+    return [];
+  }
 
   return JSON.parse(stdout);
 }
