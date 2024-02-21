@@ -69,6 +69,8 @@ export async function subnet(env: string): Promise<Worker[]> {
     "src/aqua/main.aqua",
     "--env",
     env,
+    "--ttl",
+    "20000"
   );
 
   return JSON.parse(stdout);
