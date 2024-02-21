@@ -79,6 +79,9 @@ jobs:
       - name: Setup Rust toolchain
         uses: dsherret/rust-toolchain-file@v1
 
+      - name: Add wasi target
+        run: rustup target add wasm32-wasi
+
       - name: Setup fcli
         uses: fluencelabs/setup-fluence@v1
         with:
