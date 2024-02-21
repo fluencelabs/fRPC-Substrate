@@ -27,7 +27,7 @@ func errorJsonString(msg: string) -> JsonString:
 func getWorkers() -> []Worker, ?string:
   on INIT_PEER_ID via HOST_PEER_ID:
     deals <- Deals.get()
-  dealId = deals.defaultWorker!.dealIdOriginal
+  dealId = deals.fRpcDeployment!.dealIdOriginal
   on HOST_PEER_ID:
     result <- Subnet.resolve(dealId)
   <- result.workers, result.error

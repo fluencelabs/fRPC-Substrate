@@ -1,4 +1,4 @@
-module RPCEth declares RPCEth, fromWorkerProvider
+aqua RPCEth declares RPCEth, fromWorkerProvider
 
 import Worker from "@fluencelabs/aqua-lib/subnet.aqua"
 

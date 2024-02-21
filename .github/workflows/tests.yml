@@ -14,8 +14,7 @@ on:
       fcli-version:
         description: "fcli version to use"
         type: string
-        # default: "unstable"
-        default: "stage"
+        default: "unstable"
       js-client-version:
         description: "@fluencelabs/js-client version"
         type: string

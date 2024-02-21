@@ -1,4 +1,4 @@
-module Logger declares Logger, initPeerLogger
+aqua Logger declares Logger, initPeerLogger
 
 export LoggerSrv
 

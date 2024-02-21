@@ -1,17 +1,17 @@
 aqua Deals declares *
 
 data Deal:
-    dealId: string
     chainNetwork: string
     chainNetworkId: u64
+    dealId: string
     dealIdOriginal: string
     definition: string
     timestamp: string
 
 data Deals:
-    defaultWorker: ?Deal
+    fRpcDeployment: ?Deal
 
 func get() -> Deals:
     <- Deals(
-        defaultWorker=nil
+        fRpcDeployment=nil
     )

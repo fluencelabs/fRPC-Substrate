@@ -6,21 +6,31 @@
 
 version: 0
 
-env: local
+providerName: fRPC-Provider
 
 computePeers:
   nox-0:
-    computeUnits: 1
+    computeUnits: 32
   nox-1:
-    computeUnits: 1
+    computeUnits: 32
   nox-2:
-    computeUnits: 1
+    computeUnits: 32
 
 offers:
   offer:
-    maxCollateralPerWorker: 1
     minPricePerWorkerEpoch: 0.1
     computePeers:
       - nox-0
       - nox-1
       - nox-2
+
+capacityCommitments:
+  nox-0:
+    duration: 100 minutes
+    rewardDelegationRate: 7
+  nox-1:
+    duration: 100 minutes
+    rewardDelegationRate: 7
+  nox-2:
+    duration: 100 minutes
+    rewardDelegationRate: 7

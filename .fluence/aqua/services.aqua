@@ -1,3 +1,6 @@
+aqua Services declares *
+
+
 data BytesValue:
   value: []u8
   success: bool

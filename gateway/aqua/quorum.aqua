@@ -1,4 +1,4 @@
-module Quorum declares QuorumChecker, QuorumResult, onPeerQuorumChecker
+aqua Quorum declares QuorumChecker, QuorumResult, onPeerQuorumChecker
 
 import JsonString from "services.aqua"
 

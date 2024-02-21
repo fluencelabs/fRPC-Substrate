@@ -1,4 +1,4 @@
-module Counter declares Counter, onPeerCounter
+aqua Counter declares Counter, onPeerCounter
 
 export CounterSrv
 
