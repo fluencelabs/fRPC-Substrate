@@ -132,6 +132,9 @@ describe("fRPC", () => {
         "fRPC-deployment"
       );
 
+      console.log("stdout", stdout);
+      console.log("stderr", stderr);
+
       expect(stdout.includes("Success!")).toBeTruthy();
 
       const workersMatch = stderr.match(/(\d+)\s*workers/);
