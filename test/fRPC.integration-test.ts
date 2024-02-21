@@ -128,8 +128,8 @@ describe("fRPC", () => {
       await backupFile(".fluence/workers.yaml");
 
       const [stdout, stderr] = await fluenceKeyEnv(
-        "deal",
-        "deploy"
+        "deploy",
+        "fRPC-deployment"
       );
 
       expect(stdout.includes("Success!")).toBeTruthy();
