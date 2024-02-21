@@ -4,25 +4,27 @@
 
 # Documentation: https://github.com/fluencelabs/fluence-cli/tree/main/docs/configs/fluence.md
 
-version: 5
+version: 8
 
-aquaInputPath: src/aqua/main.aqua
-
-deals:
-  defaultWorker:
-    minWorkers: 3
+deployments:
+  myDeployment:
     targetWorkers: 3
-    pricePerWorkerEpoch: 0.1
-    collateralPerWorker: 1
-    services:
+    minWorkers: 3
+    pricePerWorkerEpoch: 0.00001
+    initialBalance: 0.001
+    services: 
       - eth_rpc
+    spells: []
 
 services:
   eth_rpc:
     get: wasm-modules
 
-dependencies:
-  npm:
-    "@fluencelabs/aqua-lib": 0.9.0
-    "@fluencelabs/spell": 0.6.5
-    "@fluencelabs/registry": 0.9.4
+aquaDependencies:
+  "@fluencelabs/aqua-lib": 0.9.0
+
+compileAqua:
+  default:
+    input: src/aqua/main.aqua
+    output: src/compiled-aqua
+    target: js
