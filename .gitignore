@@ -13,6 +13,7 @@ aqua-compiled
 .fluence/docker-compose.yaml
 .fluence/schemas
 .fluence/secrets
+.fluence/configs
 .fluence/tmp
 
 # to avoid accidental publish of RPC URLs
