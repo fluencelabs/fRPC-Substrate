@@ -36,11 +36,6 @@ func showSubnet() -> []WorkerServices:
     services: *WorkerServices
     for w <- subnet.workers:
         if w.worker_id != nil:
-            Console.print(["Accessing host", w.host_id])
-            on w.host_id:
-                a = 1 + 1
-            Console.print(["Result from host:", a])
-            Console.print(["Accessing worker", w.worker_id!])
             on w.worker_id! via w.host_id:
                 -- get list of all services on this worker
                 srvs <- Srv.list()

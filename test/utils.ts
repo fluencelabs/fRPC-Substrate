@@ -69,8 +69,6 @@ export async function subnet(env: string): Promise<Worker[]> {
     "20000"
   );
 
-  console.log("subnet: ", stdout, stderr);
-
   if (stderr.includes("expired")) {
     return [];
   }
