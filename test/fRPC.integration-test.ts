@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-import { multiaddr } from "@multiformats/multiaddr";
-
 import { FLUENCE_CHAIN_PRIVATE_KEY, FLUENCE_ENV, RPC_PROVIDERS } from "./env";
 import {
   startGateway,
