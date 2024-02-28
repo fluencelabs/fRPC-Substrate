@@ -14,7 +14,7 @@ on:
       fcli-version:
         description: "fcli version to use"
         type: string
-        default: "main"
+        default: "unstable"
       js-client-version:
         description: "@fluencelabs/js-client version"
         type: string
@@ -91,6 +91,9 @@ jobs:
       - name: Install aqua deps
         run: fluence dep i --no-input
 
+      - name: Build fluence project
+        run: fluence build --no-input
+
       - name: Init local env with fcli
         run: fluence local init --no-input
 
@@ -101,7 +104,7 @@ jobs:
           sed -i'' -e '/nox-/!b;n;s|image: fluencelabs/nox:.*$|image: ${{ inputs.nox-image }}|' docker-compose.yaml
 
       - name: Run local env
-        run: fluence local up
+        run: fluence local up --no-input
 
       - name: Setup node with self-hosted registry
         uses: actions/setup-node@v4
