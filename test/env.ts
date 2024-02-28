@@ -24,5 +24,4 @@ function getOrFail(envVar: string): string {
 }
 
 export const FLUENCE_ENV = getOrFail("FLUENCE_ENV");
-export const FLUENCE_CHAIN_PRIVATE_KEY = getOrFail("FLUENCE_CHAIN_PRIVATE_KEY");
 export const RPC_PROVIDERS = getOrFail("RPC_PROVIDERS").split(",");

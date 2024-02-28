@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { FLUENCE_CHAIN_PRIVATE_KEY, FLUENCE_ENV, RPC_PROVIDERS } from "./env";
+import { FLUENCE_ENV, RPC_PROVIDERS } from "./env";
 import {
   startGateway,
   fluence,
@@ -59,13 +59,11 @@ async function testGateway(mode?: string, times = 6) {
 /**
  * Run fluence CLI with env and private key
  */
-async function fluenceKeyEnv(...args: string[]) {
+async function fluenceEnv(...args: string[]) {
   return fluence(
     ...args,
     "--env",
     FLUENCE_ENV,
-    "--priv-key",
-    FLUENCE_CHAIN_PRIVATE_KEY,
   );
 }
 
@@ -127,13 +125,10 @@ describe("fRPC", () => {
       // Remove previous deployment info
       await backupFile(".fluence/workers.yaml");
 
-      const [stdout, stderr] = await fluenceKeyEnv(
+      const [stdout, stderr] = await fluenceEnv(
         "deploy",
         "fRPC-deployment"
       );
-
-      console.log("stdout", stdout);
-      console.log("stderr", stderr);
 
       expect(stdout.includes("Success!")).toBeTruthy();
 
