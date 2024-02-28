@@ -11,7 +11,7 @@ deployments:
     targetWorkers: 3
     minWorkers: 3
     pricePerWorkerEpoch: "0.00002"
-    initialBalance: "0.001"
+    initialBalance: "1"
     services: 
       - eth_rpc
     spells: []
