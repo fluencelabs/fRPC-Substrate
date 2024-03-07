@@ -1,6 +1,5 @@
 use eyre::eyre;
 use marine_rs_sdk::marine;
-use serde::{Deserialize, Serialize};
 use serde_json::Value;
 use tokio::runtime::Builder;
 use web3::Transport;
@@ -27,31 +26,6 @@ pub fn eth_call(uri: String, method: &str, json_args: Vec<String>) -> JsonString
     result.into()
 }
 
-#[marine]
-#[derive(Debug, Clone, Deserialize, Serialize)]
-pub struct RPCResult {
-    provider_name: String,
-    stdout: String,
-    stderr: String,
-}
-
-pub fn eth_call_2(uri: String, method: &str, json_args: Vec<String>) -> JsonString {
-    let result: eyre::Result<Value> = try {
-        let rt = Builder::new_current_thread().build()?;
-
-        let args: Result<Vec<Value>, _> = json_args
-            .into_iter()
-            .map(|a| serde_json::from_str(&a))
-            .collect();
-        let transport = CurlTransport::new(uri);
-        let result = rt.block_on(transport.execute(method, args?))?;
-
-        result
-    };
-
-    result.into()
-}
-
 #[cfg(test)]
 mod tests {
     use marine_rs_sdk_test::marine_test;
@@ -67,8 +41,6 @@ mod tests {
 
         let accounts = rpc.eth_call(uri, method, json_args);
         println!("bad uri call: {:?}", accounts);
-        // println!("accounts: {:?}", accounts);
-        // assert_eq!(accounts.len(), 0);
     }
 
     #[marine_test(
@@ -95,9 +67,6 @@ mod tests {
 
         let accounts = rpc.eth_call(uri, method, json_args);
         println!("all good: {:?}", accounts);
-
-        // println!("accounts: {:?}", accounts);
-        // assert_eq!(accounts.len(), 0);
     }
 
     #[marine_test(

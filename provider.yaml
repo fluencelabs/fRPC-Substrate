@@ -8,6 +8,13 @@ version: 0
 
 providerName: fRPC-Provider
 
+nox:
+  effectors:
+    curl:
+      wasmCID: bafybeiazogjvmbfjpg3dtk4jtjqq2oi53ufb24fyzcgeo7ugw3nc565ncm
+      allowedBinaries:
+        curl: /usr/bin/curl
+
 computePeers:
   nox-0:
     computeUnits: 32
@@ -23,6 +30,8 @@ offers:
       - nox-0
       - nox-1
       - nox-2
+    effectors:
+      - bafybeiazogjvmbfjpg3dtk4jtjqq2oi53ufb24fyzcgeo7ugw3nc565ncm
 
 capacityCommitments:
   nox-0:

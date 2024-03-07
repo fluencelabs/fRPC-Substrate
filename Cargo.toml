@@ -1,3 +1,3 @@
 [workspace]
 resolver = "2"
-members = [ "wasm-modules/eth-rpc", "wasm-modules/curl-adapter" ]
+members = [ "eth-rpc/eth-rpc" ]

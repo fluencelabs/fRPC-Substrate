@@ -15,10 +15,12 @@ deployments:
     services: 
       - eth_rpc
     spells: []
+    effectors:
+      - bafybeiazogjvmbfjpg3dtk4jtjqq2oi53ufb24fyzcgeo7ugw3nc565ncm
 
 services:
   eth_rpc:
-    get: wasm-modules
+    get: eth-rpc
 
 aquaDependencies:
   "@fluencelabs/aqua-lib": 0.10.1
