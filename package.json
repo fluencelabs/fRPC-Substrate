@@ -4,6 +4,9 @@
     "license": "Apache-2.0",
     "type": "module",
     "description": "Fluence app for quering the blockchain",
+    "workspaces": [
+        "gateway"
+    ],
     "devDependencies": {
         "@tsconfig/node18-strictest-esm": "^1.0.1",
         "@types/jest": "^29.5.5",
@@ -16,9 +19,9 @@
         "typescript": "^5.2.2"
     },
     "scripts": {
-        "build": "fluence build",
-        "run": "npm -C gateway run run",
-        "test": "tsc && node --no-warnings --experimental-vm-modules node_modules/jest/bin/jest.js --verbose"
+        "build": "tsc && fluence build",
+        "run": "npm run -w gateway run",
+        "test": "node --no-warnings --experimental-vm-modules node_modules/jest/bin/jest.js --verbose"
     },
     "prettier": {}
 }
