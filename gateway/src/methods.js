@@ -1,4 +1,5 @@
-export const methods = ['eth_accounts',
+export const methods = [
+    'eth_accounts',
     'eth_blockNumber',
     'eth_call',
     'eth_chainId',
@@ -55,4 +56,5 @@ export const methods = ['eth_accounts',
     'shh_newFilter',
     'shh_uninstallFilter',
     'shh_getFilterChanges',
-    'shh_getMessages']
+    'shh_getMessages'
+]

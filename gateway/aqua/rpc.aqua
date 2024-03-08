@@ -9,16 +9,13 @@ use "deals.aqua"
 import Logger, initPeerLogger from "logger.aqua"
 import Balancer, ProviderBalancer, randomBalancer, cycleBalancer from "balancer.aqua"
 import onPeerCounter from "counter.aqua"
-import QuorumChecker, QuorumResult, onPeerQuorumChecker from "quorum.aqua"
+import QuorumChecker, onPeerQuorumChecker from "quorum.aqua"
 import timeRandom from "random.aqua"
 import RPCEth, fromWorkerProvider from "eth_rpc.aqua"
 
 import NumOp from "utils.aqua"
 
 export randomLoadBalancingEth, roundRobinEth, quorumEth
-
-func errorQuorumResult(msg: string) -> QuorumResult:
-  <- QuorumResult(value = "", results = [], error = msg)
 
 func errorJsonString(msg: string) -> JsonString:
   <- JsonString(value = "", success = false, error = msg)
@@ -77,7 +74,7 @@ func roundRobinEth(uris: []string, method: string, jsonArgs: []string, counterSe
   <- result!
 
 -- Call RPC method with workers quorum and provider load balancing
-func quorum{ProviderBalancer, QuorumChecker}(workers: []Worker, quorumNumber: u32, timeout: u32, method: string, jsonArgs: []string) -> QuorumResult:
+func quorum{ProviderBalancer, QuorumChecker}(workers: []Worker, quorumNumber: u32, timeout: u32, method: string, jsonArgs: []string) -> JsonString:
   results: *JsonString
   on HOST_PEER_ID:  
     for worker <- workers par:
@@ -92,12 +89,12 @@ func quorum{ProviderBalancer, QuorumChecker}(workers: []Worker, quorumNumber: u3
   <- QuorumChecker.check(results, quorumNumber)
 
 -- Call RPC method with workers quorum and provider load balancing
-func quorumEth(uris: []string, quorumNumber: u32, timeout: u32, method: string, jsonArgs: []string, quorumServiceId: string, quorumPeerId: string) -> QuorumResult:
-  result: *QuorumResult
+func quorumEth(uris: []string, quorumNumber: u32, timeout: u32, method: string, jsonArgs: []string, quorumServiceId: string, quorumPeerId: string) -> JsonString:
+  result: *JsonString
 
   workers, error <- getWorkers()
   if error != nil:
-    result <- errorQuorumResult(error!)
+    result <- errorJsonString(error!)
   else:
     random <- timeRandom()
     balancer <- randomBalancer{random}(workers, uris)

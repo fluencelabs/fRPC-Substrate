@@ -1,7 +1,9 @@
 {
+    "private": true,
     "author": "Fluence Labs",
     "license": "Apache-2.0",
     "type": "module",
+    "description": "Fluence app for quering the blockchain",
     "devDependencies": {
         "@tsconfig/node18-strictest-esm": "^1.0.1",
         "@types/jest": "^29.5.5",

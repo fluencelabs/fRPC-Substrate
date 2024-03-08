@@ -5,14 +5,10 @@ export LoggerSrv
 import Worker from "@fluencelabs/aqua-lib/subnet.aqua"
 
 ability Logger:
-  log(s: []string)
-  logNum(n: u32)
   logCall(s: string)
   logWorker(w: Worker)
 
 service LoggerSrv("logger"):
-  log(s: []string)
-  logNum(n: u32)
   logCall(s: string)
   logWorker(w: Worker)
 
@@ -21,13 +17,6 @@ service LoggerSrv("logger"):
 -- through LoggerSrv
 func initPeerLogger() -> Logger:
   -- closures do not capture topology here
-
-  log = func (s: []string):
-    on INIT_PEER_ID via HOST_PEER_ID:
-        LoggerSrv.log(s)
-  logNum = func (n: u32):
-    on INIT_PEER_ID via HOST_PEER_ID:
-        LoggerSrv.logNum(n)
   logCall = func (s: string):
     on INIT_PEER_ID via HOST_PEER_ID:
         LoggerSrv.logCall(s)
@@ -35,4 +24,4 @@ func initPeerLogger() -> Logger:
     on INIT_PEER_ID via HOST_PEER_ID:
         LoggerSrv.logWorker(w)
 
-  <- Logger(log=log, logNum=logNum, logCall=logCall, logWorker=logWorker)
+  <- Logger(logCall=logCall, logWorker=logWorker)
