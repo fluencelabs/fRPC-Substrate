@@ -113,13 +113,6 @@ jobs:
           registry-url: "https://npm.fluence.dev"
           cache: "npm"
 
-      - name: Run npm i
-        run: npm i
-
-      - name: Run npm i in gateway
-        working-directory: gateway
-        run: npm i
-
       - name: Set js-client version
         if: inputs.js-client-version != 'null'
         uses: fluencelabs/github-actions/npm-set-dependency@main
@@ -127,6 +120,13 @@ jobs:
           package: "@fluencelabs/js-client"
           version: "${{ inputs.js-client-version }}"
           working-directory: gateway
+
+      - name: Run npm i
+        run: npm i
+
+      - name: Run npm i in gateway
+        working-directory: gateway
+        run: npm i
 
       - name: Run npm run build
         run: npm run build
