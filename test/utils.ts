@@ -158,12 +158,13 @@ export async function startGateway(mode?: string): Promise<Gateway> {
   const wrapper = new Gateway(gateway, config.port);
 
   await new Promise<void>((resolve, reject) => {
+    const timeout_ms = 60000;
     const timeout = setTimeout(() => {
       gateway.stdout?.removeListener("data", onData);
       gateway.stderr?.removeListener("data", onData);
       wrapper.stop();
-      reject(new Error(`Gateway failed to start in 10 seconds: ${output}`));
-    }, 10000);
+      reject(new Error(`Gateway failed to start in ${timeout_ms}ms: ${output}`));
+    }, timeout_ms);
 
     let output = "";
     const onData = (data: string) => {
