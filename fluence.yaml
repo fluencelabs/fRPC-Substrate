@@ -26,11 +26,11 @@ aquaDependencies:
   "@fluencelabs/aqua-lib": 0.10.1
 
 compileAqua:
-  default:
-    input: src/aqua/main.aqua
-    output: src/aqua-compiled
-    target: js
   gateway:
-    input: gateway/aqua
+    input: src/aqua-rpc
     output: gateway/aqua-compiled
+    target: js
+  main:
+    input: src/aqua
+    output: src/aqua-compiled
     target: js

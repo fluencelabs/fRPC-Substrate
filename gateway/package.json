@@ -7,8 +7,7 @@
     "main": "src/index.js",
     "type": "module",
     "scripts": {
-        "run": "npm run compile && node src/index.js",
-        "compile": "fluence aqua -i aqua/ -o aqua-compiled/ --js --no-input"
+        "run": "node src/index.js"
     },
     "dependencies": {
         "@fluencelabs/js-client": "0.8.4",

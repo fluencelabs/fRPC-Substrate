@@ -16,8 +16,9 @@
         "typescript": "^5.2.2"
     },
     "scripts": {
-        "build": "tsc",
-        "test": "node --no-warnings --experimental-vm-modules node_modules/jest/bin/jest.js --verbose"
+        "build": "fluence build",
+        "run": "npm -C gateway run run",
+        "test": "tsc && node --no-warnings --experimental-vm-modules node_modules/jest/bin/jest.js --verbose"
     },
     "prettier": {}
 }
