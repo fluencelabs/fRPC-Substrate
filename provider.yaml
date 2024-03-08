@@ -11,7 +11,7 @@ providerName: fRPC-Provider
 nox:
   effectors:
     curl:
-      wasmCID: bafybeiazogjvmbfjpg3dtk4jtjqq2oi53ufb24fyzcgeo7ugw3nc565ncm
+      wasmCID: bafybeigucrbk77x74uthxlgqxm3vz7vrts7c5vvxds55xrytg64yfevdsi
       allowedBinaries:
         curl: /usr/bin/curl
 
@@ -31,7 +31,7 @@ offers:
       - nox-1
       - nox-2
     effectors:
-      - bafybeiazogjvmbfjpg3dtk4jtjqq2oi53ufb24fyzcgeo7ugw3nc565ncm
+      - bafybeigucrbk77x74uthxlgqxm3vz7vrts7c5vvxds55xrytg64yfevdsi
 
 capacityCommitments:
   nox-0:

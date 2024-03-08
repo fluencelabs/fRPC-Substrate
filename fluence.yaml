@@ -16,7 +16,7 @@ deployments:
       - eth_rpc
     spells: []
     effectors:
-      - bafybeiazogjvmbfjpg3dtk4jtjqq2oi53ufb24fyzcgeo7ugw3nc565ncm
+      - bafybeigucrbk77x74uthxlgqxm3vz7vrts7c5vvxds55xrytg64yfevdsi
 
 services:
   eth_rpc:

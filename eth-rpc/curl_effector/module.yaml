@@ -3,7 +3,7 @@ version: 0
 
 type: compiled
 
-name: curl_adapter
+name: curl_effector
 
 mountedBinaries:
   curl: /usr/bin/curl
