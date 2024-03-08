@@ -91,6 +91,9 @@ jobs:
       - name: Install aqua deps
         run: fluence dep i --no-input
 
+      - name: Build fluence project
+        run: fluence build --no-input
+
       - name: Init local env with fcli
         run: fluence local init --no-input
 

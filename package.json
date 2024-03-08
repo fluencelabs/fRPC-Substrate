@@ -19,7 +19,7 @@
         "typescript": "^5.2.2"
     },
     "scripts": {
-        "build": "tsc && fluence build",
+        "build": "tsc",
         "run": "npm run -w gateway run",
         "test": "node --no-warnings --experimental-vm-modules node_modules/jest/bin/jest.js --verbose"
     },
