@@ -5,7 +5,6 @@
 # Documentation: https://github.com/fluencelabs/fluence-cli/tree/main/docs/configs/module.md
 
 version: 0
+
 type: rust
-name: curl_adapter
-mountedBinaries:
-  curl: /usr/bin/curl
+name: eth_rpc

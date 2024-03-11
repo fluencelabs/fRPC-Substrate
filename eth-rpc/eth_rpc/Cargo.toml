@@ -1,6 +1,6 @@
 [package]
 name = "eth_rpc"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2021"
 authors = ["Fluence Labs"]
 publish = false
@@ -9,18 +9,16 @@ publish = false
 name = "eth_rpc"
 path = "src/main.rs"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
 [dependencies]
 web3 = { version = "=0.19.0", features = [], default-features = false }
-#async-std = "1.12.0" # async-std does not support wasm32-wasi
 serde_json = "=1.0.108"
 serde = "=1.0.193"
 jsonrpc-core = "=18.0.0"
 tokio = { version = "=1.34.0", default-features = false, features = ["rt"] }
 eyre = "=0.6.9"
-
-marine-rs-sdk = "=0.10.1"
+log = "=0.4.20"
+marine-rs-sdk = { version = "=0.14.0", features = ["logger"] }
+curl-effector-imports = { git = "https://github.com/fluencelabs/effectors.git", branch = "introduce-crates" }
 
 [dev-dependencies]
-marine-rs-sdk-test = "=0.11.1"
+marine-rs-sdk-test = "=0.16.0"

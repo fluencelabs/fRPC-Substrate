@@ -1,4 +1,4 @@
-module Utils declares NumOp
+aqua Utils declares NumOp
 
 -- Used to coerce types
 service NumOp("op"):

@@ -34,12 +34,8 @@ export async function execute(
   cmd: string,
   ...args: string[]
 ): Promise<[string, string]> {
-  return new Promise((resolve, reject) => {
-    execFile(cmd, args, (error, stdout, stderr) => {
-      if (error) {
-        reject(error);
-      }
-
+  return new Promise((resolve, _) => {
+    execFile(cmd, args, (_, stdout, stderr) => {
       resolve([stdout, stderr]);
     });
   });
@@ -61,7 +57,7 @@ interface Worker {
  * @returns Subnet workers
  */
 export async function subnet(env: string): Promise<Worker[]> {
-  const [stdout, _] = await fluence(
+  const [stdout, stderr] = await fluence(
     "run",
     "-f",
     "showSubnet()",
@@ -69,7 +65,13 @@ export async function subnet(env: string): Promise<Worker[]> {
     "src/aqua/main.aqua",
     "--env",
     env,
+    "--ttl",
+    "20000"
   );
+
+  if (stderr.includes("expired")) {
+    return [];
+  }
 
   return JSON.parse(stdout);
 }
@@ -156,12 +158,13 @@ export async function startGateway(mode?: string): Promise<Gateway> {
   const wrapper = new Gateway(gateway, config.port);
 
   await new Promise<void>((resolve, reject) => {
+    const timeout_ms = 60000;
     const timeout = setTimeout(() => {
       gateway.stdout?.removeListener("data", onData);
       gateway.stderr?.removeListener("data", onData);
       wrapper.stop();
-      reject(new Error(`Gateway failed to start in 10 seconds: ${output}`));
-    }, 10000);
+      reject(new Error(`Gateway failed to start in ${timeout_ms}ms: ${output}`));
+    }, timeout_ms);
 
     let output = "";
     const onData = (data: string) => {

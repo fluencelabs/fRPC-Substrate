@@ -14,8 +14,7 @@ on:
       fcli-version:
         description: "fcli version to use"
         type: string
-        # default: "unstable"
-        default: "stage"
+        default: "unstable"
       js-client-version:
         description: "@fluencelabs/js-client version"
         type: string
@@ -28,7 +27,7 @@ on:
 jobs:
   tests:
     name: "Run tests"
-    runs-on: builder
+    runs-on: linux-amd64-m-xlarge
 
     env:
       FLUENCE_USER_DIR: "${{ github.workspace }}/tmp/.fluence"
@@ -80,11 +79,20 @@ jobs:
       - name: Setup Rust toolchain
         uses: dsherret/rust-toolchain-file@v1
 
+      - name: Add wasi target
+        run: rustup target add wasm32-wasi
+
       - name: Setup fcli
         uses: fluencelabs/setup-fluence@v1
         with:
           artifact: fcli
           version: ${{ inputs.fcli-version }}
+
+      - name: Install aqua deps
+        run: fluence dep i --no-input
+
+      - name: Build fluence project
+        run: fluence build --no-input
 
       - name: Init local env with fcli
         run: fluence local init --no-input
@@ -96,7 +104,7 @@ jobs:
           sed -i'' -e '/nox-/!b;n;s|image: fluencelabs/nox:.*$|image: ${{ inputs.nox-image }}|' docker-compose.yaml
 
       - name: Run local env
-        run: fluence local up
+        run: fluence local up --no-input
 
       - name: Setup node with self-hosted registry
         uses: actions/setup-node@v4
@@ -105,13 +113,6 @@ jobs:
           registry-url: "https://npm.fluence.dev"
           cache: "npm"
 
-      - name: Run npm i
-        run: npm i
-
-      - name: Run npm i in gateway
-        working-directory: gateway
-        run: npm i
-
       - name: Set js-client version
         if: inputs.js-client-version != 'null'
         uses: fluencelabs/github-actions/npm-set-dependency@main
@@ -119,6 +120,9 @@ jobs:
           package: "@fluencelabs/js-client"
           version: "${{ inputs.js-client-version }}"
           working-directory: gateway
+
+      - name: Run npm i
+        run: npm i
 
       - name: Run npm run build
         run: npm run build
@@ -131,9 +135,3 @@ jobs:
       - name: Dump container logs
         if: always()
         uses: jwalton/gh-docker-logs@v2
-
-      - name: Cleanup
-        if: always()
-        run: |
-          fluence local down
-          rm -rf tmp ${{ env.FLUENCE_USER_DIR }}

@@ -1,0 +1,12 @@
+# yaml-language-server: $schema=../../.fluence/schemas/module.json
+version: 0
+
+type: compiled
+
+name: curl_effector
+
+mountedBinaries:
+  curl: /usr/bin/curl
+
+volumes:
+    /tmp/vault: /tmp

@@ -14,9 +14,7 @@
  * limitations under the License.
  */
 
-import { multiaddr } from "@multiformats/multiaddr";
-
-import { FLUENCE_CHAIN_PRIVATE_KEY, FLUENCE_ENV, RPC_PROVIDERS } from "./env";
+import { FLUENCE_ENV, RPC_PROVIDERS } from "./env";
 import {
   startGateway,
   fluence,
@@ -61,13 +59,11 @@ async function testGateway(mode?: string, times = 6) {
 /**
  * Run fluence CLI with env and private key
  */
-async function fluenceKeyEnv(...args: string[]) {
+async function fluenceEnv(...args: string[]) {
   return fluence(
     ...args,
     "--env",
     FLUENCE_ENV,
-    "--priv-key",
-    FLUENCE_CHAIN_PRIVATE_KEY,
   );
 }
 
@@ -123,67 +119,15 @@ describe("fRPC", () => {
       const relay = randomElement(peers) ?? throwError("Empty peers");
 
       await updateConfig({ relay });
-
-      if (FLUENCE_ENV !== "local") return;
-
-      const [register, stderrReg] = await fluenceKeyEnv(
-        "provider",
-        "register",
-        // TODO: Those values are moved
-        // to provider config in newer cli version
-        "--max-collateral",
-        "100",
-        "--price-per-epoch",
-        "1",
-      );
-
-      // Here CLI writes success to stdout
-      if (!register.includes("Successfully")) {
-        throw new Error(`Failed to register provider:
-        stdout: ${register}
-        stderr: ${stderrReg}`);
-      }
-
-      const providerPeers = peers
-        .slice(0, RPC_PROVIDERS.length)
-        .map((p) => multiaddr(p).getPeerId() ?? throwError("Empty peer id"));
-
-      const [stdoutAdd, addPeers] = await fluenceKeyEnv(
-        "provider",
-        "add-peer",
-        ...providerPeers.flatMap((id) => ["--peer-id", id]),
-        "--compute-units",
-        "1",
-      );
-
-      // Here CLI writes results to stderr
-      const added = addPeers.match(/Added/g)?.length ?? 0;
-      if (added != 3) {
-        throw new Error(`Failed to add peers:
-        stdout: ${stdoutAdd}
-        stderr: ${addPeers}`);
-      }
     });
 
     it("should deploy the deal", async () => {
       // Remove previous deployment info
       await backupFile(".fluence/workers.yaml");
 
-      const [stdout, stderr] = await fluenceKeyEnv(
-        "deal",
+      const [stdout, stderr] = await fluenceEnv(
         "deploy",
-        // TODO: Those values are moved
-        // to deals in fluence config in newer cli version
-        "--collateral-per-worker",
-        "1",
-        "--max-workers-per-provider",
-        "3",
-        "--min-workers",
-        "3",
-        "--target-workers",
-        "3",
-        "--price-per-worker-epoch",
-        "1",
+        "fRPC-deployment"
       );
 
       expect(stdout.includes("Success!")).toBeTruthy();

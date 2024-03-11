@@ -7,13 +7,16 @@
 src/ts/src/aqua
 src/js/src/aqua
 aqua-compiled
+**/dist
 
 # recommended by Fluence Labs:
 .fluence/project-secrets.yaml
 .fluence/docker-compose.yaml
 .fluence/schemas
 .fluence/secrets
+.fluence/configs
 .fluence/tmp
+.fluence/aqua-dependencies
 
 # to avoid accidental publish of RPC URLs
 gateway/configs/quickstart_config.json

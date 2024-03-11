@@ -1,4 +1,4 @@
-module Balancer declares Balancer, ProviderBalancer, WorkersBalancer, randomBalancer, cycleBalancer
+aqua Balancer declares Balancer, ProviderBalancer, WorkersBalancer, randomBalancer, cycleBalancer
 
 import Worker from "@fluencelabs/aqua-lib/subnet.aqua"
 

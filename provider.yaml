@@ -1,0 +1,45 @@
+# yaml-language-server: $schema=.fluence/schemas/provider.json
+
+# Defines config used for provider set up
+
+# Documentation: https://github.com/fluencelabs/cli/tree/main/docs/configs/provider.md
+
+version: 0
+
+providerName: fRPC-Provider
+
+nox:
+  effectors:
+    curl:
+      wasmCID: bafybeigucrbk77x74uthxlgqxm3vz7vrts7c5vvxds55xrytg64yfevdsi
+      allowedBinaries:
+        curl: /usr/bin/curl
+
+computePeers:
+  nox-0:
+    computeUnits: 32
+  nox-1:
+    computeUnits: 32
+  nox-2:
+    computeUnits: 32
+
+offers:
+  defaultOffer:
+    minPricePerWorkerEpoch: "0.00001"
+    computePeers:
+      - nox-0
+      - nox-1
+      - nox-2
+    effectors:
+      - bafybeigucrbk77x74uthxlgqxm3vz7vrts7c5vvxds55xrytg64yfevdsi
+
+capacityCommitments:
+  nox-0:
+    duration: 100 days
+    rewardDelegationRate: 7
+  nox-1:
+    duration: 100 days
+    rewardDelegationRate: 7
+  nox-2:
+    duration: 100 days
+    rewardDelegationRate: 7

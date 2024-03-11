@@ -1,4 +1,4 @@
-module Random declares Random, timeRandom
+aqua Random declares Random, timeRandom
 
 import Peer from "@fluencelabs/aqua-lib/builtin.aqua"
 
