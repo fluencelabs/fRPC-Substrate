@@ -4,7 +4,8 @@
 
 # Documentation: https://github.com/fluencelabs/fluence-cli/tree/main/docs/configs/module.md
 
-version: 0
+version: 1
 
 type: rust
+
 name: eth_rpc

@@ -4,14 +4,14 @@
 
 # Documentation: https://github.com/fluencelabs/cli/tree/main/docs/configs/provider.md
 
-version: 0
+version: 1
 
-providerName: fRPC-Provider
+providerName: defaultProvider
 
 nox:
   effectors:
     curl:
-      wasmCID: bafybeigucrbk77x74uthxlgqxm3vz7vrts7c5vvxds55xrytg64yfevdsi
+      wasmCID: bafkreids22lgia5bqs63uigw4mqwhsoxvtnkpfqxqy5uwyyerrldsr32ce
       allowedBinaries:
         curl: /usr/bin/curl
 
@@ -25,13 +25,13 @@ computePeers:
 
 offers:
   defaultOffer:
-    minPricePerWorkerEpoch: "0.00001"
+    minPricePerWorkerEpoch: "0.33"
     computePeers:
       - nox-0
       - nox-1
       - nox-2
     effectors:
-      - bafybeigucrbk77x74uthxlgqxm3vz7vrts7c5vvxds55xrytg64yfevdsi
+      - bafkreids22lgia5bqs63uigw4mqwhsoxvtnkpfqxqy5uwyyerrldsr32ce
 
 capacityCommitments:
   nox-0:

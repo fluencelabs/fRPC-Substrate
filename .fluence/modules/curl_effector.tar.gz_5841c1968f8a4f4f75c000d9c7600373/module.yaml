@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=../../schemas/module.json
+version: 1
+
+name: curl_effector
+
+effects:
+  binaries:
+    curl: /usr/bin/curl
+
+cid: bafybeibtqlh4fzsw725geplcebtlz2mw5xaxvybmq2gbm56ww47gna2yua
+
+rustBindingCrate:
+  name: curl-effector-imports
+  version: 0.1.1

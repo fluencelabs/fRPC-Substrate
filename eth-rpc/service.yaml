@@ -5,9 +5,11 @@
 # Documentation: https://github.com/fluencelabs/fluence-cli/tree/main/docs/configs/service.md
 
 version: 0
+
 name: eth_rpc
+
 modules:
   facade:
     get: eth_rpc
   curl_effector:
-    get: curl_effector
+    get: https://github.com/fluencelabs/curl-effector/releases/download/effector-v0.1.1/curl_effector.tar.gz
