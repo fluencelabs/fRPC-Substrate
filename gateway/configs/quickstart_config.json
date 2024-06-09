@@ -5,7 +5,10 @@
     "<replace with your url_3/api-key>"
   ],
   "mode": "round-robin",
-  "relay": "/dns4/0-stage.fluence.dev/tcp/9000/wss/p2p/12D3KooWDcpWuyrMTDinqNgmXAuRdfd2mTdY9VoXZSAet2pDzh6r",
+  // dar relay
+  "relay": "/dns4/2-dar.fluence.dev/tcp/9000/wss/p2p/12D3KooWHk9BjDQBUqnavciRPhAYFvqKBe4ZiPPvde7vDaqgn5er",
+  // local relay
+  // "relay": "/ip4/127.0.0.1/tcp/9991/ws/p2p/12D3KooWEy393wEyb3M1wkYb5fzbsgy6iQoe6jhM3JzjvyAAkNFA",
   "port": 3000,
   "counterServiceId": null,
   "counterPeerId": null,
