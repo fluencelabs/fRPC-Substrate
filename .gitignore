@@ -1,22 +1,12 @@
 .idea
 .DS_Store
+/.fluence/secrets
+/.fluence/provider-secrets.yaml
+/.fluence/schemas
+/.fluence/tmp
+/.fluence/service-configs
+/.fluence/aqua-dependencies/package.json
+src/frontend/src/compiled-aqua/
 **/node_modules
 **/target/
 .repl_history
-.vscode/settings.json
-src/ts/src/aqua
-src/js/src/aqua
-aqua-compiled
-**/dist
-
-# recommended by Fluence Labs:
-.fluence/project-secrets.yaml
-.fluence/docker-compose.yaml
-.fluence/schemas
-.fluence/secrets
-.fluence/configs
-.fluence/tmp
-.fluence/aqua-dependencies
-
-# to avoid accidental publish of RPC URLs
-gateway/configs/quickstart_config.json

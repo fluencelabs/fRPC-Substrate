@@ -8,49 +8,77 @@ use "hosts.aqua"
 import "services.aqua"
 
 -- IMPORTANT: Add exports for all functions that you want to run
-export showSubnet, helloWorld, helloWorldRemote, getInfo, getInfos
+export helloWorld, helloWorldRemote, getInfo, getInfos
 
 -- DOCUMENTATION:
 -- https://fluence.dev
 
 
 
--- example of running services deployed using `fluence deal deploy`
--- with worker 'defaultWorker' which has service 'MyService' with method 'greeting'
+-- -- example of running services deployed using `fluence deploy`
+-- -- with worker 'myDeployment' which has service 'MyService' with method 'greeting'
 
-export showSubnet
+-- export runDeployedServices, showSubnet
 
-data WorkerServices:
-    host_id: string
-    worker_id: ?string
-    services: ?[]string
+-- data Answer:
+    -- answer: ?string
+    -- worker: Worker
 
-func showSubnet() -> []WorkerServices:
-    deals <- Deals.get()
-    dealId = deals.fRpcDeployment!.dealIdOriginal
-    on HOST_PEER_ID:
-        subnet <- Subnet.resolve(dealId)
-    if subnet.success == false:
-        Console.print(["Failed to resolve subnet: ", subnet.error])
+-- func runDeployedServices() -> []Answer:
+    -- deals <- Deals.get()
+    -- dealId = deals.myDeployment!.dealIdOriginal
+    -- answers: *Answer
+    -- on HOST_PEER_ID:
+        -- subnet <- Subnet.resolve(dealId)
+    -- if subnet.success == false:
+        -- Console.print(["Failed to resolve subnet: ", subnet.error])
 
-    services: *WorkerServices
-    for w <- subnet.workers:
-        if w.worker_id != nil:
-            on w.worker_id! via w.host_id:
-                -- get list of all services on this worker
-                srvs <- Srv.list()
+    -- for w <- subnet.workers:
+        -- if w.worker_id == nil:
+            -- answers <<- Answer(answer=nil, worker=w)
+        -- else:
+            -- on w.worker_id! via w.host_id:
+                -- answer <- MyService.greeting("fluence")
+                -- answers <<- Answer(answer=?[answer], worker=w)
 
-                -- gather aliases
-                aliases: *string
-                for s <- srvs:
-                    if s.aliases.length != 0:
-                        aliases <<- s.aliases[0]
+    -- <- answers
 
-                services <<- WorkerServices(host_id=w.host_id, worker_id=w.worker_id, services=?[aliases])
-        else:
-            services <<- WorkerServices(host_id=w.host_id, worker_id=nil, services=nil)
+-- data WorkerServices:
+    -- host_id: string
+    -- worker_id: ?string
+    -- services: ?[]string
+    -- spells: ?[]string
 
-    <- services
+-- func showSubnet() -> []WorkerServices:
+    -- deals <- Deals.get()
+    -- dealId = deals.myDeployment!.dealIdOriginal
+    -- on HOST_PEER_ID:
+        -- subnet <- Subnet.resolve(dealId)
+    -- if subnet.success == false:
+        -- Console.print(["Failed to resolve subnet: ", subnet.error])
+
+    -- services: *WorkerServices
+    -- for w <- subnet.workers:
+        -- if w.worker_id != nil:
+            -- on w.worker_id! via w.host_id:
+                -- -- get list of all services on this worker
+                -- srvs <- Srv.list()
+
+                -- -- gather spells and services aliases
+                -- spells_aliases: *string
+                -- services_aliases: *string
+                -- for s <- srvs:
+                    -- if s.aliases.length != 0:
+                        -- if s.service_type == "spell":
+                            -- spells_aliases <<- s.aliases[0]
+                        -- if s.service_type == "service":
+                            -- services_aliases <<- s.aliases[0]
+
+                -- services <<- WorkerServices(host_id=w.host_id, worker_id=w.worker_id, services=?[services_aliases], spells=?[spells_aliases])
+        -- else:
+            -- services <<- WorkerServices(host_id=w.host_id, worker_id=nil, services=nil, spells=nil)
+
+    -- <- services
 
 
 -- local

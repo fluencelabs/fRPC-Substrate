@@ -1,3 +1,6 @@
 [workspace]
 resolver = "2"
 members = [ "eth-rpc/eth_rpc" ]
+
+[workspace.dependencies.curl-effector-imports]
+version = "0.1.1"

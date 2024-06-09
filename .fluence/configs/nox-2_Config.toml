@@ -1,0 +1,39 @@
+aquavm_pool_size = 2
+tcp_port = 7_773
+websocket_port = 9_993
+http_port = 18_082
+tokio_metrics_enabled = true
+metrics_enabled = true
+metrics_timer_resolution = "1 minute"
+
+[system_services]
+enable = [ "aqua-ipfs", "decider" ]
+
+  [system_services.decider]
+  decider_period_sec = 60
+  worker_ipfs_multiaddr = "/dns4/ipfs/tcp/5001"
+  network_api_endpoint = "http://chain-rpc:8545"
+  matcher_address = "0x3Aa5ebB10DC797CAC828524e59A333d0A371443c"
+  wallet_key = "0xa926a63a651b30a4a89330564ad50f6ab7ba600908d8f7b620db01283eb21dbe"
+  start_block = "earliest"
+  network_id = 31_337
+
+  [system_services.aqua_ipfs]
+  external_api_multiaddr = "/ip4/127.0.0.1/tcp/5001"
+  local_api_multiaddr = "/dns4/ipfs/tcp/5001"
+  ipfs_binary_path = "/usr/bin/ipfs"
+
+[effectors.curl]
+wasm_cid = "bafkreids22lgia5bqs63uigw4mqwhsoxvtnkpfqxqy5uwyyerrldsr32ce"
+
+  [effectors.curl.allowed_binaries]
+  curl = "/usr/bin/curl"
+
+[chain_config]
+http_endpoint = "http://chain-rpc:8545"
+core_contract_address = "0x0B306BF915C4d645ff596e518fAf3F9669b97016"
+cc_contract_address = "0xc6e7DF5E7b4f2A278906862b61205850344D4e7d"
+market_contract_address = "0x3Aa5ebB10DC797CAC828524e59A333d0A371443c"
+network_id = 31_337
+wallet_key = "0xa926a63a651b30a4a89330564ad50f6ab7ba600908d8f7b620db01283eb21dbe"
+default_priority_fee = 0

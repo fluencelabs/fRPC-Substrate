@@ -5,3 +5,22 @@
 # Documentation: https://github.com/fluencelabs/cli/tree/main/docs/configs/workers.md
 
 version: 1
+
+deals:
+  dar:
+    myDeployment:
+      definition: bafkreidvdwopj7kxjpw56uh42rz7wvsjiilv5ft7vzuk3fspz73y7q5kou
+      timestamp: 2024-05-24T22:25:20.628Z
+      dealIdOriginal: "0x76E56472bf60f11aB791d922c41d523E0954B81F"
+      dealId: 76e56472bf60f11ab791d922c41d523e0954b81f
+      chainNetworkId: 2358716091832359
+      matched: true
+  
+  local:
+    fRPC-deployment:
+      definition: bafkreidvdwopj7kxjpw56uh42rz7wvsjiilv5ft7vzuk3fspz73y7q5kou
+      timestamp: 2024-05-24T23:00:06.556Z
+      dealIdOriginal: "0xCe85503De9399D4dECa3c0b2bb3e9e7CFCBf9C6B"
+      dealId: ce85503de9399d4deca3c0b2bb3e9e7cfcbf9c6b
+      chainNetworkId: 31337
+      matched: true
