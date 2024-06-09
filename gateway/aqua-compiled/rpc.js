@@ -54,28 +54,28 @@ export const roundRobinEth_script = `
                (seq
                 (xor
                  (seq
-                  (new %FRpcDeployment_obj_map
+                  (new %MyDeployment_obj_map
                    (seq
                     (seq
                      (seq
                       (seq
                        (seq
                         (seq
-                         (ap ("chainNetworkId" 31337) %FRpcDeployment_obj_map)
-                         (ap ("dealId" "ce85503de9399d4deca3c0b2bb3e9e7cfcbf9c6b") %FRpcDeployment_obj_map)
+                         (ap ("chainNetworkId" 2358716091832359) %MyDeployment_obj_map)
+                         (ap ("dealId" "76e56472bf60f11ab791d922c41d523e0954b81f") %MyDeployment_obj_map)
                         )
-                        (ap ("dealIdOriginal" "0xCe85503De9399D4dECa3c0b2bb3e9e7CFCBf9C6B") %FRpcDeployment_obj_map)
+                        (ap ("dealIdOriginal" "0x76E56472bf60f11aB791d922c41d523E0954B81F") %MyDeployment_obj_map)
                        )
-                       (ap ("definition" "bafkreidvdwopj7kxjpw56uh42rz7wvsjiilv5ft7vzuk3fspz73y7q5kou") %FRpcDeployment_obj_map)
+                       (ap ("definition" "bafkreidvdwopj7kxjpw56uh42rz7wvsjiilv5ft7vzuk3fspz73y7q5kou") %MyDeployment_obj_map)
                       )
-                      (ap ("matched" true) %FRpcDeployment_obj_map)
+                      (ap ("matched" true) %MyDeployment_obj_map)
                      )
-                     (ap ("timestamp" "2024-05-24T23:00:06.556Z") %FRpcDeployment_obj_map)
+                     (ap ("timestamp" "2024-05-24T22:25:20.628Z") %MyDeployment_obj_map)
                     )
-                    (canon %init_peer_id% %FRpcDeployment_obj_map  FRpcDeployment_obj)
+                    (canon %init_peer_id% %MyDeployment_obj_map  MyDeployment_obj)
                    )
                   )
-                  (ap FRpcDeployment_obj $option-inline)
+                  (ap MyDeployment_obj $option-inline)
                  )
                  (null)
                 )
@@ -84,7 +84,10 @@ export const roundRobinEth_script = `
               )
               (new %Deals_obj_map
                (seq
-                (ap ("fRpcDeployment" #option-inline-0) %Deals_obj_map)
+                (seq
+                 (ap ("fRpcDeployment" []) %Deals_obj_map)
+                 (ap ("myDeployment" #option-inline-0) %Deals_obj_map)
+                )
                 (canon %init_peer_id% %Deals_obj_map  Deals_obj)
                )
               )
@@ -398,28 +401,28 @@ export const quorumEth_script = `
                (seq
                 (xor
                  (seq
-                  (new %FRpcDeployment_obj_map
+                  (new %MyDeployment_obj_map
                    (seq
                     (seq
                      (seq
                       (seq
                        (seq
                         (seq
-                         (ap ("chainNetworkId" 31337) %FRpcDeployment_obj_map)
-                         (ap ("dealId" "ce85503de9399d4deca3c0b2bb3e9e7cfcbf9c6b") %FRpcDeployment_obj_map)
+                         (ap ("chainNetworkId" 2358716091832359) %MyDeployment_obj_map)
+                         (ap ("dealId" "76e56472bf60f11ab791d922c41d523e0954b81f") %MyDeployment_obj_map)
                         )
-                        (ap ("dealIdOriginal" "0xCe85503De9399D4dECa3c0b2bb3e9e7CFCBf9C6B") %FRpcDeployment_obj_map)
+                        (ap ("dealIdOriginal" "0x76E56472bf60f11aB791d922c41d523E0954B81F") %MyDeployment_obj_map)
                        )
-                       (ap ("definition" "bafkreidvdwopj7kxjpw56uh42rz7wvsjiilv5ft7vzuk3fspz73y7q5kou") %FRpcDeployment_obj_map)
+                       (ap ("definition" "bafkreidvdwopj7kxjpw56uh42rz7wvsjiilv5ft7vzuk3fspz73y7q5kou") %MyDeployment_obj_map)
                       )
-                      (ap ("matched" true) %FRpcDeployment_obj_map)
+                      (ap ("matched" true) %MyDeployment_obj_map)
                      )
-                     (ap ("timestamp" "2024-05-24T23:00:06.556Z") %FRpcDeployment_obj_map)
+                     (ap ("timestamp" "2024-05-24T22:25:20.628Z") %MyDeployment_obj_map)
                     )
-                    (canon %init_peer_id% %FRpcDeployment_obj_map  FRpcDeployment_obj)
+                    (canon %init_peer_id% %MyDeployment_obj_map  MyDeployment_obj)
                    )
                   )
-                  (ap FRpcDeployment_obj $option-inline)
+                  (ap MyDeployment_obj $option-inline)
                  )
                  (null)
                 )
@@ -428,7 +431,10 @@ export const quorumEth_script = `
               )
               (new %Deals_obj_map
                (seq
-                (ap ("fRpcDeployment" #option-inline-0) %Deals_obj_map)
+                (seq
+                 (ap ("fRpcDeployment" []) %Deals_obj_map)
+                 (ap ("myDeployment" #option-inline-0) %Deals_obj_map)
+                )
                 (canon %init_peer_id% %Deals_obj_map  Deals_obj)
                )
               )
@@ -807,28 +813,28 @@ export const randomLoadBalancingEth_script = `
                (seq
                 (xor
                  (seq
-                  (new %FRpcDeployment_obj_map
+                  (new %MyDeployment_obj_map
                    (seq
                     (seq
                      (seq
                       (seq
                        (seq
                         (seq
-                         (ap ("chainNetworkId" 31337) %FRpcDeployment_obj_map)
-                         (ap ("dealId" "ce85503de9399d4deca3c0b2bb3e9e7cfcbf9c6b") %FRpcDeployment_obj_map)
+                         (ap ("chainNetworkId" 2358716091832359) %MyDeployment_obj_map)
+                         (ap ("dealId" "76e56472bf60f11ab791d922c41d523e0954b81f") %MyDeployment_obj_map)
                         )
-                        (ap ("dealIdOriginal" "0xCe85503De9399D4dECa3c0b2bb3e9e7CFCBf9C6B") %FRpcDeployment_obj_map)
+                        (ap ("dealIdOriginal" "0x76E56472bf60f11aB791d922c41d523E0954B81F") %MyDeployment_obj_map)
                        )
-                       (ap ("definition" "bafkreidvdwopj7kxjpw56uh42rz7wvsjiilv5ft7vzuk3fspz73y7q5kou") %FRpcDeployment_obj_map)
+                       (ap ("definition" "bafkreidvdwopj7kxjpw56uh42rz7wvsjiilv5ft7vzuk3fspz73y7q5kou") %MyDeployment_obj_map)
                       )
-                      (ap ("matched" true) %FRpcDeployment_obj_map)
+                      (ap ("matched" true) %MyDeployment_obj_map)
                      )
-                     (ap ("timestamp" "2024-05-24T23:00:06.556Z") %FRpcDeployment_obj_map)
+                     (ap ("timestamp" "2024-05-24T22:25:20.628Z") %MyDeployment_obj_map)
                     )
-                    (canon %init_peer_id% %FRpcDeployment_obj_map  FRpcDeployment_obj)
+                    (canon %init_peer_id% %MyDeployment_obj_map  MyDeployment_obj)
                    )
                   )
-                  (ap FRpcDeployment_obj $option-inline)
+                  (ap MyDeployment_obj $option-inline)
                  )
                  (null)
                 )
@@ -837,7 +843,10 @@ export const randomLoadBalancingEth_script = `
               )
               (new %Deals_obj_map
                (seq
-                (ap ("fRpcDeployment" #option-inline-0) %Deals_obj_map)
+                (seq
+                 (ap ("fRpcDeployment" []) %Deals_obj_map)
+                 (ap ("myDeployment" #option-inline-0) %Deals_obj_map)
+                )
                 (canon %init_peer_id% %Deals_obj_map  Deals_obj)
                )
               )

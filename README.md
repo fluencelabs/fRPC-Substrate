@@ -1,5 +1,8 @@
 # Hacking Decentralized RPC with Fluence
 
+> [!WARNING]
+> Please note that this guide is somewhat outdated. Updates especially with respect to deal deployment and cli use are coming soon.
+
 ## Overview
 
 Running blockchain nodes to support your dApps' read and write requirements to/from a node tends to be rather resource intensive. Not surprisingly, Web3 developers have been flocking toward integrating their dApps with hosted blockchain JSON-RPC gateways. Alas, centralized "RPC as SaaS" introduces bottlenecks challenging the availability, reliability and Web3 ethos of dApps while quite often raising the exit barriers by providing custom API overlays to the EVM JSON-RPC API convention.
@@ -396,7 +399,7 @@ The *i* command lists all the exported interfaces from the wasm modules in Aqua 
 
 ### Adding Modules To A Service
 
-Regardless of your customization requirements, you probably will have no reason to modify the *curl_adapter* and *eth_rpc* modules. However, you may want to add new modules, or even services, to handle your additional business logic requirements. For example, you may want to capture RPC endpoint performance data, such as response times and availability, to some Web3 storage, e.g., IPFS or Ceramic, for further analysis to, say, derive a weighting scheme for endpoint selection.
+Regardless of your customization requirements, you probably will have no reason to modify the *curl_effector* and *eth_rpc* modules. However, you may want to add new modules, or even services, to handle your additional business logic requirements. For example, you may want to capture RPC endpoint performance data, such as response times and availability, to some Web3 storage, e.g., IPFS or Ceramic, for further analysis to, say, derive a weighting scheme for endpoint selection.
 
 Fluence CLI allows you to quickly create a new, or add an existing, module to your project. For example,
 
