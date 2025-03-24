@@ -11,4 +11,4 @@ name = "curl_adapter"
 
 [dependencies]
 marine-rs-sdk = "=0.10.1"
-log = "=0.4.20"
+log = "=0.4.27"
