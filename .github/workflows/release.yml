@@ -59,7 +59,7 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v4
         with:
-          node-version: "18"
+          node-version: "18.20.8"
           registry-url: "https://registry.npmjs.org"
           cache: "npm"
           cache-dependency-path: "gateway/package-lock.json"
@@ -108,7 +108,7 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v4
         with:
-          node-version: "18"
+          node-version: "18.20.8"
           registry-url: "https://registry.npmjs.org"
           cache-dependency-path: "gateway/package-lock.json"
           cache: "npm"
